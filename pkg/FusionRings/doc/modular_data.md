@@ -165,6 +165,39 @@ handling is in place.
 
 ---
 
+## 2.2) Planned API: root‑system / Verlinde constructors
+
+The following API is planned for the **original** (root‑system based) modular
+data from Verlinde categories. This is **not implemented yet**; it is the next
+construction layer after the current database‑based pipeline.
+
+### Proposed constructors
+
+- `VerlindeModularData(type, rank, level)`
+  - Example: `VerlindeModularData("A", 2, k)` for `SU(3)_k`.
+- `VerlindeModularDataByLieAlgebra(L, level)`
+  - `L` is a semisimple Lie algebra in GAP.
+- `VerlindeModularDataByRootSystem(R, level)`
+  - `R` is a root system in GAP.
+
+### Expected internal steps
+
+1. Build the root system / Weyl group (`RootSystem`, `WeylGroup`).
+2. Enumerate labels (dominant weights in the Weyl alcove).
+3. Compute `S` and `T` from Weyl‑group formulas (BK Theorem 3.3.20).
+4. Construct `ModularDataFromST(S, T, labels)` and validate.
+
+### GAP helpers likely needed (from Chapter 64)
+
+- `SimpleLieAlgebra`, `RootSystem`
+- `WeylGroup`, `SparseCartanMatrix`, `ApplySimpleReflection`
+- `DominantWeights`, `DominantCharacter` (for label enumeration)
+
+Once this layer is implemented, it can feed into **zesting** as a second‑stage
+modifier of modular data.
+
+---
+
 ## FAQ
 
 **Q: Why does the database not store the `S`-matrix?**  
