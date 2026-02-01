@@ -154,6 +154,33 @@ FusionRing
           <Item><C>makeImmutable</C>: true/false to finalize as immutable.</Item>
         </List>
       </Section>
+
+      <Section>
+        <Heading>ModularData (Quick API)</Heading>
+        <ManSection>
+          <Func Name="ModularData" Arg="rec | S, T[, labels]"/>
+          <Func Name="ModularDataFromNsdRecord" Arg="rec"/>
+          <Func Name="ModularDataFromST" Arg="S, T[, labels]"/>
+          <Func Name="ValidateModularData" Arg="md[, level]"/>
+          <Func Name="LoadNsdGOL" Arg="rank"/>
+          <Func Name="GetModularData" Arg="rank, iGO, iMD"/>
+          <Func Name="FusionRingFromModularData" Arg="md"/>
+          <Attr Name="SMatrix" Arg="md"/>
+          <Attr Name="TMatrix" Arg="md"/>
+          <Attr Name="MDLabels" Arg="md"/>
+          <Attr Name="MDSpins" Arg="md"/>
+          <Attr Name="MDTwists" Arg="md"/>
+          <Attr Name="MDQuantumDimensions" Arg="md"/>
+          <Attr Name="MDGlobalDimensionSquared" Arg="md"/>
+          <Attr Name="MDFusionCoefficients" Arg="md"/>
+          <Attr Name="MDOrderT" Arg="md"/>
+          <Description>
+            Modular data support (rank ≤ 12 database, reconstruction via balancing
+            equation, and validation levels 1–7). See the full technical guide in
+            <C>doc/modular_data.md</C>.
+          </Description>
+        </ManSection>
+      </Section>
     </Chapter>
 
     <Chapter Label="formats">
