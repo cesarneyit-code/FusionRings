@@ -92,3 +92,17 @@ If future sessions need manual excerpts
 Please provide:
 - Relevant chapter/section from GAP manual (e.g., packages, GAPDoc, objects)
 - Any error message line numbers for XML or GAPDoc parsing
+
+Future Roadmap (user-defined)
+-----------------------------
+1) Modular data layer
+   - Define ModularData object built on top of a FusionRing.
+   - Load/import modular data from Rowell's paper (format to be specified).
+
+2) Computations from fusion rings and modular data
+   - Implement functions for invariants and constructions derived from FusionRing.
+   - Extend to computations that use ModularData (S/T matrices, etc.).
+
+3) Zestings
+   - Describe and implement construction of zestings.
+   - Load zestings from the Mora & Galindo paper (format to be specified).
