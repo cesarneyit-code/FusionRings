@@ -21,6 +21,13 @@ Roadmap:
 - Root‑system/Verlinde constructors (original data from Lie theory)
 - Zesting layer on top of original modular data
 
+Planned constructors (stubs exist now):
+```
+VerlindeModularData("A", 2, k);
+VerlindeModularDataByLieAlgebra(L, k);
+VerlindeModularDataByRootSystem(R, k);
+```
+
 Single source of truth:
 ```
 pkg/FusionRings/doc/modular_data.md
