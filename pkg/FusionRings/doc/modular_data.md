@@ -201,7 +201,8 @@ Levels implemented:
 - **5**: FS indicator `nu_2` constraints.
 - **6**: partial field/Galois checks:
   - entries in `Q_N` (via `Conductor` when available),
-  - `Gal(Q_N)` permutes columns up to sign (via `GaloisCyc`).
+  - `Gal(Q_N)` permutes columns up to sign (via `GaloisMat` if available,
+    otherwise `GaloisCyc`).
 
 - **7**: Cauchy primes check using `Norm(D^2)` when available
   (falls back to rational case if `D^2` is rational).
@@ -233,6 +234,23 @@ Read("/Users/cesargalindo/Documents/FusionRings/run_tests_strict.g");
 ```
 
 ---
+
+## 5.1) Cyclotomics cheat-sheet (GAP)
+
+Useful functions for exact arithmetic and field checks:
+
+- `E(n)`: primitive `n`-th root of unity.
+- `IsCyclotomic(x)`: test cyclotomic.
+- `IsIntegralCyclotomic(x)`: cyclotomic integer test.
+- `Conductor(x)` / `Conductor(list)`: smallest `n` with `x in Q_n`.
+- `DenominatorCyc(x)`: smallest `m` with `m*x` cyclotomic integer.
+- `GaloisCyc(x, k)`: Galois conjugate by `k` (when `gcd(k,n)=1`).
+- `GaloisMat(mat)`: Galois orbits and generators for rows of a cyclotomic matrix.
+- `DefaultField(list)`: smallest cyclotomic field containing given elements.
+- `Norm(x)`: field norm (used for Cauchy condition in level 7).
+
+Performance note: cyclotomic arithmetic can be expensive at large conductors;
+prefer aggregate checks (e.g., `Conductor(Flat(S))`) when possible.
 
 ## 6) Usage examples
 

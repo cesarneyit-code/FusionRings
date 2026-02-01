@@ -150,7 +150,7 @@ InstallGlobalFunction(ModularData, function(arg)
 end );
 
 InstallGlobalFunction(ValidateModularData, function(arg)
-  local md, level, out, S, T, r, d, D2, I, ok, pplus, pminus, i, j, k, a, sum, Ncalc, Ndata, tmp, Nuse, theta, expected, dual, nu2, Nord, x, col, cols, used, b, match, g, sig, cond, normD2, primesD, primesN;
+  local md, level, out, S, T, r, d, D2, I, ok, pplus, pminus, i, j, k, a, sum, Ncalc, Ndata, tmp, Nuse, theta, expected, dual, nu2, Nord, x, col, cols, used, b, match, g, sig, cond, normD2, primesD, primesN, allCycS, allCycT, condS, condT, colsSigned, gm;
   if Length(arg) = 1 then
     md := arg[1];
     level := 3;
@@ -321,12 +321,14 @@ InstallGlobalFunction(ValidateModularData, function(arg)
   fi;
   Nord := MDOrderT(md);
   if IsBoundGlobal("Conductor") then
+    allCycS := true;
     for i in [1..r] do
       for j in [1..r] do
         x := S[i][j];
         if not IsCyclotomic(x) then
           out.ok := false;
           Add(out.failures, "S has non-cyclotomic entry");
+          allCycS := false;
           i := r; j := r;
           break;
         fi;
@@ -339,11 +341,20 @@ InstallGlobalFunction(ValidateModularData, function(arg)
         fi;
       od;
     od;
+    if allCycS then
+      condS := ValueGlobal("Conductor")(Flat(S));
+      if condS <> 0 and (Nord mod condS) <> 0 then
+        out.ok := false;
+        Add(out.failures, "S entries not contained in Q_N (aggregate check)");
+      fi;
+    fi;
+    allCycT := true;
     for i in [1..r] do
       x := T[i][i];
       if not IsCyclotomic(x) then
         out.ok := false;
         Add(out.failures, "T has non-cyclotomic entry");
+        allCycT := false;
         break;
       fi;
       cond := ValueGlobal("Conductor")(x);
@@ -353,9 +364,26 @@ InstallGlobalFunction(ValidateModularData, function(arg)
         break;
       fi;
     od;
+    if allCycT then
+      condT := ValueGlobal("Conductor")(List([1..r], i -> T[i][i]));
+      if condT <> 0 and (Nord mod condT) <> 0 then
+        out.ok := false;
+        Add(out.failures, "T entries not contained in Q_N (aggregate check)");
+      fi;
+    fi;
   fi;
-  if IsBoundGlobal("GaloisCyc") then
-    cols := List([1..r], a -> List([1..r], i -> S[i][a]));
+  cols := List([1..r], a -> List([1..r], i -> S[i][a]));
+  colsSigned := Concatenation(cols, List(cols, c -> List(c, x -> -x)));
+  if IsBoundGlobal("GaloisMat") then
+    gm := ValueGlobal("GaloisMat")(TransposedMat(S));
+    for a in [1..Length(gm.mat)] do
+      if Position(colsSigned, gm.mat[a]) = fail then
+        out.ok := false;
+        Add(out.failures, "Galois action does not permute columns (up to sign)");
+        break;
+      fi;
+    od;
+  elif IsBoundGlobal("GaloisCyc") then
     for g in [1..Nord] do
       if GcdInt(g, Nord) <> 1 then
         continue;
