@@ -1,0 +1,19 @@
+# GAP outputs
+*.o
+*.so
+*.dll
+*.dylib
+
+# GAPDoc build artifacts
+/doc/manual.six
+/doc/manual.toc
+/doc/manual.lab
+/doc/chap*.html
+/doc/manual.pdf
+
+# OS
+.DS_Store
+
+# Temporary
+*~
+*.swp

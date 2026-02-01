@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Book SYSTEM "gapdoc.dtd">
+<Book Name="FusionRings">
+  <Title>FusionRings</Title>
+  <Subtitle>Fusion rings as GAP objects</Subtitle>
+  <Version>0.1.0</Version>
+  <Date>2026-02-01</Date>
+
+  <TitlePage>
+    <Title>FusionRings</Title>
+    <Subtitle>Fusion rings as GAP objects</Subtitle>
+    <Version>0.1.0</Version>
+    <Date>2026-02-01</Date>
+  </TitlePage>
+
+  <TableOfContents/>
+
+  <Body>
+    <Chapter Label="intro">
+      <Heading>Introduction</Heading>
+      <Section>
+        <Heading>Overview</Heading>
+        <Para>
+          FusionRings provides GAP objects representing fusion rings with
+          label-based APIs, multiple internal representations, and validation
+          utilities.
+        </Para>
+      </Section>
+      <Section>
+        <Heading>Installation and Loading</Heading>
+        <Para>
+          If the package is installed in a GAP package directory, load it via
+          <C>LoadPackage("FusionRings")</C>.
+        </Para>
+        <Para>
+          For direct loading without GAP's package mechanism, use the helper
+          loader in <C>read_direct.g</C>:
+        </Para>
+        <Listing Type="Gap">
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+        </Listing>
+      </Section>
+      <Section>
+        <Heading>Quick Start</Heading>
+        <Listing Type="Gap">
+G := Group((1,2,3));;
+F := PointedFusionRing(G);;
+MultiplyBasis(F, (1,2,3), (1,2,3));
+FusionRings_TestAllStrict();
+        </Listing>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="api">
+      <Heading>API</Heading>
+      <Section>
+        <Heading>Constructors</Heading>
+        <ManSection>
+          <Func Name="FusionRing" Arg="I, one, dual, multOrData, opts"/>
+          <Func Name="FusionRingByRule" Arg="I, one, dual, mult, opts"/>
+          <Func Name="FusionRingBySparseConstants" Arg="I, one, dual, prodTable, opts"/>
+          <Func Name="FusionRingByFusionMatrices" Arg="labels, one, dual, fusionMatrices, opts"/>
+          <Func Name="PointedFusionRing" Arg="G"/>
+          <Func Name="CyclicPointedFusionRing" Arg="n"/>
+          <Func Name="FibonacciFusionRing" Arg=""/>
+          <Func Name="IsingFusionRing" Arg=""/>
+          <Func Name="TambaraYamagamiFusionRing" Arg="A"/>
+          <Func Name="NearGroupFusionRing" Arg="G, k"/>
+          <Attr Name="TYMLabel" Arg="F"/>
+          <Attr Name="NGRhoLabel" Arg="F"/>
+          <Description>
+            Constructors for fusion rings and the pointed fusion ring of a group.
+            See also <Ref Func="PointedFusionRing"/>.
+          </Description>
+        </ManSection>
+      </Section>
+      <Section>
+        <Heading>Core Operations</Heading>
+        <ManSection>
+          <Oper Name="MultiplyBasis" Arg="F, i, j"/>
+          <Oper Name="FusionCoefficient" Arg="F, i, j, k"/>
+          <Oper Name="DualLabel" Arg="F, i"/>
+          <Oper Name="FusionMatrix" Arg="F, i"/>
+          <Oper Name="CheckFusionRingAxioms" Arg="F, level"/>
+          <Description>
+            Basic algebraic operations and verification. See
+            <Ref Oper="MultiplyBasis"/> and <Ref Oper="CheckFusionRingAxioms"/>.
+          </Description>
+        </ManSection>
+      </Section>
+      <Section>
+        <Heading>Attributes and Indexing</Heading>
+        <ManSection>
+          <Attr Name="BasisLabels" Arg="F"/>
+          <Attr Name="OneLabel" Arg="F"/>
+          <Attr Name="DualData" Arg="F"/>
+          <Attr Name="RepresentationType" Arg="F"/>
+          <Attr Name="LabelsList" Arg="F"/>
+          <Attr Name="DualTable" Arg="F"/>
+          <Attr Name="FusionMatrices" Arg="F"/>
+          <Oper Name="PositionOfLabel" Arg="F, i"/>
+          <Oper Name="LabelOfPosition" Arg="F, p"/>
+          <Func Name="NormalizeProductList" Arg="list[, F]"/>
+          <Description>
+            Accessors and helpers for label sets, indexing, dual tables, and
+            fusion matrices.
+          </Description>
+        </ManSection>
+      </Section>
+      <Section>
+        <Heading>Testing Helpers</Heading>
+        <ManSection>
+          <Func Name="FusionRings_TestAll" Arg=""/>
+          <Func Name="FusionRings_TestAllStrict" Arg=""/>
+          <Func Name="FusionRings_RewriteTests" Arg=""/>
+          <Description>
+            Convenience wrappers for running and normalizing the package tests.
+          </Description>
+        </ManSection>
+      </Section>
+      <Section>
+        <Heading>Export / Import</Heading>
+        <ManSection>
+          <Func Name="FusionRingRecord" Arg="F"/>
+          <Func Name="FusionRingFromRecord" Arg="rec"/>
+          <Func Name="SaveFusionRing" Arg="filename, F"/>
+          <Func Name="LoadFusionRing" Arg="filename"/>
+          <Description>
+            Serialize and restore fusion rings in a GAP record format.
+            Rule-based representations are not serializable.
+          </Description>
+        </ManSection>
+      </Section>
+      <Section>
+        <Heading>Options</Heading>
+        <Para>
+          Constructors accept an optional record <C>opts</C> with fields:
+        </Para>
+        <List>
+          <Item><C>storeRepresentation</C>: "rule", "sparse", or "matrices".</Item>
+          <Item><C>check</C>: 0, 1, or 2 (verification level).</Item>
+          <Item><C>inferDual</C>: true/false to infer the dual when possible.</Item>
+          <Item><C>buildIndex</C>: true/false to build a labels index.</Item>
+          <Item><C>makeImmutable</C>: true/false to finalize as immutable.</Item>
+        </List>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="formats">
+      <Heading>Data Formats</Heading>
+      <Section>
+        <Heading>Product Lists</Heading>
+        <Para>
+          The product <C>i*j</C> is represented as a list of pairs
+          <C>[[k1,n1],[k2,n2],...]</C> with integer coefficients <C>ni &gt;= 0</C>.
+          The helper <C>NormalizeProductList</C> combines repeated terms and
+          removes zeros.
+        </Para>
+      </Section>
+      <Section>
+        <Heading>Sparse Table</Heading>
+        <Para>
+          The sparse table can be given as a list of triples
+          <C>[i, j, productList]</C>, or as a record keyed by pairs. See examples
+          in the tests.
+        </Para>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="reps">
+      <Heading>Representations and Performance</Heading>
+      <Section>
+        <Heading>Representations</Heading>
+        <List>
+          <Item><C>rule</C>: multiplication by function; minimal storage.</Item>
+          <Item><C>sparse</C>: explicit sparse products per pair.</Item>
+          <Item><C>matrices</C>: fusion matrices <C>N_i</C> stored explicitly.</Item>
+        </List>
+      </Section>
+      <Section>
+        <Heading>Performance Tips</Heading>
+        <List>
+          <Item>For large objects, prefer <C>sparse</C> or <C>matrices</C>.</Item>
+          <Item>Disable heavy checks with <C>check := 0</C> and use on-demand validation.</Item>
+          <Item>Keep <C>buildIndex := true</C> for faster label lookup.</Item>
+          <Item>Use <C>FusionMatrix</C> only when needed to avoid large allocations.</Item>
+        </List>
+      </Section>
+      <Section>
+        <Heading>Printing</Heading>
+        <Para>
+          Fusion rings have custom <C>ViewObj</C> and <C>PrintObj</C>
+          output to show representation, rank, and labels.
+        </Para>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="verification">
+      <Heading>Verification Levels</Heading>
+      <Section>
+        <Heading>CheckFusionRingAxioms</Heading>
+        <Para>
+          Levels:
+        </Para>
+        <List>
+          <Item><C>0</C>: internal consistency only (fast).</Item>
+          <Item><C>1</C>: unit, involution, Frobenius reciprocity, and basic dual checks.</Item>
+          <Item><C>2</C>: full associativity and Frobenius checks (expensive).</Item>
+        </List>
+        <Para>
+          For large rings, run level 0 or 1 during construction and reserve level 2
+          for small examples or dedicated validation runs.
+        </Para>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="design">
+      <Heading>Design Decisions</Heading>
+      <Section>
+        <Heading>Labels and Duality</Heading>
+        <List>
+          <Item>All public APIs use labels from <C>I</C>, not integer indices.</Item>
+          <Item>Duality is stored as part of the object and is always available.</Item>
+        </List>
+      </Section>
+      <Section>
+        <Heading>Immutability and Caches</Heading>
+        <List>
+          <Item>Objects are immutable after construction.</Item>
+          <Item>Derived data (dual table, matrices, labels list) are cached via attributes.</Item>
+        </List>
+      </Section>
+      <Section>
+        <Heading>Multiple Representations</Heading>
+        <List>
+          <Item>Rule-based, sparse, and matrices representations share one public API.</Item>
+          <Item>Internal indexing is optional and used for performance.</Item>
+        </List>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="roadmap">
+      <Heading>Limitations and Roadmap</Heading>
+      <Section>
+        <Heading>Current Limitations</Heading>
+        <List>
+          <Item>No modular data (S/T matrices) in this version.</Item>
+          <Item>Minimal pretty-printing; focus is on core algebra.</Item>
+          <Item>Associativity checks at level 2 can be expensive for large rings.</Item>
+        </List>
+      </Section>
+      <Section>
+        <Heading>Planned Extensions</Heading>
+        <List>
+          <Item>Modular data and categorical invariants.</Item>
+          <Item>Serialization/import/export tools.</Item>
+          <Item>Enhanced docs and examples.</Item>
+        </List>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="testing">
+      <Heading>Testing</Heading>
+      <Section>
+        <Heading>Running Tests</Heading>
+        <Para>
+          After loading via <C>read_direct.g</C>, use:
+        </Para>
+        <Listing Type="Gap">
+FusionRings_TestAll();
+        </Listing>
+        <Para>
+          This runs all <C>.tst</C> files in the package test directory.
+        </Para>
+        <Para>
+          For strict checking and normalized outputs:
+        </Para>
+        <Listing Type="Gap">
+FusionRings_RewriteTests();   # normalize outputs once per GAP install
+FusionRings_TestAllStrict();  # strict verification
+        </Listing>
+      </Section>
+      <Section>
+        <Heading>Test Suite Contents</Heading>
+        <List>
+          <Item><C>tst/test_pointed.tst</C>: pointed fusion ring basics.</Item>
+          <Item><C>tst/test_sparse.tst</C>: sparse representation (Z/2 example).</Item>
+          <Item><C>tst/test_matrices.tst</C>: matrices representation (Z/2 example).</Item>
+          <Item><C>tst/test_axioms2.tst</C>: level-2 axioms on small cases.</Item>
+          <Item><C>tst/test_families.tst</C>: Fibonacci/Ising/TY/cyclic constructors.</Item>
+          <Item><C>tst/test_neargroup.tst</C>: near-group (G+k) rules.</Item>
+          <Item><C>tst/test_export.tst</C>: save/load roundtrip.</Item>
+        </List>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="documentation">
+      <Heading>Building Documentation</Heading>
+      <Section>
+        <Heading>Manual Build</Heading>
+        <Para>
+          If GAP is available, build the manual by reading:
+        </Para>
+        <Listing Type="Gap">
+Read("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/doc/build_manual.g");
+        </Listing>
+        <Para>
+          This generates <C>manual.six</C>, <C>chap0.html</C>, and <C>manual.pdf</C>
+          (PDF requires a TeX installation).
+        </Para>
+      </Section>
+    </Chapter>
+
+    <Chapter Label="examples">
+      <Heading>Examples</Heading>
+      <Section>
+        <Heading>Z/2Z Pointed Ring</Heading>
+        <Listing Type="Gap">
+labels := [ "1", "x" ];;
+prodTable := [
+  [ "1", "1", [ [ "1", 1 ] ] ],
+  [ "1", "x", [ [ "x", 1 ] ] ],
+  [ "x", "1", [ [ "x", 1 ] ] ],
+  [ "x", "x", [ [ "1", 1 ] ] ]
+];;
+F := FusionRingBySparseConstants(labels, "1", [ "1", "x" ], prodTable, rec(check := 1));;
+MultiplyBasis(F, "x", "x");
+        </Listing>
+      </Section>
+      <Section>
+        <Heading>Fibonacci and Ising</Heading>
+        <Listing Type="Gap">
+F := FibonacciFusionRing();;
+MultiplyBasis(F, "x", "x");
+F := IsingFusionRing();;
+MultiplyBasis(F, "sigma", "sigma");
+        </Listing>
+      </Section>
+      <Section>
+        <Heading>Pointed Cyclic</Heading>
+        <Listing Type="Gap">
+F := CyclicPointedFusionRing(4);;
+CheckFusionRingAxioms(F, 1);
+        </Listing>
+      </Section>
+      <Section>
+        <Heading>Near-group (G + k)</Heading>
+        <Listing Type="Gap">
+G := CyclicGroup(3);;
+F := NearGroupFusionRing(G, 1);;
+rho := NGRhoLabel(F);;
+MultiplyBasis(F, rho, rho);
+        </Listing>
+      </Section>
+      <Section>
+        <Heading>Tambara–Yamagami</Heading>
+        <Listing Type="Gap">
+A := CyclicGroup(3);;
+F := TambaraYamagamiFusionRing(A);;
+m := TYMLabel(F);;
+m <> fail;
+MultiplyBasis(F, m, m);
+CheckFusionRingAxioms(F, 1);
+        </Listing>
+      </Section>
+    </Chapter>
+  </Body>
+</Book>
