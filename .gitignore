@@ -5,11 +5,14 @@
 *.dylib
 
 # GAPDoc build artifacts
-/doc/manual.six
-/doc/manual.toc
-/doc/manual.lab
-/doc/chap*.html
-/doc/manual.pdf
+pkg/FusionRings/doc/manual.six
+pkg/FusionRings/doc/manual.toc
+pkg/FusionRings/doc/manual.lab
+pkg/FusionRings/doc/chap*.html
+pkg/FusionRings/doc/chap*.txt
+pkg/FusionRings/doc/chap0.html
+pkg/FusionRings/doc/main.tex
+pkg/FusionRings/doc/manual.pdf
 
 # OS
 .DS_Store
