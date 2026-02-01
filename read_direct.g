@@ -19,10 +19,12 @@ end;
 #    Leemos los archivos .gd/.gi directamente para evitar ReadPackage.
 FusionRings_Load := function()
     FusionRings_Read("pkg/FusionRings/lib/FusionRing.gd");
+    FusionRings_Read("pkg/FusionRings/lib/ModularData.gd");
     FusionRings_Read("pkg/FusionRings/lib/FusionRing.gi");
     FusionRings_Read("pkg/FusionRings/lib/FusionRingRule.gi");
     FusionRings_Read("pkg/FusionRings/lib/FusionRingSparse.gi");
     FusionRings_Read("pkg/FusionRings/lib/FusionRingMatrices.gi");
+    FusionRings_Read("pkg/FusionRings/lib/ModularData.gi");
 end;
 
 FusionRings_Setup := function()
