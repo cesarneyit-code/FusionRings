@@ -9,6 +9,19 @@ Status
 MVP core (construction, multiply, dual, and consistency checks) is implemented.
 Documentation and extended features are planned.
 
+Modular Data (new)
+------------------
+FusionRings now includes a **ModularData** module with:
+- Admissible modular data specification (levels 1–7 validation)
+- Direct reconstruction of `S` from `(N, s, d)` via the balancing equation
+- Database access to the rank ≤ 12 catalog (`NsdGOL`)
+- Helpers to build a `FusionRing` from modular data
+
+Single source of truth:
+```
+pkg/FusionRings/doc/modular_data.md
+```
+
 Installation (development)
 --------------------------
 1) Copy or symlink this directory into a GAP package directory, e.g.
@@ -43,6 +56,17 @@ G := CyclicGroup(3);;
 F := TambaraYamagamiFusionRing(G);;
 F := NearGroupFusionRing(G, 1);;
 Display(F);
+```
+
+ModularData quick start:
+```
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+md := GetModularData(2, 1, 1);;
+S := SMatrix(md);;
+T := TMatrix(md);;
+ValidateModularData(md, 4);
+F := FusionRingFromModularData(md);;
+CheckFusionRingAxioms(F, 1);
 ```
 
 Example `Display(F)` output:
@@ -100,6 +124,8 @@ Normalize (once per GAP install):
 ```
 Read("/Users/cesargalindo/Documents/FusionRings/normalize_tests.g");
 ```
+
+ModularData tests are included in the same test suite.
 
 CI (local)
 ----------
