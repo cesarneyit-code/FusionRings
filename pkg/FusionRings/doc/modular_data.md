@@ -113,6 +113,26 @@ Each file defines a global `NsdGOL` list of **Galois orbits**. For indices
 **Efficient reconstruction:** given `(N, s, d)`, build `theta` from `s`, then
 reconstruct `S` using the balancing equation (no diagonalization).
 
+### Rigidity vs. ambiguity (in terms of the database)
+
+The database does **not** store `S` directly. This is intentional:
+
+- If you only know the fusion rules `N` (or even `N` and `T`), the modular data
+  is **not rigid**: you can permute labels, apply Galois conjugation, or change
+  spherical structure, producing distinct (but related) modular data.
+- The database resolves this by grouping entries into **Galois orbits**:
+  `NsdGOL[iGO]` is one orbit, and `NsdGOL[iGO][iMD]` are the different members
+  (each with its own `s` and `d`).
+- Once you **choose an entry** (i.e. fix `N`, `s`, and `d`), the balancing
+  equation determines `S` **uniquely** for that entry:
+
+```
+S_{ij} = sum_k N^k_{ij} * (theta_i * theta_j / theta_k) * d_k
+```
+
+So the ambiguity lives at the orbit level, while reconstruction is rigid at
+the entry level.
+
 ---
 
 ## 3) ModularData API
@@ -217,4 +237,3 @@ md := ModularDataFromNsdRecord(NsdGOL[1][1]);
 - **Balancing equation** is the fastest route to `S` from `(N, d, theta)`.
 - **Galois orbits** are preserved as metadata via the database structure.
 - **read_direct.g** has been extended to load `ModularData.gd/gi` for direct use.
-
