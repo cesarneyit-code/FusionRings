@@ -135,6 +135,36 @@ the entry level.
 
 ---
 
+## 2.1) Lie/Verlinde modular data (original, root systems)
+
+The paper `galindo.tex` (Lie/root-system based construction) describes how to
+build **original modular data** from Verlinde categories
+`C(g, k)` (quantum groups at roots of unity). This is distinct from **zesting**
+data (treated later in that paper). For the package, we currently target only
+the **original** modular data.
+
+Key ingredients (root-system formulation):
+
+- Choose a simple Lie algebra `g` and level `k > 0`.
+- Let `q = exp(pi i / (m (k + h^vee)))`, with `m` depending on the root system,
+  and `h^vee` the dual Coxeter number.
+- Simple objects are labeled by dominant weights in the Weyl alcove:
+  `Irr(C(g,k)) = { lambda in P_+ : <lambda, Theta> <= k }`,
+  where `Theta` is the highest root.
+- The modular matrices are given by Weyl-group sums:
+  - `S_{lambda,mu}` is a signed sum over the Weyl group `W` with phase
+    `q^{2 < < w(lambda+rho), mu+rho > > }`, normalized by the `rho`–`rho` sum.
+  - `T_{lambda,lambda} = q^{ < < lambda, lambda + 2 rho > > }`.
+
+These formulas are the basis for root-system/Verlinde modular data. They are
+the **input layer** for future constructors (root-system → `(S,T)` → `ModularData`).
+
+Zesting (braided/ribbon zesting) is **not implemented yet**; it will be added
+as a second layer on top of the original data once the cohomological parameter
+handling is in place.
+
+---
+
 ## FAQ
 
 **Q: Why does the database not store the `S`-matrix?**  
