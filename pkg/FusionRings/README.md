@@ -109,6 +109,19 @@ Run tests + build docs in one step:
 Read("/Users/cesargalindo/Documents/FusionRings/run_ci.g");
 ```
 
+Shell shortcuts (recommended)
+-----------------------------
+From the repo root you can run:
+
+```
+./bin/fr-test
+./bin/fr-test-strict
+./bin/fr-ci
+./bin/fr-doc
+```
+
+If you want them available globally, add the repo's `bin/` to your PATH.
+
 Test Suite Contents
 -------------------
 - `tst/test_pointed.tst`: pointed fusion ring (group-based) basics
