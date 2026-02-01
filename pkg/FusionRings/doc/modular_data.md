@@ -135,6 +135,24 @@ the entry level.
 
 ---
 
+## FAQ
+
+**Q: Why does the database not store the `S`-matrix?**  
+A: Because for each database entry, `S` is uniquely determined from
+`(N, s, d)` by the balancing equation. Storing `S` would duplicate data and
+risk inconsistency.
+
+**Q: Why are there multiple entries per rank / orbit?**  
+A: Modular data is not rigid under Galois action. The database groups entries
+into Galois orbits; each entry represents a distinct Galois conjugate (or a
+change of spherical structure) with its own `s` and `d`.
+
+**Q: If I only know `N`, can I reconstruct `S`?**  
+A: Not uniquely. You must choose a specific entry (i.e. fix `s` and `d`) from
+the database. Once you do, the balancing equation fixes `S` uniquely.
+
+---
+
 ## 3) ModularData API
 
 ### Constructors
