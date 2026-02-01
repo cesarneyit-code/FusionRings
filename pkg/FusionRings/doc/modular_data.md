@@ -206,6 +206,12 @@ Levels implemented:
 Planned:
 - **7**: full Cauchy primes in cyclotomic integers (non-rational case).
 
+### To do / Improvements
+
+- **Level 6 (full)**: construct the exact field `F_S = Q(S_ij)` and verify
+  `Gal(F_S/Q)` acts by permutations; check that `Gal(Q_N/F_S)` is a 2-group.
+  Current level 6 is a practical partial check.
+
 ---
 
 ## 5) Tests
