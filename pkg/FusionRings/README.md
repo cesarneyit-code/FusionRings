@@ -42,6 +42,16 @@ F := CyclicPointedFusionRing(4);;
 G := CyclicGroup(3);;
 F := TambaraYamagamiFusionRing(G);;
 F := NearGroupFusionRing(G, 1);;
+Display(F);
+```
+
+Example `Display(F)` output:
+```
+FusionRing
+  rep: rule
+  rank: 3
+  one: ()
+  labels: [ (), (1,2,3), (1,3,2) ]
 ```
 
 API (core)
@@ -100,6 +110,7 @@ Test Suite Contents
 - `tst/test_families.tst`: Fibonacci/Ising/TY/cyclic family constructors
 - `tst/test_neargroup.tst`: near-group (G+k) constructor and rules
 - `tst/test_export.tst`: save/load roundtrip for sparse rings
+- `tst/test_export_matrices.tst`: save/load roundtrip for matrices
 
 License
 -------

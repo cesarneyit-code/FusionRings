@@ -47,6 +47,15 @@ G := Group((1,2,3));;
 F := PointedFusionRing(G);;
 MultiplyBasis(F, (1,2,3), (1,2,3));
 FusionRings_TestAllStrict();
+Display(F);
+        </Listing>
+        <Para>Example output:</Para>
+        <Listing Type="plain">
+FusionRing
+  rep: rule
+  rank: 3
+  one: ()
+  labels: [ (), (1,2,3), (1,3,2) ]
         </Listing>
       </Section>
     </Chapter>
@@ -290,6 +299,7 @@ FusionRings_TestAllStrict();  # strict verification
           <Item><C>tst/test_families.tst</C>: Fibonacci/Ising/TY/cyclic constructors.</Item>
           <Item><C>tst/test_neargroup.tst</C>: near-group (G+k) rules.</Item>
           <Item><C>tst/test_export.tst</C>: save/load roundtrip.</Item>
+          <Item><C>tst/test_export_matrices.tst</C>: save/load roundtrip (matrices).</Item>
         </List>
       </Section>
     </Chapter>

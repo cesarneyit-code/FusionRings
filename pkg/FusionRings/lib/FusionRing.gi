@@ -156,6 +156,24 @@ InstallMethod(PrintObj, [ IsFusionRing ], function(F)
   Print("] )");
 end );
 
+InstallMethod(DisplayObj, [ IsFusionRing ], function(F)
+  local rep, labels, r, one;
+  rep := RepresentationType(F);
+  labels := LabelsList(F);
+  r := Length(labels);
+  one := OneLabel(F);
+  Print("FusionRing\n");
+  Print("  rep: ", rep, "\n");
+  Print("  rank: ", r, "\n");
+  Print("  one: ", one, "\n");
+  Print("  labels: ");
+  if r <= 12 then
+    Print(labels, "\n");
+  else
+    Print(labels{[1..10]}, " ...\n");
+  fi;
+end );
+
 
 InstallMethod(PositionOfLabel, [ IsFusionRing, IsObject ], function(F, i)
   local labels, pos;
