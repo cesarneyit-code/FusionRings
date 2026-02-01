@@ -101,6 +101,14 @@ Normalize (once per GAP install):
 Read("/Users/cesargalindo/Documents/FusionRings/normalize_tests.g");
 ```
 
+CI (local)
+----------
+Run tests + build docs in one step:
+
+```
+Read("/Users/cesargalindo/Documents/FusionRings/run_ci.g");
+```
+
 Test Suite Contents
 -------------------
 - `tst/test_pointed.tst`: pointed fusion ring (group-based) basics

@@ -471,6 +471,55 @@ InstallMethod(CheckFusionRingAxioms, [ IsFusionRing, IsInt ], function(F, level)
   return true;
 end );
 
+InstallGlobalFunction(CheckFusionRingAxiomsSample, function(F, level, samples)
+  local labels, r, pick, one, i, j, k, l, left, right, term, prod, di, s;
+  if not IsInt(samples) or samples <= 0 then
+    Error("samples must be a positive integer");
+  fi;
+  labels := LabelsList(F);
+  r := Length(labels);
+  pick := function()
+    return labels[Random([1..r])];
+  end;
+  one := OneLabel(F);
+  if level <= 0 then
+    return IsInternallyConsistent(F);
+  fi;
+  # Level 1 sampled checks
+  for s in [1..samples] do
+    i := pick();
+    j := pick();
+    k := pick();
+    di := DualLabel(F, i);
+    if MultiplyBasis(F, one, i) <> [ [ i, 1 ] ] then return false; fi;
+    if MultiplyBasis(F, i, one) <> [ [ i, 1 ] ] then return false; fi;
+    if DualLabel(F, di) <> i then return false; fi;
+    if FusionCoefficient(F, i, di, one) <> 1 then return false; fi;
+    # Frobenius reciprocity samples
+    if FusionCoefficient(F, i, j, k) <> FusionCoefficient(F, DualLabel(F, i), k, j) then
+      return false;
+    fi;
+    if FusionCoefficient(F, i, j, k) <> FusionCoefficient(F, k, DualLabel(F, j), i) then
+      return false;
+    fi;
+  od;
+  if level < 2 then
+    return true;
+  fi;
+  # Level 2 associativity samples
+  for s in [1..samples] do
+    i := pick();
+    j := pick();
+    l := pick();
+    left := FRMultiplyComboByLabel@(F, MultiplyBasis(F, i, j), l);
+    right := FRMultiplyLabelByCombo@(F, i, MultiplyBasis(F, j, l));
+    if left <> right then
+      return false;
+    fi;
+  od;
+  return true;
+end );
+
 BindGlobal("FRInferDual@", function(labels, one, mult)
   local dual, i, k, prod, c, found, term;
   dual := [];

@@ -57,3 +57,9 @@ FusionRings_RewriteTests := function()
         rec(exitGAP := false, rewriteToFile := true)
     );
 end;
+
+# Local CI helper (tests + docs)
+FusionRings_CI := function()
+    FusionRings_TestAllStrict();
+    Read("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/doc/build_manual.g");
+end;

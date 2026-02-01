@@ -90,6 +90,7 @@ FusionRing
           <Oper Name="DualLabel" Arg="F, i"/>
           <Oper Name="FusionMatrix" Arg="F, i"/>
           <Oper Name="CheckFusionRingAxioms" Arg="F, level"/>
+          <Func Name="CheckFusionRingAxiomsSample" Arg="F, level, samples"/>
           <Description>
             Basic algebraic operations and verification. See
             <Ref Oper="MultiplyBasis"/> and <Ref Oper="CheckFusionRingAxioms"/>.
@@ -225,6 +226,15 @@ FusionRing
           For large rings, run level 0 or 1 during construction and reserve level 2
           for small examples or dedicated validation runs.
         
+      </Section>
+      <Section>
+        <Heading>Sampled Checks</Heading>
+        <P/>
+        For large rings you may use <C>CheckFusionRingAxiomsSample</C> to test
+        randomly selected triples of labels.
+        <Listing Type="Gap">
+CheckFusionRingAxiomsSample(F, 2, 100);
+        </Listing>
       </Section>
     </Chapter>
 

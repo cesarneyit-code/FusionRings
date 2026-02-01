@@ -34,6 +34,7 @@ DeclareOperation("FusionMatrix", [ IsFusionRing, IsObject ]);
 DeclareAttribute("FusionMatrices", IsFusionRing);
 
 DeclareOperation("CheckFusionRingAxioms", [ IsFusionRing, IsInt ]);
+DeclareGlobalFunction("CheckFusionRingAxiomsSample");
 
 DeclareGlobalFunction("FusionRing");
 DeclareGlobalFunction("FusionRingByRule");
