@@ -17,6 +17,10 @@ FusionRings now includes a **ModularData** module with:
 - Database access to the rank ≤ 12 catalog (`NsdGOL`)
 - Helpers to build a `FusionRing` from modular data
 
+Roadmap:
+- Root‑system/Verlinde constructors (original data from Lie theory)
+- Zesting layer on top of original modular data
+
 Single source of truth:
 ```
 pkg/FusionRings/doc/modular_data.md
