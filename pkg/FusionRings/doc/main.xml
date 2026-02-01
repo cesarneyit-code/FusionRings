@@ -179,8 +179,9 @@ FusionRing
           <Attr Name="MDOrderT" Arg="md"/>
           <Description>
             Modular data support (rank ≤ 12 database, reconstruction via balancing
-            equation, and validation levels 1–7). See the full technical guide in
-            <C>doc/modular_data.md</C>.
+            equation, and validation levels 1–7). Verlinde constructors are
+            planned; currently <C>VerlindeModularData("A", 1, k)</C> implements
+            SU(2)_k. See the full technical guide in <C>doc/modular_data.md</C>.
           </Description>
         </ManSection>
       </Section>

@@ -184,6 +184,10 @@ These functions are currently **stubs** (they exist but raise a clear
 `not implemented yet` error). This is intentional to make the future roadmap
 visible in a fresh session.
 
+**Status (Phase 2):**
+- `VerlindeModularData("A", 1, k)` is implemented for SU(2)\_k (type A, rank 1).
+- All other types/ranks remain unimplemented and still raise the stub error.
+
 ### Expected internal steps
 
 1. Build the root system / Weyl group (`RootSystem`, `WeylGroup`).
@@ -199,6 +203,31 @@ visible in a fresh session.
 
 Once this layer is implemented, it can feed into **zesting** as a second‑stage
 modifier of modular data.
+
+---
+
+## 2.3) Implemented: SU(2)\_k (type A, rank 1)
+
+This is the first implemented case of the Verlinde/root‑system layer. For
+level `k >= 1`, the labels are `0..k`, and the S/T matrices are:
+
+```
+S_{a b} = ( q^{(a+1)(b+1)} - q^{-(a+1)(b+1)} ) / (q - q^{-1}),
+q = exp(pi i / (k + 2)).
+
+T_{a a} = exp( pi i * a(a+2) / (2(k+2)) ).
+```
+
+In GAP (cyclotomic form), this corresponds to:
+
+- `q = E(2*(k+2))` and `T_{a a} = E(4*(k+2))^(a*(a+2))`.
+
+Usage:
+
+```
+md := VerlindeModularData("A", 1, k);;
+ValidateModularData(md, 4);
+```
 
 ---
 

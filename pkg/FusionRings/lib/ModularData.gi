@@ -70,6 +70,30 @@ BindGlobal("MDSFromNsd@", function(N, d, theta)
   return S;
 end );
 
+BindGlobal("MDVerlindeSU2@", function(level)
+  local k, r, q, denom, S, T, a, b, exp, labels;
+  if not IsInt(level) or level < 1 then
+    Error("level must be a positive integer");
+  fi;
+  k := level;
+  r := k + 1;
+  q := E(2 * (k + 2)); # exp(pi i / (k+2))
+  denom := q - q^-1;
+  S := NullMat(r, r);
+  for a in [0..k] do
+    for b in [0..k] do
+      exp := (a + 1) * (b + 1);
+      S[a + 1][b + 1] := (q^exp - q^(-exp)) / denom;
+    od;
+  od;
+  T := NullMat(r, r);
+  for a in [0..k] do
+    T[a + 1][a + 1] := E(4 * (k + 2))^(a * (a + 2));
+  od;
+  labels := [0..k];
+  return ModularDataFromST(S, T, labels);
+end );
+
 InstallMethod(SMatrix, [ IsModularData ], F -> F!.S );
 InstallMethod(TMatrix, [ IsModularData ], F -> F!.T );
 InstallMethod(MDLabels, [ IsModularData ], F -> F!.labels );
@@ -506,7 +530,19 @@ end );
 
 # Roadmap stubs: Lie/root-system Verlinde modular data constructors
 InstallGlobalFunction(VerlindeModularData, function(type, rank, level)
-  Error("VerlindeModularData not implemented yet. See doc/modular_data.md (planned API).");
+  local t;
+  if not IsString(type) then
+    Error("type must be a string (e.g. \"A\")");
+  fi;
+  if not IsInt(rank) or rank < 1 then
+    Error("rank must be a positive integer");
+  fi;
+  t := UppercaseString(type);
+  if t = "A" and rank = 1 then
+    return MDVerlindeSU2@(level);
+  fi;
+  Error("VerlindeModularData not implemented yet for type ", t, " rank ", rank,
+        ". See doc/modular_data.md (planned API).");
 end );
 
 InstallGlobalFunction(VerlindeModularDataByLieAlgebra, function(L, level)
