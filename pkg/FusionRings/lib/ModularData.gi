@@ -477,3 +477,29 @@ InstallGlobalFunction(GetModularData, function(rank, iGO, iMD)
   fi;
   return ModularDataFromNsdRecord(nsd[iGO][iMD]);
 end );
+
+InstallGlobalFunction(FusionRingFromModularData, function(md)
+  local N, r, labels, prodTable, i, j, k, terms;
+  if not IsModularData(md) then
+    Error("FusionRingFromModularData expects a ModularData object");
+  fi;
+  N := MDFusionCoefficients(md);
+  if N = fail then
+    Error("FusionRingFromModularData requires fusion coefficients (N)");
+  fi;
+  r := Length(N);
+  labels := [1..r];
+  prodTable := [];
+  for i in [1..r] do
+    for j in [1..r] do
+      terms := [];
+      for k in [1..r] do
+        if N[i][j][k] <> 0 then
+          Add(terms, [ labels[k], N[i][j][k] ]);
+        fi;
+      od;
+      Add(prodTable, [ labels[i], labels[j], terms ]);
+    od;
+  od;
+  return FusionRingBySparseConstants(labels, 1, fail, prodTable, rec(check := 0, inferDual := true));
+end );

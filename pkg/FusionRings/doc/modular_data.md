@@ -182,6 +182,8 @@ the database. Once you do, the balancing equation fixes `S` uniquely.
   - Loads the database file for a given rank.
 - `GetModularData(rank, iGO, iMD)`
   - Returns a `ModularData` object for the specified entry.
+- `FusionRingFromModularData(md)`
+  - Builds a `FusionRing` from the fusion coefficients stored in `md`.
 
 ---
 

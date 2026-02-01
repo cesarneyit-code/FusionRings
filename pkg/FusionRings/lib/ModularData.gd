@@ -20,3 +20,4 @@ DeclareGlobalFunction("ModularDataFromNsdRecord");
 DeclareGlobalFunction("ValidateModularData");
 DeclareGlobalFunction("LoadNsdGOL");
 DeclareGlobalFunction("GetModularData");
+DeclareGlobalFunction("FusionRingFromModularData");
