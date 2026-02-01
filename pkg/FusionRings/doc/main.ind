@@ -95,5 +95,8 @@
   \indexspace
 
   \item \texttt  {ValidateModularData}, \hyperpage{7}
+  \item \texttt  {VerlindeModularData}, \hyperpage{7}
+  \item \texttt  {VerlindeModularDataByLieAlgebra}, \hyperpage{7}
+  \item \texttt  {VerlindeModularDataByRootSystem}, \hyperpage{7}
 
 \end{theindex}

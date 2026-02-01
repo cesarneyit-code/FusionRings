@@ -180,6 +180,10 @@ construction layer after the current database‑based pipeline.
 - `VerlindeModularDataByRootSystem(R, level)`
   - `R` is a root system in GAP.
 
+These functions are currently **stubs** (they exist but raise a clear
+`not implemented yet` error). This is intentional to make the future roadmap
+visible in a fresh session.
+
 ### Expected internal steps
 
 1. Build the root system / Weyl group (`RootSystem`, `WeylGroup`).

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.10)  1 FEB 2026 15:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.10)  1 FEB 2026 15:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -490,7 +490,7 @@ LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 3
 (/usr/local/texlive/2023/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [6]
-Underfull \hbox (badness 10000) in paragraph at lines 388--436
+Underfull \hbox (badness 10000) in paragraph at lines 388--445
 
  []
 
@@ -525,10 +525,10 @@ Chapter 9.
 ]
 Chapter 10.
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 738.
+(Font)              Font shape `T1/cmtt/m/n' tried instead on input line 747.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\char' on input line 738.
+(hyperref)                removing `\char' on input line 747.
 
 [15
 
@@ -537,10 +537,10 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: B1FE2FB684C7496D559DDC46668BE7CA;5413.
  ) 
 Here is how much of TeX's memory you used:
- 10580 strings out of 476025
- 166627 string characters out of 5790017
+ 10583 strings out of 476025
+ 166714 string characters out of 5790017
  1861388 words of memory out of 5000000
- 30765 multiletter control sequences out of 15000+600000
+ 30768 multiletter control sequences out of 15000+600000
  563792 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  90i,6n,90p,277b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -553,7 +553,7 @@ local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sftt1440.pfb></usr/lo
 cal/texlive/2023/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texliv
 e/2023/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2023/tex
 mf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (16 pages, 197804 bytes).
+Output written on main.pdf (16 pages, 198812 bytes).
 PDF statistics:
  403 PDF objects out of 1000 (max. 8388607)
  363 compressed objects within 4 object streams

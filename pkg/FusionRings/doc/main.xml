@@ -165,6 +165,9 @@ FusionRing
           <Func Name="LoadNsdGOL" Arg="rank"/>
           <Func Name="GetModularData" Arg="rank, iGO, iMD"/>
           <Func Name="FusionRingFromModularData" Arg="md"/>
+          <Func Name="VerlindeModularData" Arg="type, rank, level"/>
+          <Func Name="VerlindeModularDataByLieAlgebra" Arg="L, level"/>
+          <Func Name="VerlindeModularDataByRootSystem" Arg="R, level"/>
           <Attr Name="SMatrix" Arg="md"/>
           <Attr Name="TMatrix" Arg="md"/>
           <Attr Name="MDLabels" Arg="md"/>

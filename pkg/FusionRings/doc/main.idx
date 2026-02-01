@@ -40,6 +40,9 @@
 \indexentry{LoadNsdGOL@\texttt  {LoadNsdGOL}|hyperpage}{7}
 \indexentry{GetModularData@\texttt  {GetModularData}|hyperpage}{7}
 \indexentry{FusionRingFromModularData@\texttt  {FusionRingFromModularData}|hyperpage}{7}
+\indexentry{VerlindeModularData@\texttt  {VerlindeModularData}|hyperpage}{7}
+\indexentry{VerlindeModularDataByLieAlgebra@\texttt  {VerlindeModularDataByLieAlgebra}|hyperpage}{7}
+\indexentry{VerlindeModularDataByRootSystem@\texttt  {VerlindeModularDataByRootSystem}|hyperpage}{7}
 \indexentry{SMatrix@\texttt  {SMatrix}|hyperpage}{7}
 \indexentry{TMatrix@\texttt  {TMatrix}|hyperpage}{7}
 \indexentry{MDLabels@\texttt  {MDLabels}|hyperpage}{7}

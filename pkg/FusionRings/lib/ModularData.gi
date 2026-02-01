@@ -503,3 +503,16 @@ InstallGlobalFunction(FusionRingFromModularData, function(md)
   od;
   return FusionRingBySparseConstants(labels, 1, fail, prodTable, rec(check := 0, inferDual := true));
 end );
+
+# Roadmap stubs: Lie/root-system Verlinde modular data constructors
+InstallGlobalFunction(VerlindeModularData, function(type, rank, level)
+  Error("VerlindeModularData not implemented yet. See doc/modular_data.md (planned API).");
+end );
+
+InstallGlobalFunction(VerlindeModularDataByLieAlgebra, function(L, level)
+  Error("VerlindeModularDataByLieAlgebra not implemented yet. See doc/modular_data.md (planned API).");
+end );
+
+InstallGlobalFunction(VerlindeModularDataByRootSystem, function(R, level)
+  Error("VerlindeModularDataByRootSystem not implemented yet. See doc/modular_data.md (planned API).");
+end );
