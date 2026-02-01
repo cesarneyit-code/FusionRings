@@ -38,7 +38,7 @@ FusionRings_Setup();
 FusionRings_TestAll := function()
     return TestDirectory(
         [ "/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/tst" ],
-        rec(exitGAP := false, testOptions := rec(compareFunction := "uptonl"))
+        rec(exitGAP := false, testOptions := rec(compareFunction := "uptowhitespace"))
     );
 end;
 
@@ -46,7 +46,7 @@ end;
 FusionRings_TestAllStrict := function()
     return TestDirectory(
         [ "/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/tst" ],
-        rec(exitGAP := false)
+        rec(exitGAP := false, testOptions := rec(compareFunction := "uptonl"))
     );
 end;
 

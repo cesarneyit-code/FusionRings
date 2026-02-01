@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Book SYSTEM "gapdoc.dtd">
 <Book Name="FusionRings">
-  <Title>FusionRings</Title>
-  <Subtitle>Fusion rings as GAP objects</Subtitle>
-  <Version>0.1.0</Version>
-  <Date>2026-02-01</Date>
-
   <TitlePage>
     <Title>FusionRings</Title>
     <Subtitle>Fusion rings as GAP objects</Subtitle>
@@ -20,22 +15,25 @@
       <Heading>Introduction</Heading>
       <Section>
         <Heading>Overview</Heading>
-        <Para>
+        <P/>
+
           FusionRings provides GAP objects representing fusion rings with
           label-based APIs, multiple internal representations, and validation
           utilities.
-        </Para>
+        
       </Section>
       <Section>
         <Heading>Installation and Loading</Heading>
-        <Para>
+        <P/>
+
           If the package is installed in a GAP package directory, load it via
           <C>LoadPackage("FusionRings")</C>.
-        </Para>
-        <Para>
+        
+        <P/>
+
           For direct loading without GAP's package mechanism, use the helper
           loader in <C>read_direct.g</C>:
-        </Para>
+        
         <Listing Type="Gap">
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
         </Listing>
@@ -49,7 +47,8 @@ MultiplyBasis(F, (1,2,3), (1,2,3));
 FusionRings_TestAllStrict();
 Display(F);
         </Listing>
-        <Para>Example output:</Para>
+        <P/>
+Example output:
         <Listing Type="plain">
 FusionRing
   rep: rule
@@ -142,9 +141,10 @@ FusionRing
       </Section>
       <Section>
         <Heading>Options</Heading>
-        <Para>
+        <P/>
+
           Constructors accept an optional record <C>opts</C> with fields:
-        </Para>
+        
         <List>
           <Item><C>storeRepresentation</C>: "rule", "sparse", or "matrices".</Item>
           <Item><C>check</C>: 0, 1, or 2 (verification level).</Item>
@@ -159,20 +159,22 @@ FusionRing
       <Heading>Data Formats</Heading>
       <Section>
         <Heading>Product Lists</Heading>
-        <Para>
+        <P/>
+
           The product <C>i*j</C> is represented as a list of pairs
           <C>[[k1,n1],[k2,n2],...]</C> with integer coefficients <C>ni &gt;= 0</C>.
           The helper <C>NormalizeProductList</C> combines repeated terms and
           removes zeros.
-        </Para>
+        
       </Section>
       <Section>
         <Heading>Sparse Table</Heading>
-        <Para>
+        <P/>
+
           The sparse table can be given as a list of triples
           <C>[i, j, productList]</C>, or as a record keyed by pairs. See examples
           in the tests.
-        </Para>
+        
       </Section>
     </Chapter>
 
@@ -197,10 +199,11 @@ FusionRing
       </Section>
       <Section>
         <Heading>Printing</Heading>
-        <Para>
+        <P/>
+
           Fusion rings have custom <C>ViewObj</C> and <C>PrintObj</C>
           output to show representation, rank, and labels.
-        </Para>
+        
       </Section>
     </Chapter>
 
@@ -208,18 +211,20 @@ FusionRing
       <Heading>Verification Levels</Heading>
       <Section>
         <Heading>CheckFusionRingAxioms</Heading>
-        <Para>
+        <P/>
+
           Levels:
-        </Para>
+        
         <List>
           <Item><C>0</C>: internal consistency only (fast).</Item>
           <Item><C>1</C>: unit, involution, Frobenius reciprocity, and basic dual checks.</Item>
           <Item><C>2</C>: full associativity and Frobenius checks (expensive).</Item>
         </List>
-        <Para>
+        <P/>
+
           For large rings, run level 0 or 1 during construction and reserve level 2
           for small examples or dedicated validation runs.
-        </Para>
+        
       </Section>
     </Chapter>
 
@@ -272,21 +277,24 @@ FusionRing
       <Heading>Testing</Heading>
       <Section>
         <Heading>Running Tests</Heading>
-        <Para>
+        <P/>
+
           After loading via <C>read_direct.g</C>, use:
-        </Para>
+        
         <Listing Type="Gap">
 FusionRings_TestAll();
         </Listing>
-        <Para>
+        <P/>
+
           This runs all <C>.tst</C> files in the package test directory.
-        </Para>
-        <Para>
+        
+        <P/>
+
           For strict checking and normalized outputs:
-        </Para>
+        
         <Listing Type="Gap">
 FusionRings_RewriteTests();   # normalize outputs once per GAP install
-FusionRings_TestAllStrict();  # strict verification
+FusionRings_TestAllStrict();  # strict (ignores newline-only diffs)
         </Listing>
       </Section>
       <Section>
@@ -308,16 +316,18 @@ FusionRings_TestAllStrict();  # strict verification
       <Heading>Building Documentation</Heading>
       <Section>
         <Heading>Manual Build</Heading>
-        <Para>
+        <P/>
+
           If GAP is available, build the manual by reading:
-        </Para>
+        
         <Listing Type="Gap">
 Read("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/doc/build_manual.g");
         </Listing>
-        <Para>
+        <P/>
+
           This generates <C>manual.six</C>, <C>chap0.html</C>, and <C>manual.pdf</C>
           (PDF requires a TeX installation).
-        </Para>
+        
       </Section>
     </Chapter>
 
@@ -368,7 +378,7 @@ MultiplyBasis(F, rho, rho);
 A := CyclicGroup(3);;
 F := TambaraYamagamiFusionRing(A);;
 m := TYMLabel(F);;
-m <> fail;
+m &lt;&gt; fail;
 MultiplyBasis(F, m, m);
 CheckFusionRingAxioms(F, 1);
         </Listing>

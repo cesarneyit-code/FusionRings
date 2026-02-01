@@ -72,13 +72,13 @@ Recommended workflow:
 ```
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
 FusionRings_RewriteTests();   # normalize outputs once per GAP install
-FusionRings_TestAllStrict();  # strict verification
+FusionRings_TestAllStrict();  # strict (ignores newline-only diffs)
 ```
 
 If your GAP installation has newline/output quirks, use:
 
 ```
-FusionRings_TestAll();        # tolerant comparison (uptonl)
+FusionRings_TestAll();        # tolerant comparison (uptowhitespace)
 ```
 
 Shortcuts

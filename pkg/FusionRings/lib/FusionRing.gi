@@ -156,7 +156,7 @@ InstallMethod(PrintObj, [ IsFusionRing ], function(F)
   Print("] )");
 end );
 
-InstallMethod(DisplayObj, [ IsFusionRing ], function(F)
+InstallMethod(Display, [ IsFusionRing ], function(F)
   local rep, labels, r, one;
   rep := RepresentationType(F);
   labels := LabelsList(F);
