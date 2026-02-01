@@ -214,6 +214,8 @@ Levels implemented:
 - **Level 6 (full)**: construct the exact field `F_S = Q(S_ij)` and verify
   `Gal(F_S/Q)` acts by permutations; check that `Gal(Q_N/F_S)` is a 2-group.
   Current level 6 is a practical partial check.
+- **Level 7 (full)**: Cauchy primes via cyclotomic integer norms for all cases,
+  independent of the availability of `Norm` or rationality shortcuts.
 
 ---
 
@@ -228,11 +230,31 @@ ModularData tests live in `pkg/FusionRings/tst/`:
 - `test_modulardata_cauchy.tst`: Cauchy primes in rational case.
 - `test_modulardata_validate*.tst`: validator levels 1–7.
 - `test_modulardata_loader.tst`: database loader helpers.
+- `test_modulardata_rank3.tst`: rank‑3 regression (level 4 + fusion ring axioms).
+- `test_modulardata_rank4.tst`: rank‑4 regression (level 4 + fusion ring axioms).
+- `test_modulardata_rank5.tst`: rank‑5 regression (level 4 + fusion ring axioms).
+
+### Running tests
 
 Run all tests (strict):
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/run_tests_strict.g");
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+FusionRings_TestAllStrict();
+```
+
+Run a single test:
+
+```
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+Test("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/tst/test_modulardata_rank5.tst");
+```
+
+Run with tolerant comparison (newline quirks):
+
+```
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+FusionRings_TestAll();
 ```
 
 ---
