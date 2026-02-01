@@ -150,7 +150,7 @@ InstallGlobalFunction(ModularData, function(arg)
 end );
 
 InstallGlobalFunction(ValidateModularData, function(arg)
-  local md, level, out, S, T, r, d, D2, I, ok, pplus, pminus, i, j, k, a, sum, Ncalc, Ndata, tmp, Nuse, theta, expected, dual, nu2, Nord, x, col, cols, used, b, match, g, sig, cond;
+  local md, level, out, S, T, r, d, D2, I, ok, pplus, pminus, i, j, k, a, sum, Ncalc, Ndata, tmp, Nuse, theta, expected, dual, nu2, Nord, x, col, cols, used, b, match, g, sig, cond, normD2, primesD, primesN;
   if Length(arg) = 1 then
     md := arg[1];
     level := 3;
@@ -386,6 +386,34 @@ InstallGlobalFunction(ValidateModularData, function(arg)
       fi;
     od;
   fi;
+  if level < 7 then
+    return out;
+  fi;
+  primesN := Set(FactorsInt(Nord));
+  if IsRat(D2) then
+    primesD := Set(FactorsInt(AbsInt(NumeratorRat(D2))));
+    if primesD <> primesN then
+      out.ok := false;
+      Add(out.failures, "Cauchy primes mismatch (rational D2)");
+    fi;
+    return out;
+  fi;
+  if IsBoundGlobal("Norm") then
+    normD2 := ValueGlobal("Norm")(D2);
+    if not IsRat(normD2) then
+      out.ok := false;
+      Add(out.failures, "Cauchy check failed: norm(D2) not rational");
+      return out;
+    fi;
+    primesD := Set(FactorsInt(AbsInt(NumeratorRat(normD2))));
+    if primesD <> primesN then
+      out.ok := false;
+      Add(out.failures, "Cauchy primes mismatch (cyclotomic D2)");
+    fi;
+    return out;
+  fi;
+  out.ok := false;
+  Add(out.failures, "Cauchy check unavailable: Norm not bound");
   return out;
 end );
 

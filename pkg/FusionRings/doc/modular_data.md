@@ -203,8 +203,8 @@ Levels implemented:
   - entries in `Q_N` (via `Conductor` when available),
   - `Gal(Q_N)` permutes columns up to sign (via `GaloisCyc`).
 
-Planned:
-- **7**: full Cauchy primes in cyclotomic integers (non-rational case).
+- **7**: Cauchy primes check using `Norm(D^2)` when available
+  (falls back to rational case if `D^2` is rational).
 
 ### To do / Improvements
 
@@ -223,7 +223,7 @@ ModularData tests live in `pkg/FusionRings/tst/`:
 - `test_modulardata_gauss.tst`: Gauss sums + `(ST)^3 = p_+ S^2`.
 - `test_modulardata_fs.tst`: `nu_2` constraints.
 - `test_modulardata_cauchy.tst`: Cauchy primes in rational case.
-- `test_modulardata_validate*.tst`: validator levels 1–6.
+- `test_modulardata_validate*.tst`: validator levels 1–7.
 - `test_modulardata_loader.tst`: database loader helpers.
 
 Run all tests (strict):
