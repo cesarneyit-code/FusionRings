@@ -100,3 +100,5 @@ DeclareOperation("AreEquivalentFusionModules", [ IsFusionModule, IsFusionModule 
 DeclareAttribute("FusionModuleComponents", IsFusionModule);
 DeclareGlobalFunction("FusionModuleByActionMatrices");
 DeclareGlobalFunction("FusionModuleGraph");
+DeclareAttribute("CanonicalFusionModule", IsFusionRing);
+DeclareOperation("FusionSubmoduleByObject", [ IsFusionRing, IsObject ]);

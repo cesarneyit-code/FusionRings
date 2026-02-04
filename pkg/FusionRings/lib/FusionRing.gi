@@ -645,6 +645,17 @@ InstallGlobalFunction(FusionModuleGraph, function(arg)
   );
 end );
 
+InstallMethod(CanonicalFusionModule, [ IsFusionRing ], function(F)
+  return FusionModuleByActionMatrices(F, LabelsList(F), FusionMatrices(F), rec(check := 1));
+end );
+
+InstallMethod(FusionSubmoduleByObject, [ IsFusionRing, IsObject ], function(F, i)
+  if PositionOfLabel(F, i) = fail then
+    Error("FusionSubmoduleByObject: object label not found in fusion ring");
+  fi;
+  return FusionSubmoduleByGenerators(CanonicalFusionModule(F), [ i ]);
+end );
+
 
 InstallMethod(PositionOfLabel, [ IsFusionRing, IsObject ], function(F, i)
   local labels, pos;

@@ -64,4 +64,19 @@ gap> Gcomb.mode;
 gap> Gcomb.edges;
 [ [ "m1", "m1", 2 ], [ "m2", "m2", 2 ] ]
 
+gap> Fi := IsingFusionRing();;
+
+gap> CM := CanonicalFusionModule(Fi);;
+
+gap> ModuleBasisLabels(CM) = LabelsList(Fi);
+true
+
+gap> ActionOnBasis(CM, "sigma", "sigma");
+[ [ "1", 1 ], [ "psi", 1 ] ]
+
+gap> Sobj := FusionSubmoduleByObject(Fi, "sigma");;
+
+gap> ModuleBasisLabels(Sobj);
+[ "1", "psi", "sigma" ]
+
 gap> STOP_TEST("FusionRings-modules");

@@ -234,3 +234,23 @@ Expected output:
 "combined-undirected"
 [ [ "m1", "m1", 2 ], [ "m2", "m2", 2 ] ]
 ```
+
+Canonical module of a fusion ring and cyclic submodule from one object:
+
+```gap
+Fi := IsingFusionRing();;
+CM := CanonicalFusionModule(Fi);;
+ModuleBasisLabels(CM) = LabelsList(Fi);
+ActionOnBasis(CM, "sigma", "sigma");
+
+Sobj := FusionSubmoduleByObject(Fi, "sigma");;
+ModuleBasisLabels(Sobj);
+```
+
+Expected output:
+
+```text
+true
+[ [ "1", 1 ], [ "psi", 1 ] ]
+[ "1", "psi", "sigma" ]
+```
