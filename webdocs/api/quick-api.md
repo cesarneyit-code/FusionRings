@@ -30,6 +30,9 @@
 - `FusionSubringLatticeSmall(F[, maxRank])`
 - `CanonicalPointedSubring(F)`
 - `AdjointSubring(F)`
+- `UniversalGradingData(F)`
+- `UniversalGradingComponent(F, i)`
+- `UniversalGradingOrder(F)`
 - `IsIntegralFusionRing(F)`
 - `IsWeaklyIntegralFusionRing(F)`
 

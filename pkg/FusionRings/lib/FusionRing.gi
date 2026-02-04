@@ -1461,6 +1461,109 @@ InstallMethod(AdjointSubring, [ IsFusionRing ], function(F)
   return FusionSubring(F, cur);
 end );
 
+InstallMethod(UniversalGradingData, [ IsFusionRing ], function(F)
+  local labels, r, adjLabels, neigh, a, x, y, prod, term, seen, compsPos, q, head, v,
+        compOfPos, i, c, reps, mult, compSet, oneComp, isGroup;
+  labels := LabelsList(F);
+  r := Length(labels);
+  if r = 0 then
+    return rec(components := [], one := fail, multiplication := [], isGroup := false);
+  fi;
+  adjLabels := LabelsList(AdjointSubring(F));
+  neigh := List([1..r], i -> []);
+  for a in adjLabels do
+    for x in labels do
+      prod := MultiplyBasis(F, a, x);
+      for term in prod do
+        y := term[1];
+        i := PositionOfLabel(F, x);
+        c := PositionOfLabel(F, y);
+        if i <> fail and c <> fail then
+          if not c in neigh[i] then Add(neigh[i], c); fi;
+          if not i in neigh[c] then Add(neigh[c], i); fi;
+        fi;
+      od;
+    od;
+  od;
+
+  seen := List([1..r], i -> false);
+  compsPos := [];
+  for v in [1..r] do
+    if not seen[v] then
+      q := [ v ];
+      seen[v] := true;
+      head := 1;
+      c := [];
+      while head <= Length(q) do
+        x := q[head];
+        head := head + 1;
+        Add(c, x);
+        for y in neigh[x] do
+          if not seen[y] then
+            seen[y] := true;
+            Add(q, y);
+          fi;
+        od;
+      od;
+      Sort(c);
+      Add(compsPos, c);
+    fi;
+  od;
+  SortBy(compsPos, C -> C[1]);
+
+  compOfPos := List([1..r], i -> 0);
+  for i in [1..Length(compsPos)] do
+    for c in compsPos[i] do
+      compOfPos[c] := i;
+    od;
+  od;
+
+  reps := List(compsPos, C -> labels[C[1]]);
+  mult := List([1..Length(compsPos)], i -> List([1..Length(compsPos)], j -> 0));
+  for i in [1..Length(compsPos)] do
+    for c in [1..Length(compsPos)] do
+      prod := MultiplyBasis(F, reps[i], reps[c]);
+      compSet := Set(List(prod, t -> compOfPos[PositionOfLabel(F, t[1])]));
+      if Length(compSet) <> 1 then
+        Error("universal grading component product is not well-defined");
+      fi;
+      mult[i][c] := compSet[1];
+    od;
+  od;
+
+  oneComp := compOfPos[PositionOfLabel(F, OneLabel(F))];
+  isGroup := true;
+  for i in [1..Length(compsPos)] do
+    if Set(mult[i]) <> [1..Length(compsPos)] then
+      isGroup := false;
+      break;
+    fi;
+  od;
+
+  return rec(
+    components := Immutable(List(compsPos, C -> labels{C})),
+    compOfPos := Immutable(compOfPos),
+    one := oneComp,
+    multiplication := Immutable(mult),
+    representatives := Immutable(reps),
+    isGroup := isGroup
+  );
+end );
+
+InstallMethod(UniversalGradingComponent, [ IsFusionRing, IsObject ], function(F, x)
+  local pos, data;
+  pos := PositionOfLabel(F, x);
+  if pos = fail then
+    Error("UniversalGradingComponent: unknown label");
+  fi;
+  data := UniversalGradingData(F);
+  return data.compOfPos[pos];
+end );
+
+InstallMethod(UniversalGradingOrder, [ IsFusionRing ], function(F)
+  return Length(UniversalGradingData(F).components);
+end );
+
 BindGlobal("FRPolyEvalFloat@", function(poly, x)
   local coeffs, i, y;
   coeffs := CoefficientsOfUnivariatePolynomial(poly);

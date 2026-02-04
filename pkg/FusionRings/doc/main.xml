@@ -98,6 +98,9 @@ FusionRing
           <Func Name="FusionSubringLatticeSmall" Arg="F[, maxRank]"/>
           <Attr Name="CanonicalPointedSubring" Arg="F"/>
           <Attr Name="AdjointSubring" Arg="F"/>
+          <Attr Name="UniversalGradingData" Arg="F"/>
+          <Oper Name="UniversalGradingComponent" Arg="F, i"/>
+          <Attr Name="UniversalGradingOrder" Arg="F"/>
           <Prop Name="IsIntegralFusionRing" Arg="F"/>
           <Prop Name="IsWeaklyIntegralFusionRing" Arg="F"/>
           <Func Name="CheckDNumberCriterionCommutative" Arg="F"/>

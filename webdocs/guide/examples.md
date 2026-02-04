@@ -272,3 +272,22 @@ true
 true
 [ "A", "D", "E6" ]
 ```
+
+Universal grading (first step toward nilpotency series):
+
+```gap
+Fi := IsingFusionRing();;
+UniversalGradingOrder(Fi);
+UniversalGradingComponent(Fi, "1");
+UniversalGradingComponent(Fi, "sigma");
+UniversalGradingData(Fi).multiplication;
+```
+
+Expected output:
+
+```text
+2
+1
+2
+[ [ 1, 2 ], [ 2, 1 ] ]
+```

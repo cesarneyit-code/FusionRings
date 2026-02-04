@@ -123,6 +123,7 @@ API (core)
   `IsPointedFusionRing`, `IsFusionSubring`, `FusionSubring`,
   `FusionSubringByGenerators`, `FusionSubringLatticeSmall`,
   `CanonicalPointedSubring`, `AdjointSubring`,
+  `UniversalGradingData`, `UniversalGradingComponent`, `UniversalGradingOrder`,
   `IsIntegralFusionRing`, `IsWeaklyIntegralFusionRing`
 - Based modules: `FusionModuleByActionMatrices`, `ActionMatrix`, `ActionOnBasis`,
   `IsFusionSubmodule`, `FusionSubmodule`, `FusionSubmoduleByGenerators`,
