@@ -52,6 +52,9 @@ Why these four?
 - Fibonacci and Ising are standard small benchmark categories.
 - Tambara-Yamagami and near-group cover non-pointed family constructors.
 
+For pointed examples and the bridge to modular data, see
+`Fusion Rings and Modular Data`.
+
 ## Run tests
 
 Strict:

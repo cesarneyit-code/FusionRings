@@ -37,6 +37,7 @@ nav:
   - Getting Started: guide/getting-started.md
   - Guides:
       - Modular Data: guide/modular-data.md
+      - Fusion Rings and Modular Data: guide/fusion-rings-and-modular-data.md
       - Validation Levels: guide/validation-levels.md
       - Phase 2 (Verlinde): guide/phase2-verlinde.md
       - Worked Examples: guide/examples.md

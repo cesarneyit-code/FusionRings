@@ -4,7 +4,21 @@ All snippets here are designed to be copy-paste runnable in GAP after loading
 `read_direct.g`. They escalate from constructor smoke tests to database
 navigation and then Phase 2 Verlinde checks.
 
-## Example 1: Family constructors (Fibonacci, Ising, Tambara-Yamagami, near-group)
+## Example 1: Pointed family constructors
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+
+G := Group((1,2,3));;
+Fpt := PointedFusionRing(G);;
+CheckFusionRingAxioms(Fpt, 1);
+MultiplyBasis(Fpt, (1,2,3), (1,2,3));
+
+Fc4 := CyclicPointedFusionRing(4);;
+CheckFusionRingAxioms(Fc4, 1);
+```
+
+## Example 2: Family constructors (Fibonacci, Ising, Tambara-Yamagami, near-group)
 
 ```gap
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
@@ -23,7 +37,7 @@ CheckFusionRingAxioms(Fng, 1);
 
 Expected result: all checks return `true`.
 
-## Example 2: Load modular data from the NsdGOL database
+## Example 3: Load modular data from the NsdGOL database
 
 ```gap
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
@@ -36,7 +50,7 @@ v.ok;
 
 This is the shortest "database to validated modular data" workflow.
 
-## Example 3: Scan a rank file and find a level-4 valid entry
+## Example 4: Scan a rank file and find a level-4 valid entry
 
 ```gap
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
@@ -61,7 +75,7 @@ od;
 This pattern is useful when exploring a rank file without assuming the first
 entry satisfies the validation level you want.
 
-## Example 4: Build a fusion ring from modular data
+## Example 5: Build a fusion ring from modular data
 
 ```gap
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
@@ -74,7 +88,7 @@ CheckFusionRingAxioms(F, 1);
 This confirms the reconstructed fusion coefficients are compatible with the
 core ring axioms.
 
-## Example 5: Phase 2 constructor SU(2)_k
+## Example 6: Phase 2 constructor SU(2)_k
 
 ```gap
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
@@ -89,7 +103,21 @@ od;
 
 This is the currently implemented Verlinde path: type A, rank 1.
 
-## Example 6: Run the SU(2)_k test file
+## Example 7: Check whether modular data has fusion coefficients
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+
+mdDB := GetModularData(2, 1, 1);;
+MDFusionCoefficients(mdDB) = fail;      # expected: false
+
+mdV := VerlindeModularData("A", 1, 3);;
+MDFusionCoefficients(mdV) = fail;       # expected: true (current Phase 2 state)
+```
+
+Use this check before calling `FusionRingFromModularData(md)`.
+
+## Example 8: Run the SU(2)_k test file
 
 ```gap
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");

@@ -75,3 +75,20 @@ CheckFusionRingAxioms(F, 1);
 
 If `ValidateModularData` fails, inspect `v.failures` before converting to a
 fusion ring. That keeps debugging localized to the modular-data layer.
+
+## Bridge condition: when conversion to FusionRing is possible
+
+`FusionRingFromModularData(md)` requires fusion coefficients `N`.
+
+- Database entries loaded with `GetModularData` include `N`.
+- Some direct `(S, T)` constructors may not include `N` yet.
+
+Quick check:
+
+```gap
+mdDB := GetModularData(2, 1, 1);;
+MDFusionCoefficients(mdDB) = fail;   # false
+
+mdV := VerlindeModularData("A", 1, 3);;
+MDFusionCoefficients(mdV) = fail;    # true (current implementation state)
+```
