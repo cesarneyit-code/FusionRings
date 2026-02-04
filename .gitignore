@@ -17,6 +17,28 @@ pkg/FusionRings/doc/manual.pdf
 # MkDocs build artifacts
 site/
 
+# Local research/internal notes (keep private/local)
+CONTEXT.md
+SESSION_NOTES.md
+START_HERE.md
+WEB_DOCS.md
+FusionRings (GAP) — Documento completo de especificación (matemática + diseño + API + decisiones).md
+pkg/FusionRings/README_CONTEXT.md
+ostrik.tex
+nilpotent.tex
+
+# Generated GAPDoc byproducts
+pkg/FusionRings/doc/main.aux
+pkg/FusionRings/doc/main.bbl
+pkg/FusionRings/doc/main.blg
+pkg/FusionRings/doc/main.idx
+pkg/FusionRings/doc/main.ilg
+pkg/FusionRings/doc/main.ind
+pkg/FusionRings/doc/main.out
+pkg/FusionRings/doc/main.pnr
+pkg/FusionRings/doc/main.toc
+pkg/FusionRings/doc/chap0.html
+
 # OS
 .DS_Store
 

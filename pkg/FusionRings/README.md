@@ -54,13 +54,12 @@ Documentation
 Build the manual (GAPDoc required):
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/doc/build_manual.g");
+ReadPackage("FusionRings", "doc/build_manual.g");
 ```
 
 Web documentation (TensorKit-style site with MkDocs Material):
 
 ```
-cd /Users/cesargalindo/Documents/FusionRings
 python3 -m pip install -r requirements-docs.txt
 mkdocs serve
 ```
@@ -75,7 +74,7 @@ webdocs/
 Examples
 --------
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 F := FibonacciFusionRing();;
 F := IsingFusionRing();;
 F := CyclicPointedFusionRing(4);;
@@ -87,7 +86,7 @@ Display(F);
 
 ModularData quick start:
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 md := GetModularData(2, 1, 1);;
 S := SMatrix(md);;
 T := TMatrix(md);;
@@ -142,7 +141,7 @@ Testing
 Recommended workflow:
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 FusionRings_RewriteTests();   # normalize outputs once per GAP install
 FusionRings_TestAllStrict();  # strict (ignores newline-only diffs)
 ```
@@ -158,19 +157,19 @@ Shortcuts
 From GAP you can simply:
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/run_tests.g");
+FusionRings_TestAll();
 ```
 
 Strict run:
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/run_tests_strict.g");
+FusionRings_TestAllStrict();
 ```
 
 Normalize (once per GAP install):
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/normalize_tests.g");
+FusionRings_RewriteTests();
 ```
 
 ModularData tests are included in the same test suite.
@@ -180,7 +179,7 @@ CI (local)
 Run tests + build docs in one step:
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/run_ci.g");
+FusionRings_CI();
 ```
 
 Shell shortcuts (recommended)
