@@ -25,3 +25,19 @@ numeric helpers meant for inspection.
 - Use `*Approx` APIs only for readability in logs/notes.
 - For weak integrality, treat current result as practical; if you need a strict
   proof-level check, add an exact arithmetic variant.
+
+## Theorem -> API map (current status)
+
+| Mathematical statement / criterion | API entry points | Exactness status |
+|---|---|---|
+| Perron-Frobenius dimensions of simples | `FPDimensions`, `FPDimensionPolynomial` | exact |
+| Global FP dimension `sum_i d_i^2` | `GlobalFPDimension` | exact |
+| Integral / weakly integral checks | `IsIntegralFusionRing`, `IsWeaklyIntegralFusionRing` | exact / practical numeric |
+| Invertible objects and pointedness | `IsInvertibleSimple`, `InvertibleSimples`, `IsPointedFusionRing` | exact |
+| Canonical pointed and adjoint subrings | `CanonicalPointedSubring`, `AdjointSubring` | exact combinatorial |
+| Universal grading decomposition | `UniversalGradingData`, `UniversalGradingComponent`, `UniversalGradingOrder` | exact combinatorial |
+| Formal codegrees | `FormalCodegrees` | exact/partial (ordering uses numeric helper) |
+| d-number criterion (commutative case) | `CheckDNumberCriterionCommutative` | exact (implemented) |
+| Drinfeld ratio criterion (commutative case) | `CheckDrinfeldCriterionCommutative` | partial/conservative |
+| Extended cyclotomic criterion (commutative case) | `CheckExtendedCyclotomicCriterionCommutative` | partial/conservative |
+| ADE/Ostrik SU(2)_k module classification | `OstrikSU2Module`, `OstrikSU2Modules`, `IsOstrikSU2Module` | exact by combinatorial reconstruction |

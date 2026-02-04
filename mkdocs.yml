@@ -37,6 +37,7 @@ nav:
   - Getting Started: guide/getting-started.md
   - Guides:
       - Full Tutorial: guide/full-tutorial.md
+      - Theorem to Computation: guide/theorem-to-computation.md
       - Ostrik ADE Modules: guide/ostrik-ade-modules.md
       - Manual Construction: guide/manual-construction.md
       - Modular Data: guide/modular-data.md
