@@ -36,6 +36,7 @@ nav:
   - Home: index.md
   - Getting Started: guide/getting-started.md
   - Guides:
+      - Full Tutorial: guide/full-tutorial.md
       - Manual Construction: guide/manual-construction.md
       - Modular Data: guide/modular-data.md
       - Fusion Rings and Modular Data: guide/fusion-rings-and-modular-data.md

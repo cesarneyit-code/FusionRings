@@ -1,8 +1,9 @@
 # Getting Started
 
-This page is the practical "first 10 minutes" path for FusionRings development.
-The goal is to load the package code directly, run one modular-data pipeline,
-and then confirm a few representative fusion-ring families.
+This is the practical "first 10 minutes" path. You will:
+1) load local code,
+2) run one full modular-data -> fusion-ring pipeline,
+3) check a few standard families.
 
 ## Local developer loader
 
@@ -18,8 +19,8 @@ Or use the convenience entrypoint:
 Read("/Users/cesargalindo/Documents/FusionRings/start_modulardata.g");
 ```
 
-`read_direct.g` is better for rapid local iteration because it rereads source
-files directly from this repository and exposes helper test functions.
+`read_direct.g` is the default for local development: it rereads source files
+from this repo and exposes helper test functions.
 
 ## Core sanity check
 
@@ -28,10 +29,20 @@ database entry -> `ModularData` -> validation -> `FusionRing`.
 
 ```gap
 md := GetModularData(2, 1, 1);;
-ValidateModularData(md, 4);
+v := ValidateModularData(md, 4);;
+v.ok;
 F := FusionRingFromModularData(md);;
 CheckFusionRingAxioms(F, 1);
 ```
+
+Expected output:
+
+```text
+true
+true
+```
+
+If both are `true`, the core pipeline is healthy.
 
 ## Fusion ring family smoke test
 
@@ -52,6 +63,15 @@ Why these four?
 - Fibonacci and Ising are standard small benchmark categories.
 - Tambara-Yamagami and near-group cover non-pointed family constructors.
 
+Expected output:
+
+```text
+true
+true
+true
+true
+```
+
 For pointed examples and the bridge to modular data, see
 `Fusion Rings and Modular Data`.
 
@@ -63,6 +83,8 @@ Strict:
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
 FusionRings_TestAllStrict();
 ```
+
+Expected final line (success case): `0 failures in ... files`
 
 Tolerant:
 

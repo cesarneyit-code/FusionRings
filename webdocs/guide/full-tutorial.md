@@ -1,0 +1,140 @@
+# Full Tutorial
+
+This is a single narrative flow you can run top-to-bottom in GAP. It is meant
+for new users who want to understand both the API and the expected behavior.
+
+## Step 1: Load local development code
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+```
+
+You may see `#W NewRepresentation ...` warnings when rereading during local
+development. Those are expected in this workflow.
+
+## Step 2: Quick constructor sanity checks
+
+```gap
+Ffib := FibonacciFusionRing();;
+Fis := IsingFusionRing();;
+G3 := CyclicGroup(3);;
+Fty := TambaraYamagamiFusionRing(G3);;
+
+CheckFusionRingAxioms(Ffib, 1);
+CheckFusionRingAxioms(Fis, 1);
+CheckFusionRingAxioms(Fty, 1);
+```
+
+Expected output:
+
+```text
+true
+true
+true
+```
+
+## Step 3: Load modular data from the database
+
+```gap
+LoadNsdGOL(2);;
+md := GetModularData(2, 1, 1);;
+v := ValidateModularData(md, 7);;
+v.ok;
+```
+
+Expected output:
+
+```text
+true
+```
+
+This means the selected entry passes high-level validation checks.
+
+## Step 4: Bridge modular data into a fusion ring
+
+```gap
+Fmd := FusionRingFromModularData(md);;
+CheckFusionRingAxioms(Fmd, 1);
+```
+
+Expected output:
+
+```text
+true
+```
+
+Now you have a ring object reconstructed from modular data and verified at level
+1.
+
+## Step 5: Understand invertibles and pointed subrings
+
+```gap
+InvertibleSimples(Fis);
+P := CanonicalPointedSubring(Fis);;
+LabelsList(P);
+IsPointedFusionRing(P);
+```
+
+Expected output:
+
+```text
+[ "1", "psi" ]
+[ "1", "psi" ]
+true
+```
+
+Interpretation: Ising is not pointed, but it contains a canonical pointed part.
+
+## Step 6: FP dimensions (exact and approximate views)
+
+```gap
+FPDimensionPolynomial(Ffib, "x");
+FPDimensions(Ffib)[2];
+FPDimensionApprox(Ffib, "x", 8);
+GlobalFPDimension(Ffib);
+```
+
+Expected output:
+
+```text
+x_1^2-x_1-1
+fp2
+1.61803399
+fp2+2
+```
+
+Use exact outputs (`fp2`) for algebraic computations; use decimal approximations
+only for intuition and quick inspection.
+
+## Step 7: Criterion-failure example (paper-style)
+
+```gap
+M := [
+  [ [1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1] ],
+  [ [0,1,0,0],[0,0,1,0],[1,0,0,0],[0,0,0,1] ],
+  [ [0,0,1,0],[1,0,0,0],[0,1,0,0],[0,0,0,1] ],
+  [ [0,0,0,1],[0,0,0,1],[0,0,0,1],[1,1,1,1] ]
+];;
+Fbad := FusionRingByFusionMatrices([1..4], 1, fail, M, rec(inferDual := true, check := 0));;
+dres := CheckDNumberCriterionCommutative(Fbad);;
+dres.ok;
+dres.failures[1];
+```
+
+Expected output:
+
+```text
+false
+formal codegree polynomial #2 fails d-number divisibility test
+```
+
+This is useful as a known negative test case.
+
+## Step 8: Run the full test suite
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+FusionRings_TestAllStrict();
+```
+
+Success signal: final summary with `0 failures in ... files`.
