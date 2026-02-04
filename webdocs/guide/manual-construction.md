@@ -14,6 +14,15 @@ MultiplyBasis(F1, "tau", "tau");
 MultiplyBasis(F5, "tau", "tau");
 ```
 
+## 0b) Rank-3 family (K(k, l, m, n))
+
+```gap
+F3 := Rank3FusionRing(0, 1, 0, 0);;
+MultiplyBasis(F3, "X", "X");
+MultiplyBasis(F3, "Y", "Y");
+MultiplyBasis(F3, "X", "Y");
+```
+
 ## 1) Fusion ring from sparse product table
 
 ```gap

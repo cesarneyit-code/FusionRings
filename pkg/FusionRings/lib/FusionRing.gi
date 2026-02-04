@@ -2402,6 +2402,34 @@ InstallGlobalFunction(Rank2FusionRing, function(n)
   return F;
 end );
 
+InstallGlobalFunction(Rank3FusionRing, function(k, l, m, n)
+  local labels, prodTable, dual, F;
+  if not IsInt(k) or not IsInt(l) or not IsInt(m) or not IsInt(n) then
+    Error("k, l, m, n must be integers");
+  fi;
+  if k < 0 or l < 0 or m < 0 or n < 0 then
+    Error("k, l, m, n must be nonnegative for a based ring");
+  fi;
+  if k^2 + l^2 <> k*n + l*m + 1 then
+    Error("parameters must satisfy k^2 + l^2 = k*n + l*m + 1");
+  fi;
+  labels := [ "1", "X", "Y" ];
+  prodTable := [
+    [ "1", "1", [ [ "1", 1 ] ] ],
+    [ "1", "X", [ [ "X", 1 ] ] ],
+    [ "X", "1", [ [ "X", 1 ] ] ],
+    [ "1", "Y", [ [ "Y", 1 ] ] ],
+    [ "Y", "1", [ [ "Y", 1 ] ] ],
+    [ "X", "X", [ [ "1", 1 ], [ "X", m ], [ "Y", k ] ] ],
+    [ "Y", "Y", [ [ "1", 1 ], [ "X", l ], [ "Y", n ] ] ],
+    [ "X", "Y", [ [ "X", k ], [ "Y", l ] ] ],
+    [ "Y", "X", [ [ "X", k ], [ "Y", l ] ] ]
+  ];
+  dual := [ "1", "X", "Y" ];
+  F := FusionRingBySparseConstants(labels, "1", dual, prodTable, rec(check := 1));
+  return F;
+end );
+
 InstallGlobalFunction(IsingFusionRing, function()
   local labels, prodTable, dual, F;
   labels := [ "1", "psi", "sigma" ];

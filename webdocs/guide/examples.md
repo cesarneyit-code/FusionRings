@@ -57,7 +57,42 @@ Interpretation:
 - the second simple times itself lands in simple #4 with coefficient 1;
 - level-1 axioms pass.
 
-## 3) Fibonacci, Ising, and Tambara-Yamagami
+## 3) Rank-3 family K(k, l, m, n)
+
+The rank-3 family has basis `1, X, Y` with rules:
+
+```
+X^2 = 1 + m X + k Y
+Y^2 = 1 + l X + n Y
+X Y = Y X = k X + l Y
+```
+
+Parameters must satisfy:
+
+```
+k^2 + l^2 = k n + l m + 1
+```
+
+Example with `(k, l, m, n) = (0, 1, 0, 0)`:
+
+```gap
+F3 := Rank3FusionRing(0, 1, 0, 0);;
+MultiplyBasis(F3, "X", "X");
+MultiplyBasis(F3, "Y", "Y");
+MultiplyBasis(F3, "X", "Y");
+CheckFusionRingAxioms(F3, 1);
+```
+
+Expected output:
+
+```text
+[ [ "1", 1 ] ]
+[ [ "1", 1 ], [ "X", 1 ] ]
+[ [ "Y", 1 ] ]
+true
+```
+
+## 4) Fibonacci, Ising, and Tambara-Yamagami
 
 This is a quick family smoke test that mixes pointed/non-pointed behavior.
 
@@ -83,7 +118,7 @@ true
 Interpretation: all three constructors produce internally consistent fusion
 rules at level 1.
 
-## 4) From modular-data database to fusion ring
+## 5) From modular-data database to fusion ring
 
 This is the core pipeline many users want:
 database -> validated `ModularData` -> `FusionRing`.
@@ -109,7 +144,7 @@ Interpretation:
 - the modular datum passes validation level 7;
 - the reconstructed fusion ring also passes ring-axiom checks.
 
-## 5) Invertibles and canonical pointed subring
+## 6) Invertibles and canonical pointed subring
 
 Now inspect structure inside a non-pointed ring (`IsingFusionRing`).
 
@@ -132,7 +167,7 @@ true
 Interpretation: Ising has exactly two invertibles, and they generate the
 canonical pointed subring.
 
-## 6) FP dimensions: exact and approximate
+## 7) FP dimensions: exact and approximate
 
 Use exact values for algebraic work and decimal approximations for quick
 intuition.
@@ -158,7 +193,7 @@ Interpretation:
 - the FP dimension of `x` is the positive root of `x^2 - x - 1`;
 - exact values stay algebraic (`fp2`), while approximations are optional.
 
-## 7) Paper-style criterion example that fails
+## 8) Paper-style criterion example that fails
 
 This rank-4 commutative example is useful because it fails a criterion in a
 controlled way.
@@ -187,7 +222,7 @@ formal codegree polynomial #2 fails d-number divisibility test
 Interpretation: this is a concrete "criterion fails" case you can use while
 developing filters/classifiers.
 
-## 8) Full test run (when you want confidence)
+## 9) Full test run (when you want confidence)
 
 ```gap
 FusionRings_TestAllStrict();
@@ -195,7 +230,7 @@ FusionRings_TestAllStrict();
 
 This runs the package test suite and is the right command before a commit.
 
-## 9) Based modules over a fusion ring
+## 10) Based modules over a fusion ring
 
 The package now supports based modules (Ostrik's based modules over a based
 ring, i.e. modules over a fusion ring with nonnegative integral action

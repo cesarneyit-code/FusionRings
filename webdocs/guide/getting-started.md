@@ -36,6 +36,26 @@ Expected output:
 [ [ "1", 1 ], [ "tau", 5 ] ]
 ```
 
+## Quick rank-3 check (K(k, l, m, n))
+
+Use the rank-3 family when you want a small but nontrivial example with two
+parameters and a Diophantine constraint.
+
+```gap
+F3 := Rank3FusionRing(0, 1, 0, 0);;
+MultiplyBasis(F3, "X", "X");
+MultiplyBasis(F3, "Y", "Y");
+MultiplyBasis(F3, "X", "Y");
+```
+
+Expected output:
+
+```text
+[ [ "1", 1 ] ]
+[ [ "1", 1 ], [ "X", 1 ] ]
+[ [ "Y", 1 ] ]
+```
+
 ## Core sanity check
 
 This verifies the end-to-end path:
