@@ -1,12 +1,11 @@
 # Worked Examples
 
 This page is a guided tour: run a command, see what GAP prints, and understand
-why that output matters. Every block is runnable after loading
-`read_direct.g`.
+why that output matters. Start each session with:
 
-> Note: when you use `read_direct.g`, GAP may print `#W NewRepresentation ...`
-> warnings on reread. For local development in this repo, those warnings are
-> expected and do not mean your example failed.
+```gap
+LoadPackage("FusionRings");;
+```
 
 ## 1) Pointed ring in 20 seconds
 
@@ -14,7 +13,6 @@ Start with a very small pointed ring (`CyclicPointedFusionRing(4)`), then check
 the basic product logic.
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
 Fc4 := CyclicPointedFusionRing(4);;
 LabelsList(Fc4);
 MultiplyBasis(Fc4, 2, 2);
@@ -166,7 +164,6 @@ developing filters/classifiers.
 ## 7) Full test run (when you want confidence)
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
 FusionRings_TestAllStrict();
 ```
 

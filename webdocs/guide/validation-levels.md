@@ -39,7 +39,7 @@ fi;
 ## Full walkthrough on rank-2 and rank-3 database entries
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 
 # Rank 2 example
 md2 := GetModularData(2, 1, 1);;
@@ -63,7 +63,7 @@ Expected behavior for these examples: all levels return `ok=true`.
 To verify that all validation-related tests pass together with the rest of the package:
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 FusionRings_TestAllStrict();
 ```
 

@@ -9,7 +9,7 @@ This page explains three things together:
 ## 1) Load the package code
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 ```
 
 ## 2) FusionRing family constructors

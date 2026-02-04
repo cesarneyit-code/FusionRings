@@ -55,7 +55,7 @@ deterministically through the balancing equation.
 Quick inspection:
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 
 rank := 3;;
 LoadNsdGOL(rank);;
@@ -70,7 +70,7 @@ entries are in a specific orbit.
 ## End-to-end: database -> validation -> fusion ring
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 
 md := GetModularData(2, 1, 1);;
 v := ValidateModularData(md, 4);;

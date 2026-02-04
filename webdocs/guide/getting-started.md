@@ -1,26 +1,15 @@
 # Getting Started
 
 This is the practical "first 10 minutes" path. You will:
-1) load local code,
+1) load the package,
 2) run one full modular-data -> fusion-ring pipeline,
 3) check a few standard families.
 
-## Local developer loader
-
-Use direct loading while iterating locally:
+## Load the package
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 ```
-
-Or use the convenience entrypoint:
-
-```gap
-Read("/Users/cesargalindo/Documents/FusionRings/start_modulardata.g");
-```
-
-`read_direct.g` is the default for local development: it rereads source files
-from this repo and exposes helper test functions.
 
 ## Core sanity check
 
@@ -80,7 +69,7 @@ For pointed examples and the bridge to modular data, see
 Strict:
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 FusionRings_TestAllStrict();
 ```
 
@@ -89,13 +78,13 @@ Expected final line (success case): `0 failures in ... files`
 Tolerant:
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 FusionRings_TestAll();
 ```
 
 CI helper (tests + docs):
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 FusionRings_CI();
 ```

@@ -5,7 +5,7 @@ This page shows direct constructors for FusionRing and ModularData objects.
 ## 1) Fusion ring from sparse product table
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 
 labels := [ "1", "x" ];;
 prodTable := [

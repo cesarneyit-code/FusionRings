@@ -3,14 +3,11 @@
 This is a single narrative flow you can run top-to-bottom in GAP. It is meant
 for new users who want to understand both the API and the expected behavior.
 
-## Step 1: Load local development code
+## Step 1: Load the package
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 ```
-
-You may see `#W NewRepresentation ...` warnings when rereading during local
-development. Those are expected in this workflow.
 
 ## Step 2: Quick constructor sanity checks
 
@@ -133,7 +130,7 @@ This is useful as a known negative test case.
 ## Step 8: Run the full test suite
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 FusionRings_TestAllStrict();
 ```
 

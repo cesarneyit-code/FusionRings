@@ -6,7 +6,7 @@ using currently available FusionRings APIs.
 ## 1) Formal codegrees (Drinfeld/d-number workflows)
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 
 F := CyclicPointedFusionRing(4);;
 fc := FormalCodegrees(F);;

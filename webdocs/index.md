@@ -17,7 +17,7 @@ Current Phase 2 progress includes an implemented SU(2)_k Verlinde constructor.
 ## Fast start
 
 ```gap
-Read("/Users/cesargalindo/Documents/FusionRings/start_modulardata.g");
+LoadPackage("FusionRings");;
 
 md := GetModularData(2, 1, 1);;
 ValidateModularData(md, 4);
@@ -25,4 +25,4 @@ F := FusionRingFromModularData(md);;
 CheckFusionRingAxioms(F, 1);
 ```
 
-See [Getting Started](guide/getting-started.md) for local setup and test commands.
+See [Getting Started](guide/getting-started.md) for package usage and test commands.

@@ -3,6 +3,23 @@
 This page explains the graph picture behind Ostrik's classification for
 `SU(2)_k` module categories, and how the package names/functions map to it.
 
+## 0) Load packages
+
+Main package:
+
+```gap
+LoadPackage("FusionRings");;
+```
+
+Optional graph toolkit inside GAP:
+
+```gap
+LoadPackage("grape");;
+```
+
+`grape` is not required for FusionRings itself. It is only for extra graph
+operations/visual checks.
+
 ## 1) Notation bridge: paper vs GAP
 
 - In Ostrik's paper, the category is written as `C_l` (level `l`).
