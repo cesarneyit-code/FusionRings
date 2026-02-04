@@ -1,0 +1,45 @@
+site_name: FusionRings.jl-style docs for GAP
+site_description: Fusion rings and modular data in GAP, including Phase 2 Verlinde constructors.
+site_url: https://cesargalindo.github.io/FusionRings/
+repo_url: https://github.com/cesargalindo/FusionRings
+repo_name: cesargalindo/FusionRings
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - search.highlight
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: teal
+      accent: amber
+
+extra_css:
+  - assets/custom.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+
+nav:
+  - Home: index.md
+  - Getting Started: guide/getting-started.md
+  - Guides:
+      - Modular Data: guide/modular-data.md
+      - Validation Levels: guide/validation-levels.md
+      - Phase 2 (Verlinde): guide/phase2-verlinde.md
+      - Worked Examples: guide/examples.md
+  - API:
+      - Quick API: api/quick-api.md
+      - Constructors: api/constructors.md
+  - Roadmap: guide/roadmap.md

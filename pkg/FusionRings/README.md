@@ -21,9 +21,10 @@ Roadmap:
 - Root‑system/Verlinde constructors (original data from Lie theory)
 - Zesting layer on top of original modular data
 
-Planned constructors (stubs exist now):
+Current constructor status:
 ```
-VerlindeModularData("A", 2, k);
+VerlindeModularData("A", 1, k);   # implemented (SU(2)_k)
+VerlindeModularData("A", 2, k);   # planned
 VerlindeModularDataByLieAlgebra(L, k);
 VerlindeModularDataByRootSystem(R, k);
 ```
@@ -54,6 +55,21 @@ Build the manual (GAPDoc required):
 
 ```
 Read("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/doc/build_manual.g");
+```
+
+Web documentation (TensorKit-style site with MkDocs Material):
+
+```
+cd /Users/cesargalindo/Documents/FusionRings
+python3 -m pip install -r requirements-docs.txt
+mkdocs serve
+```
+
+Source lives in:
+
+```
+mkdocs.yml
+webdocs/
 ```
 
 Examples
@@ -155,6 +171,7 @@ From the repo root you can run:
 ./bin/fr-test-strict
 ./bin/fr-ci
 ./bin/fr-doc
+./bin/fr-webdocs
 ```
 
 If you want them available globally, add the repo's `bin/` to your PATH.

@@ -1,0 +1,28 @@
+# FusionRings for GAP
+
+<div class="hero-card">
+FusionRings builds fusion rings and modular data with exact arithmetic in GAP.
+Current Phase 2 progress includes an implemented SU(2)_k Verlinde constructor.
+</div>
+
+## What is included
+
+- Fusion ring constructors from rules, sparse tables, and matrices.
+- ModularData objects from database entries or direct `(S, T)` input.
+- Validation pipeline with levels 1 to 7.
+- Rank `<= 12` modular data database loaders.
+- Bridge from modular data to fusion rings.
+- Phase 2 start: `VerlindeModularData("A", 1, k)` for SU(2)_k.
+
+## Fast start
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/start_modulardata.g");
+
+md := GetModularData(2, 1, 1);;
+ValidateModularData(md, 4);
+F := FusionRingFromModularData(md);;
+CheckFusionRingAxioms(F, 1);
+```
+
+See [Getting Started](guide/getting-started.md) for local setup and test commands.
