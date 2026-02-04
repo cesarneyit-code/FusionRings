@@ -46,6 +46,7 @@ nav:
       - Phase 2 (Verlinde): guide/phase2-verlinde.md
       - API Exactness: guide/api-exactness.md
       - Paper Criteria Examples: guide/paper-criteria.md
+      - Rank-5 Classification (LowrankIMRN): guide/rank5-lowrankimrn.md
       - Worked Examples: guide/examples.md
   - API:
       - Quick API: api/quick-api.md
