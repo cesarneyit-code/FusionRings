@@ -30,7 +30,8 @@ See [Getting Started](guide/getting-started.md) for package usage and test comma
 ## Maintainer and citation
 
 - Maintainer: **Cesar Galindo**
+- Position: Professor of Mathematics, Universidad de los Andes
 - Repository: [github.com/cesarneyit-code/FusionRings](https://github.com/cesarneyit-code/FusionRings)
-- Contact: please open an issue in the GitHub repository for questions/collaboration.
+- Contact: **cn.galindo1116@uniandes.edu.co** (or open a GitHub issue)
 - If this package is useful in your work, please cite it and acknowledge the
   FusionRings project in your paper/preprint.
