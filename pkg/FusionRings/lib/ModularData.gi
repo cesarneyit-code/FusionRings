@@ -610,6 +610,46 @@ InstallGlobalFunction(FusionRingFromModularData, function(md)
   return FusionRingBySparseConstants(labels, 1, fail, prodTable, rec(check := 0, inferDual := true));
 end );
 
+InstallGlobalFunction(UniversalGradingFromModularData, function(md)
+  local F;
+  if not IsModularData(md) then
+    Error("UniversalGradingFromModularData expects a ModularData object");
+  fi;
+  if MDFusionCoefficients(md) = fail then
+    Error("UniversalGradingFromModularData requires fusion coefficients (N)");
+  fi;
+  F := FusionRingFromModularData(md);
+  return UniversalGradingData(F);
+end );
+
+InstallGlobalFunction(CheckUniversalGradingEqualsInvertibles, function(md)
+  local F, U, inv, out;
+  if not IsModularData(md) then
+    Error("CheckUniversalGradingEqualsInvertibles expects a ModularData object");
+  fi;
+  if MDFusionCoefficients(md) = fail then
+    return rec(
+      ok := false,
+      applicable := false,
+      reason := "requires fusion coefficients (N)"
+    );
+  fi;
+  F := FusionRingFromModularData(md);
+  U := UniversalGradingData(F);
+  inv := InvertibleSimples(F);
+  out := rec(
+    ok := Length(U.components) = Length(inv),
+    applicable := true,
+    universalGradingOrder := Length(U.components),
+    invertibleCount := Length(inv),
+    invertibles := inv
+  );
+  if not out.ok then
+    out.reason := "orders do not match";
+  fi;
+  return out;
+end );
+
 # Roadmap stubs: Lie/root-system Verlinde modular data constructors
 InstallGlobalFunction(VerlindeModularData, function(type, rank, level)
   local t;

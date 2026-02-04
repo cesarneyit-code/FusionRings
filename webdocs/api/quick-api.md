@@ -15,6 +15,8 @@
 ## Bridges and Verlinde
 
 - `FusionRingFromModularData(md)`
+- `UniversalGradingFromModularData(md)`
+- `CheckUniversalGradingEqualsInvertibles(md)`
 - `VerlindeModularData(type, rank, level)`
 - `VerlindeModularDataByLieAlgebra(L, level)`
 - `VerlindeModularDataByRootSystem(R, level)`

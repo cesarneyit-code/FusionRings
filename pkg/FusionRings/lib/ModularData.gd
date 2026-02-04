@@ -21,6 +21,8 @@ DeclareGlobalFunction("ValidateModularData");
 DeclareGlobalFunction("LoadNsdGOL");
 DeclareGlobalFunction("GetModularData");
 DeclareGlobalFunction("FusionRingFromModularData");
+DeclareGlobalFunction("UniversalGradingFromModularData");
+DeclareGlobalFunction("CheckUniversalGradingEqualsInvertibles");
 DeclareGlobalFunction("VerlindeModularData");
 DeclareGlobalFunction("VerlindeModularDataByLieAlgebra");
 DeclareGlobalFunction("VerlindeModularDataByRootSystem");

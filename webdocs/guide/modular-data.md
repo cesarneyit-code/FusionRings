@@ -101,3 +101,18 @@ MDFusionCoefficients(mdDB) = fail;   # false
 mdV := VerlindeModularData("A", 1, 3);;
 MDFusionCoefficients(mdV) = fail;    # true (current implementation state)
 ```
+
+## Universal grading check from modular data
+
+For modular-data entries with fusion coefficients, you can check the expected
+relation `|U(C)| = number of invertible simples` through the fusion-ring bridge:
+
+```gap
+md := GetModularData(2, 1, 1);;
+ug := UniversalGradingFromModularData(md);;
+chk := CheckUniversalGradingEqualsInvertibles(md);;
+chk.ok;
+```
+
+If `N` is unavailable (`MDFusionCoefficients(md) = fail`), the check reports
+`applicable := false`.
