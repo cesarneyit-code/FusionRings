@@ -16,6 +16,7 @@ Then use the sections below as a function index.
 - `ModularData(rec | S, T[, labels])`
 - `ModularDataFromNsdRecord(rec)`
 - `ModularDataFromST(S, T[, labels])`
+- `Rank2FusionRing(n)` (`tau*tau = 1 + n*tau`)
 
 ## Validation and loaders
 

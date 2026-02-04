@@ -2,6 +2,18 @@
 
 This page shows direct constructors for FusionRing and ModularData objects.
 
+## 0) Rank-2 family (tau*tau = 1 + n*tau)
+
+```gap
+F0 := Rank2FusionRing(0);;
+F1 := Rank2FusionRing(1);;
+F5 := Rank2FusionRing(5);;
+
+MultiplyBasis(F0, "tau", "tau");
+MultiplyBasis(F1, "tau", "tau");
+MultiplyBasis(F5, "tau", "tau");
+```
+
 ## 1) Fusion ring from sparse product table
 
 ```gap

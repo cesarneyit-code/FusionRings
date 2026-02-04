@@ -2385,6 +2385,23 @@ InstallGlobalFunction(FibonacciFusionRing, function()
   return F;
 end );
 
+InstallGlobalFunction(Rank2FusionRing, function(n)
+  local labels, prodTable, dual, F;
+  if not IsInt(n) or n < 0 then
+    Error("n must be a nonnegative integer");
+  fi;
+  labels := [ "1", "tau" ];
+  prodTable := [
+    [ "1", "1", [ [ "1", 1 ] ] ],
+    [ "1", "tau", [ [ "tau", 1 ] ] ],
+    [ "tau", "1", [ [ "tau", 1 ] ] ],
+    [ "tau", "tau", [ [ "1", 1 ], [ "tau", n ] ] ]
+  ];
+  dual := [ "1", "tau" ];
+  F := FusionRingBySparseConstants(labels, "1", dual, prodTable, rec(check := 1));
+  return F;
+end );
+
 InstallGlobalFunction(IsingFusionRing, function()
   local labels, prodTable, dual, F;
   labels := [ "1", "psi", "sigma" ];

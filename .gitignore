@@ -26,6 +26,7 @@ FusionRings (GAP) — Documento completo de especificación (matemática + dise�
 pkg/FusionRings/README_CONTEXT.md
 ostrik.tex
 nilpotent.tex
+rank3.tex
 
 # Generated GAPDoc byproducts
 pkg/FusionRings/doc/main.aux

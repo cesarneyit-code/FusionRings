@@ -17,6 +17,18 @@ LoadPackage("FusionRings");;
 
 ## 2) FusionRing family constructors
 
+### Rank-2 family (tau*tau = 1 + n*tau)
+
+```gap
+F0 := Rank2FusionRing(0);;
+F1 := Rank2FusionRing(1);;
+F5 := Rank2FusionRing(5);;
+
+MultiplyBasis(F0, "tau", "tau");
+MultiplyBasis(F1, "tau", "tau");
+MultiplyBasis(F5, "tau", "tau");
+```
+
 ### Pointed families
 
 ```gap
@@ -38,6 +50,7 @@ Fng := NearGroupFusionRing(A, 1);;
 CheckFusionRingAxioms(Fty, 1);
 CheckFusionRingAxioms(Fng, 1);
 ```
+
 
 These are useful benchmarks because they cover both pointed and non-pointed
 construction patterns.

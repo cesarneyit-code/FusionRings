@@ -7,7 +7,33 @@ why that output matters. Start each session with:
 LoadPackage("FusionRings");;
 ```
 
-## 1) Pointed ring in 20 seconds
+## 1) Rank-2 family (tau*tau = 1 + n*tau)
+
+The rank-2 family is parameterized by a nonnegative integer `n`.
+It is a useful stress-test: `n=0` is pointed (`C2`), `n=1` is Fibonacci,
+and larger `n` often fails deeper criteria even though the ring is defined.
+
+```gap
+F0 := Rank2FusionRing(0);;
+F1 := Rank2FusionRing(1);;
+F5 := Rank2FusionRing(5);;
+
+MultiplyBasis(F0, "tau", "tau");
+MultiplyBasis(F1, "tau", "tau");
+MultiplyBasis(F5, "tau", "tau");
+```
+
+Expected output:
+
+```text
+[ [ "1", 1 ] ]
+[ [ "1", 1 ], [ "tau", 1 ] ]
+[ [ "1", 1 ], [ "tau", 5 ] ]
+```
+
+Use this family when you want a fast parameterized example with known behavior.
+
+## 2) Pointed ring in 20 seconds
 
 Start with a very small pointed ring (`CyclicPointedFusionRing(4)`), then check
 the basic product logic.
@@ -31,7 +57,7 @@ Interpretation:
 - the second simple times itself lands in simple #4 with coefficient 1;
 - level-1 axioms pass.
 
-## 2) Fibonacci, Ising, and Tambara-Yamagami
+## 3) Fibonacci, Ising, and Tambara-Yamagami
 
 This is a quick family smoke test that mixes pointed/non-pointed behavior.
 
@@ -57,7 +83,7 @@ true
 Interpretation: all three constructors produce internally consistent fusion
 rules at level 1.
 
-## 3) From modular-data database to fusion ring
+## 4) From modular-data database to fusion ring
 
 This is the core pipeline many users want:
 database -> validated `ModularData` -> `FusionRing`.
@@ -83,7 +109,7 @@ Interpretation:
 - the modular datum passes validation level 7;
 - the reconstructed fusion ring also passes ring-axiom checks.
 
-## 4) Invertibles and canonical pointed subring
+## 5) Invertibles and canonical pointed subring
 
 Now inspect structure inside a non-pointed ring (`IsingFusionRing`).
 
@@ -106,7 +132,7 @@ true
 Interpretation: Ising has exactly two invertibles, and they generate the
 canonical pointed subring.
 
-## 5) FP dimensions: exact and approximate
+## 6) FP dimensions: exact and approximate
 
 Use exact values for algebraic work and decimal approximations for quick
 intuition.
@@ -132,7 +158,7 @@ Interpretation:
 - the FP dimension of `x` is the positive root of `x^2 - x - 1`;
 - exact values stay algebraic (`fp2`), while approximations are optional.
 
-## 6) Paper-style criterion example that fails
+## 7) Paper-style criterion example that fails
 
 This rank-4 commutative example is useful because it fails a criterion in a
 controlled way.
@@ -161,7 +187,7 @@ formal codegree polynomial #2 fails d-number divisibility test
 Interpretation: this is a concrete "criterion fails" case you can use while
 developing filters/classifiers.
 
-## 7) Full test run (when you want confidence)
+## 8) Full test run (when you want confidence)
 
 ```gap
 FusionRings_TestAllStrict();
@@ -169,7 +195,7 @@ FusionRings_TestAllStrict();
 
 This runs the package test suite and is the right command before a commit.
 
-## 8) Based modules over a fusion ring
+## 9) Based modules over a fusion ring
 
 The package now supports based modules (Ostrik's based modules over a based
 ring, i.e. modules over a fusion ring with nonnegative integral action

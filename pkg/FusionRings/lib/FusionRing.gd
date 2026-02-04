@@ -78,6 +78,7 @@ DeclareGlobalFunction("FusionRingByFusionMatrices");
 DeclareGlobalFunction("PointedFusionRing");
 DeclareGlobalFunction("CyclicPointedFusionRing");
 DeclareGlobalFunction("FibonacciFusionRing");
+DeclareGlobalFunction("Rank2FusionRing");
 DeclareGlobalFunction("IsingFusionRing");
 DeclareGlobalFunction("TambaraYamagamiFusionRing");
 DeclareGlobalFunction("NearGroupFusionRing");

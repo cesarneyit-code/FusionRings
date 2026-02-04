@@ -15,7 +15,27 @@ At the end of this tutorial you will have:
 LoadPackage("FusionRings");;
 ```
 
-## Step 2: Quick constructor sanity checks
+## Step 2: Rank-2 family sanity check
+
+```gap
+F0 := Rank2FusionRing(0);;
+F1 := Rank2FusionRing(1);;
+F5 := Rank2FusionRing(5);;
+
+MultiplyBasis(F0, "tau", "tau");
+MultiplyBasis(F1, "tau", "tau");
+MultiplyBasis(F5, "tau", "tau");
+```
+
+Expected output:
+
+```text
+[ [ "1", 1 ] ]
+[ [ "1", 1 ], [ "tau", 1 ] ]
+[ [ "1", 1 ], [ "tau", 5 ] ]
+```
+
+## Step 3: Quick constructor sanity checks
 
 ```gap
 Ffib := FibonacciFusionRing();;
@@ -36,7 +56,7 @@ true
 true
 ```
 
-## Step 3: Load modular data from the database
+## Step 4: Load modular data from the database
 
 ```gap
 LoadNsdGOL(2);;
@@ -53,7 +73,7 @@ true
 
 This means the selected entry passes high-level validation checks.
 
-## Step 4: Bridge modular data into a fusion ring
+## Step 5: Bridge modular data into a fusion ring
 
 ```gap
 Fmd := FusionRingFromModularData(md);;
@@ -69,7 +89,7 @@ true
 Now you have a ring object reconstructed from modular data and verified at level
 1.
 
-## Step 5: Understand invertibles and pointed subrings
+## Step 6: Understand invertibles and pointed subrings
 
 ```gap
 InvertibleSimples(Fis);
@@ -88,7 +108,7 @@ true
 
 Interpretation: Ising is not pointed, but it contains a canonical pointed part.
 
-## Step 6: FP dimensions (exact and approximate views)
+## Step 7: FP dimensions (exact and approximate views)
 
 ```gap
 FPDimensionPolynomial(Ffib, "x");
@@ -109,7 +129,7 @@ fp2+2
 Use exact outputs (`fp2`) for algebraic computations; use decimal approximations
 only for intuition and quick inspection.
 
-## Step 7: Criterion-failure example (paper-style)
+## Step 8: Criterion-failure example (paper-style)
 
 ```gap
 M := [
@@ -133,7 +153,7 @@ formal codegree polynomial #2 fails d-number divisibility test
 
 This is useful as a known negative test case.
 
-## Step 8: Run the full test suite
+## Step 9: Run the full test suite
 
 ```gap
 LoadPackage("FusionRings");;

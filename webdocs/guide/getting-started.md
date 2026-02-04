@@ -14,6 +14,28 @@ If GAP cannot find the package, install/symlink it in your GAP `pkg/` directory.
 LoadPackage("FusionRings");;
 ```
 
+## Quick rank-2 check (tau*tau = 1 + n*tau)
+
+This is the fastest sanity check because it is fully explicit and parameterized.
+
+```gap
+F0 := Rank2FusionRing(0);;
+F1 := Rank2FusionRing(1);;
+F5 := Rank2FusionRing(5);;
+
+MultiplyBasis(F0, "tau", "tau");
+MultiplyBasis(F1, "tau", "tau");
+MultiplyBasis(F5, "tau", "tau");
+```
+
+Expected output:
+
+```text
+[ [ "1", 1 ] ]
+[ [ "1", 1 ], [ "tau", 1 ] ]
+[ [ "1", 1 ], [ "tau", 5 ] ]
+```
+
 ## Core sanity check
 
 This verifies the end-to-end path:

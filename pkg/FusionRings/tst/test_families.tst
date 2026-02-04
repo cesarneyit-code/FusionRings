@@ -3,6 +3,12 @@
 gap> F := FibonacciFusionRing();;
 gap> MultiplyBasis(F, "x", "x") = [ [ "1", 1 ], [ "x", 1 ] ];
 true
+gap> F := Rank2FusionRing(1);;
+gap> MultiplyBasis(F, "tau", "tau") = [ [ "1", 1 ], [ "tau", 1 ] ];
+true
+gap> F := Rank2FusionRing(0);;
+gap> CheckFusionRingAxioms(F, 1);
+true
 gap> F := IsingFusionRing();;
 gap> MultiplyBasis(F, "sigma", "sigma") = [ [ "1", 1 ], [ "psi", 1 ] ];
 true
