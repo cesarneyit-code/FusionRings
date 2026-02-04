@@ -144,3 +144,49 @@ Fi := IsingFusionRing();;
 A := AdjointSubring(Fi);;
 BasisLabels(A);                          # [ "1", "psi" ]
 ```
+
+## 7) Universal grading on fusion rings (worked examples)
+
+Ising example:
+
+```gap
+Fi := IsingFusionRing();;
+UGi := UniversalGradingData(Fi);;
+UniversalGradingOrder(Fi);
+UniversalGradingComponent(Fi, "1");
+UniversalGradingComponent(Fi, "sigma");
+UGi.multiplication;
+```
+
+Expected output:
+
+```text
+2
+1
+2
+[ [ 1, 2 ], [ 2, 1 ] ]
+```
+
+Pointed example (`C4`):
+
+```gap
+F4 := CyclicPointedFusionRing(4);;
+UG4 := UniversalGradingData(F4);;
+UniversalGradingOrder(F4);
+UG4.one;
+UG4.isGroup;
+```
+
+Expected output:
+
+```text
+4
+1
+true
+```
+
+Interpretation:
+- In Ising, the universal grading has two components, with `sigma` in the
+  nontrivial one.
+- In a pointed ring like `C4`, each simple gives a grading component and the
+  grading is a genuine finite group.

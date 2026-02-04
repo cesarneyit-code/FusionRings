@@ -116,3 +116,24 @@ chk.ok;
 
 If `N` is unavailable (`MDFusionCoefficients(md) = fail`), the check reports
 `applicable := false`.
+
+Worked output for the rank-2 database entry:
+
+```gap
+md := GetModularData(2, 1, 1);;
+chk := CheckUniversalGradingEqualsInvertibles(md);;
+chk.universalGradingOrder;
+chk.invertibleCount;
+chk.ok;
+```
+
+Expected output:
+
+```text
+2
+2
+true
+```
+
+This is the modular-data version of the statement that for modular categories
+the universal grading group size matches the number of invertible simples.

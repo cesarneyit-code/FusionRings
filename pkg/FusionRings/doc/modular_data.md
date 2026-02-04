@@ -283,6 +283,10 @@ the database. Once you do, the balancing equation fixes `S` uniquely.
   - Returns a `ModularData` object for the specified entry.
 - `FusionRingFromModularData(md)`
   - Builds a `FusionRing` from the fusion coefficients stored in `md`.
+- `UniversalGradingFromModularData(md)`
+  - Returns universal grading data through the fusion-ring bridge.
+- `CheckUniversalGradingEqualsInvertibles(md)`
+  - Checks `|U(C)| = number of invertible simples` when `N` is available.
 
 ---
 
@@ -311,7 +315,7 @@ Levels implemented:
 ### Practical walkthrough (rank 2 and rank 3)
 
 ```
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+LoadPackage("FusionRings");;
 
 md2 := GetModularData(2, 1, 1);;
 for l in [1..7] do
@@ -337,6 +341,28 @@ For these two entries, all levels `1..7` return `ok = true`.
   independent of the availability of `Norm` or rationality shortcuts.
 
 ---
+
+## 5) Universal grading via modular data
+
+For entries with fusion coefficients, you can evaluate universal grading
+directly from `ModularData`:
+
+```
+md := GetModularData(2, 1, 1);;
+ug := UniversalGradingFromModularData(md);;
+chk := CheckUniversalGradingEqualsInvertibles(md);;
+chk.universalGradingOrder;
+chk.invertibleCount;
+chk.ok;
+```
+
+Expected:
+
+```
+2
+2
+true
+```
 
 ## 5) Tests
 
