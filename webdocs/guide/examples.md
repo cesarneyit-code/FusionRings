@@ -254,3 +254,24 @@ true
 [ [ "1", 1 ], [ "psi", 1 ] ]
 [ "1", "psi", "sigma" ]
 ```
+
+Ostrik classification modules for `SU(2)_k` (ADE):
+
+```gap
+mods4 := OstrikSU2Modules(4);;
+List(mods4, x -> x.type);
+IsOstrikSU2Module(mods4[1].module, 4, "A");
+IsOstrikSU2Module(mods4[2].module, 4, "D");
+
+mods10 := OstrikSU2Modules(10);;
+List(mods10, x -> x.type);
+```
+
+Expected output:
+
+```text
+[ "A", "D" ]
+true
+true
+[ "A", "D", "E6" ]
+```

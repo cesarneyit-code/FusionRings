@@ -656,6 +656,236 @@ InstallMethod(FusionSubmoduleByObject, [ IsFusionRing, IsObject ], function(F, i
   return FusionSubmoduleByGenerators(CanonicalFusionModule(F), [ i ]);
 end );
 
+InstallGlobalFunction(DynkinGraphAdjacency, function(arg)
+  local typ, n, A, i;
+  if Length(arg) = 1 then
+    typ := arg[1];
+    n := fail;
+  elif Length(arg) = 2 then
+    typ := arg[1];
+    n := arg[2];
+  else
+    Error("DynkinGraphAdjacency expects 1 or 2 arguments");
+  fi;
+  if not IsString(typ) then
+    Error("type must be a string (A, D, E6, E7, E8)");
+  fi;
+  typ := UppercaseString(typ);
+  if typ = "E6" then
+    n := 6;
+  elif typ = "E7" then
+    n := 7;
+  elif typ = "E8" then
+    n := 8;
+  elif typ = "A" or typ = "D" then
+    if n = fail or not IsInt(n) or n < 2 then
+      Error("types A and D require integer rank n >= 2");
+    fi;
+  else
+    Error("unknown Dynkin type; use A, D, E6, E7, E8");
+  fi;
+
+  A := List([1..n], r -> List([1..n], c -> 0));
+  if typ = "A" then
+    for i in [1..n-1] do
+      A[i][i+1] := 1;
+      A[i+1][i] := 1;
+    od;
+  elif typ = "D" then
+    if n < 4 then
+      Error("D_n requires n >= 4");
+    fi;
+    for i in [1..n-3] do
+      A[i][i+1] := 1;
+      A[i+1][i] := 1;
+    od;
+    A[n-2][n-1] := 1;
+    A[n-1][n-2] := 1;
+    A[n-2][n] := 1;
+    A[n][n-2] := 1;
+  elif typ = "E6" then
+    # 1-2-3-4-5 and 3-6
+    A[1][2] := 1; A[2][1] := 1;
+    A[2][3] := 1; A[3][2] := 1;
+    A[3][4] := 1; A[4][3] := 1;
+    A[4][5] := 1; A[5][4] := 1;
+    A[3][6] := 1; A[6][3] := 1;
+  elif typ = "E7" then
+    # 1-2-3-4-5-6 and 3-7
+    A[1][2] := 1; A[2][1] := 1;
+    A[2][3] := 1; A[3][2] := 1;
+    A[3][4] := 1; A[4][3] := 1;
+    A[4][5] := 1; A[5][4] := 1;
+    A[5][6] := 1; A[6][5] := 1;
+    A[3][7] := 1; A[7][3] := 1;
+  else
+    # E8: 1-2-3-4-5-6-7 and 3-8
+    A[1][2] := 1; A[2][1] := 1;
+    A[2][3] := 1; A[3][2] := 1;
+    A[3][4] := 1; A[4][3] := 1;
+    A[4][5] := 1; A[5][4] := 1;
+    A[5][6] := 1; A[6][5] := 1;
+    A[6][7] := 1; A[7][6] := 1;
+    A[3][8] := 1; A[8][3] := 1;
+  fi;
+  return A;
+end );
+
+BindGlobal("FROstrikADEAllowedK@", function(typ, n)
+  if typ = "A" then
+    return n - 1;
+  fi;
+  if typ = "D" then
+    return 2 * n - 4;
+  fi;
+  if typ = "E6" then
+    return 10;
+  fi;
+  if typ = "E7" then
+    return 16;
+  fi;
+  if typ = "E8" then
+    return 28;
+  fi;
+  Error("unsupported ADE type");
+end );
+
+BindGlobal("FROstrikBuildSU2Actions@", function(k, A)
+  local mats, r, j;
+  r := k + 1;
+  mats := [];
+  Add(mats, FRIdentityMatrix@(Length(A)));
+  if r = 1 then
+    return mats;
+  fi;
+  Add(mats, A);
+  for j in [2..r-1] do
+    Add(mats, A * mats[j] - mats[j-1]);
+  od;
+  return mats;
+end );
+
+InstallGlobalFunction(OstrikSU2Module, function(arg)
+  local k, typ, n, opts, gAdj, kExpected, md, F, labels, acts, m, i, j;
+  if Length(arg) = 2 then
+    k := arg[1]; typ := arg[2]; n := fail; opts := fail;
+  elif Length(arg) = 3 then
+    k := arg[1]; typ := arg[2];
+    if IsRecord(arg[3]) then
+      n := fail; opts := arg[3];
+    else
+      n := arg[3]; opts := fail;
+    fi;
+  elif Length(arg) = 4 then
+    k := arg[1]; typ := arg[2]; n := arg[3]; opts := arg[4];
+  else
+    Error("OstrikSU2Module expects (k, type[, n][, opts])");
+  fi;
+  if not IsInt(k) or k < 1 then
+    Error("k must be a positive integer");
+  fi;
+  if not IsString(typ) then
+    Error("type must be a string");
+  fi;
+  typ := UppercaseString(typ);
+  if typ = "A" or typ = "D" then
+    if n = fail then
+      if typ = "A" then
+        n := k + 1;
+      else
+        if k mod 2 <> 0 then
+          Error("D-type appears only for even k in SU(2)_k");
+        fi;
+        n := k / 2 + 2;
+      fi;
+    fi;
+    gAdj := DynkinGraphAdjacency(typ, n);
+  elif typ = "E6" or typ = "E7" or typ = "E8" then
+    gAdj := DynkinGraphAdjacency(typ);
+    n := Length(gAdj);
+  else
+    Error("type must be A, D, E6, E7, or E8");
+  fi;
+
+  kExpected := FROstrikADEAllowedK@(typ, n);
+  if k <> kExpected then
+    Error("incompatible (k, ADE): expected k=", String(kExpected), " for ", typ, "_", String(n));
+  fi;
+
+  md := VerlindeModularData("A", 1, k);
+  F := FusionRingFromModularData(md);
+  labels := List([1..Length(gAdj)], i -> Concatenation("v", String(i)));
+  acts := FROstrikBuildSU2Actions@(k, gAdj);
+  m := Length(gAdj);
+  for i in [1..Length(acts)] do
+    for j in [1..m] do
+      if ForAny(acts[i][j], x -> not IsInt(x) or x < 0) then
+        Error("constructed action has negative/nonintegral entries; invalid nimrep");
+      fi;
+    od;
+  od;
+  return FusionModuleByActionMatrices(F, labels, acts, opts);
+end );
+
+InstallGlobalFunction(IsOstrikSU2Module, function(arg)
+  local M, k, typ, n, gAdj, one, acts, expect, j;
+  if Length(arg) < 2 or Length(arg) > 4 then
+    Error("IsOstrikSU2Module expects (M, k[, type[, n]])");
+  fi;
+  M := arg[1];
+  k := arg[2];
+  typ := "A";
+  n := fail;
+  if Length(arg) >= 3 then typ := UppercaseString(arg[3]); fi;
+  if Length(arg) = 4 then n := arg[4]; fi;
+  if not IsFusionModule(M) then
+    return false;
+  fi;
+  if not IsInt(k) or k < 1 then
+    return false;
+  fi;
+  one := ActionMatrices(M)[1];
+  if one <> FRIdentityMatrix@(Length(one)) then
+    return false;
+  fi;
+  if typ = "A" or typ = "D" then
+    if n = fail then
+      if typ = "A" then n := k + 1; else n := k / 2 + 2; fi;
+    fi;
+    gAdj := DynkinGraphAdjacency(typ, n);
+  elif typ = "E6" or typ = "E7" or typ = "E8" then
+    gAdj := DynkinGraphAdjacency(typ);
+  else
+    return false;
+  fi;
+  acts := ActionMatrices(M);
+  expect := FROstrikBuildSU2Actions@(k, gAdj);
+  if Length(acts) <> Length(expect) then
+    return false;
+  fi;
+  for j in [1..Length(acts)] do
+    if acts[j] <> expect[j] then
+      return false;
+    fi;
+  od;
+  return true;
+end );
+
+InstallGlobalFunction(OstrikSU2Modules, function(k)
+  local out;
+  if not IsInt(k) or k < 1 then
+    Error("k must be a positive integer");
+  fi;
+  out := [ rec(type := "A", module := OstrikSU2Module(k, "A")) ];
+  if k mod 2 = 0 and k >= 4 then
+    Add(out, rec(type := "D", n := k / 2 + 2, module := OstrikSU2Module(k, "D")));
+  fi;
+  if k = 10 then Add(out, rec(type := "E6", module := OstrikSU2Module(k, "E6"))); fi;
+  if k = 16 then Add(out, rec(type := "E7", module := OstrikSU2Module(k, "E7"))); fi;
+  if k = 28 then Add(out, rec(type := "E8", module := OstrikSU2Module(k, "E8"))); fi;
+  return Immutable(out);
+end );
+
 
 InstallMethod(PositionOfLabel, [ IsFusionRing, IsObject ], function(F, i)
   local labels, pos;

@@ -102,3 +102,7 @@ DeclareGlobalFunction("FusionModuleByActionMatrices");
 DeclareGlobalFunction("FusionModuleGraph");
 DeclareAttribute("CanonicalFusionModule", IsFusionRing);
 DeclareOperation("FusionSubmoduleByObject", [ IsFusionRing, IsObject ]);
+DeclareGlobalFunction("DynkinGraphAdjacency");
+DeclareGlobalFunction("OstrikSU2Module");
+DeclareGlobalFunction("OstrikSU2Modules");
+DeclareGlobalFunction("IsOstrikSU2Module");

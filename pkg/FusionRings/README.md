@@ -128,7 +128,8 @@ API (core)
   `IsFusionSubmodule`, `FusionSubmodule`, `FusionSubmoduleByGenerators`,
   `FusionModuleComponents`, `IsIndecomposableFusionModule`,
   `IsIrreducibleFusionModule`, `AreEquivalentFusionModules`, `FusionModuleGraph`,
-  `CanonicalFusionModule`, `FusionSubmoduleByObject`
+  `CanonicalFusionModule`, `FusionSubmoduleByObject`, `DynkinGraphAdjacency`,
+  `OstrikSU2Module`, `OstrikSU2Modules`, `IsOstrikSU2Module`
 - Helpers: `NormalizeProductList`
 - Export/Import: `FusionRingRecord`, `FusionRingFromRecord`, `SaveFusionRing`, `LoadFusionRing`
 

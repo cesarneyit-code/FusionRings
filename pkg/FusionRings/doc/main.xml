@@ -132,6 +132,10 @@ FusionRing
           <Func Name="FusionModuleGraph" Arg="M[, i]"/>
           <Attr Name="CanonicalFusionModule" Arg="F"/>
           <Oper Name="FusionSubmoduleByObject" Arg="F, i"/>
+          <Func Name="DynkinGraphAdjacency" Arg="type[, n]"/>
+          <Func Name="OstrikSU2Module" Arg="k, type[, n][, opts]"/>
+          <Func Name="OstrikSU2Modules" Arg="k"/>
+          <Func Name="IsOstrikSU2Module" Arg="M, k[, type[, n]]"/>
           <Description>
             Based-module constructors and analysis tools over a fusion ring.
           </Description>
