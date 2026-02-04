@@ -1,11 +1,11 @@
 SetPackageInfo( rec(
   PackageName := "FusionRings",
   Subtitle := "Fusion rings as GAP objects",
-  Version := "0.2.0",
+  Version := "0.2.1",
   Date := "2026-02-04",
   License := "GPL-2.0-or-later",
   Status := "dev",
-  ArchiveURL := "https://github.com/cesarneyit-code/FusionRings/releases/download/v0.2.0/FusionRings-0.2.0",
+  ArchiveURL := "https://github.com/cesarneyit-code/FusionRings/releases/download/v0.2.1/FusionRings-0.2.1",
   ArchiveFormats := ".tar.gz",
   README_URL := "https://github.com/cesarneyit-code/FusionRings/blob/main/README.md",
   PackageInfoURL := "https://raw.githubusercontent.com/cesarneyit-code/FusionRings/main/pkg/FusionRings/PackageInfo.g",

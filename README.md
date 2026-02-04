@@ -71,7 +71,7 @@ Suggested BibTeX:
   author       = {Cesar Galindo},
   title        = {FusionRings for GAP},
   year         = {2026},
-  version      = {0.2.0},
+  version      = {0.2.1},
   url          = {https://github.com/cesarneyit-code/FusionRings},
   note         = {GAP package for fusion rings, modular data, and based-module computations}
 }

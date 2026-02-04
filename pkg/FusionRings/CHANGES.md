@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.2.1 (2026-02-04)
+------------------
+- Added installed-package smoke test script:
+  `pkg/FusionRings/tst/smoke_installed.g` and `bin/fr-smoke-installed`.
+- Added CI workflow for package tests in installed mode:
+  `.github/workflows/ci.yml`.
+- Added formal citation page with BibTeX in web docs.
+
 0.2.0 (2026-02-04)
 ------------------
 - Added exact FP helper APIs and formal codegrees workflow:
