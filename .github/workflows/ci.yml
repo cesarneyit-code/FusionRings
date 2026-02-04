@@ -19,11 +19,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gap
 
-      - name: Run strict test suite (dev loader)
+      - name: Run package test suite (installed mode)
         run: |
+          mkdir -p "$HOME/.gap/pkg"
+          ln -sfn "$GITHUB_WORKSPACE/pkg/FusionRings" "$HOME/.gap/pkg/FusionRings"
           gap -q -A <<'GAP'
-          Read("read_direct.g");
-          FusionRings_TestAllStrict();
+          if LoadPackage("FusionRings") = fail then
+            Error("Could not load FusionRings");
+          fi;
+          tstdir := DirectoriesPackageLibrary("FusionRings", "tst")[1];
+          ok := TestDirectory([tstdir],
+            rec(exitGAP := false, testOptions := rec(compareFunction := "uptowhitespace")));
+          if not ok then
+            Error("Installed-mode package tests failed");
+          fi;
           QUIT;
           GAP
 
