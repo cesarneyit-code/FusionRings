@@ -32,6 +32,13 @@ DeclareGlobalFunction("NormalizeProductList");
 
 DeclareOperation("FusionMatrix", [ IsFusionRing, IsObject ]);
 DeclareAttribute("FusionMatrices", IsFusionRing);
+DeclareAttribute("FPDimensionData", IsFusionRing);
+DeclareAttribute("FPDimensions", IsFusionRing);
+DeclareAttribute("FPDimensionPolynomials", IsFusionRing);
+DeclareOperation("FPDimensionPolynomial", [ IsFusionRing, IsObject ]);
+DeclareOperation("FPDimensionApprox", [ IsFusionRing, IsObject ]);
+DeclareOperation("FPDimensionApprox", [ IsFusionRing, IsObject, IsInt ]);
+DeclareGlobalFunction("FPDimensionsApprox");
 
 DeclareOperation("CheckFusionRingAxioms", [ IsFusionRing, IsInt ]);
 DeclareGlobalFunction("CheckFusionRingAxiomsSample");

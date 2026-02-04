@@ -341,6 +341,160 @@ InstallMethod(FusionMatrices, [ IsFusionRing ], function(F)
   return Immutable(mats);
 end );
 
+BindGlobal("FRPolyEvalFloat@", function(poly, x)
+  local coeffs, i, y;
+  coeffs := CoefficientsOfUnivariatePolynomial(poly);
+  y := 0.0;
+  for i in Reversed([1..Length(coeffs)]) do
+    y := y * x + Float(coeffs[i]);
+  od;
+  return y;
+end );
+
+BindGlobal("FRPFApproxFromMatrix@", function(mat)
+  local r, v, w, i, j, k, sumw, lam, prev, maxIter, tol;
+  r := Length(mat);
+  if r = 0 then
+    return 0.0;
+  fi;
+  if r = 1 then
+    return Float(mat[1][1]);
+  fi;
+  v := List([1..r], i -> 1.0);
+  v := List(v, x -> x / Float(r));
+  prev := 0.0;
+  tol := 1.0e-12;
+  maxIter := 400;
+  for i in [1..maxIter] do
+    w := List([1..r], j -> 0.0);
+    for j in [1..r] do
+      for k in [1..r] do
+        w[j] := w[j] + Float(mat[j][k]) * v[k];
+      od;
+      # Power iteration on A + I improves convergence for periodic nonnegative matrices.
+      w[j] := w[j] + v[j];
+    od;
+    sumw := Sum(w);
+    if sumw = 0.0 then
+      return 0.0;
+    fi;
+    v := List(w, x -> x / sumw);
+    lam := sumw - 1.0;
+    if i > 1 and AbsoluteValue(lam - prev) < tol then
+      return lam;
+    fi;
+    prev := lam;
+  od;
+  return prev;
+end );
+
+BindGlobal("FRRoundFloatDigits@", function(x, digits)
+  local s, m;
+  if digits < 0 then
+    Error("digits must be nonnegative");
+  fi;
+  s := 10.0^digits;
+  if x >= 0.0 then
+    m := Int(x * s + 0.5);
+  else
+    m := -Int(-x * s + 0.5);
+  fi;
+  return m / s;
+end );
+
+InstallMethod(FPDimensionData, [ IsFusionRing ], function(F)
+  local labels, out, idx, mat, charpoly, factors, approx, best, bestAbs, f, val, entry, deg, K, root;
+  labels := LabelsList(F);
+  out := [];
+  for idx in [1..Length(labels)] do
+    mat := FusionMatrix(F, labels[idx]);
+    charpoly := CharacteristicPolynomial(mat);
+    factors := Factors(charpoly);
+    if factors = [] then
+      factors := [ charpoly ];
+    fi;
+    approx := FRPFApproxFromMatrix@(mat);
+    best := factors[1];
+    bestAbs := AbsoluteValue(FRPolyEvalFloat@(best, approx));
+    for f in factors do
+      val := AbsoluteValue(FRPolyEvalFloat@(f, approx));
+      if val < bestAbs then
+        best := f;
+        bestAbs := val;
+      fi;
+    od;
+    deg := DegreeOfLaurentPolynomial(best);
+    if deg = 1 then
+      root := -CoefficientsOfUnivariatePolynomial(best)[1];
+    else
+      K := AlgebraicExtension(Rationals, best, Concatenation("fp", String(idx)));
+      root := RootOfDefiningPolynomial(K);
+    fi;
+    entry := rec(
+      label := labels[idx],
+      root := root,
+      polynomial := best,
+      charpoly := charpoly,
+      approx := approx
+    );
+    Add(out, entry);
+  od;
+  return Immutable(out);
+end );
+
+InstallMethod(FPDimensions, [ IsFusionRing ], function(F)
+  return Immutable(List(FPDimensionData(F), x -> x.root));
+end );
+
+InstallMethod(FPDimensionPolynomials, [ IsFusionRing ], function(F)
+  return Immutable(List(FPDimensionData(F), x -> x.polynomial));
+end );
+
+InstallMethod(FPDimensionPolynomial, [ IsFusionRing, IsObject ], function(F, label)
+  local p, data;
+  p := PositionOfLabel(F, label);
+  if p = fail then
+    Error("label not in fusion ring");
+  fi;
+  data := FPDimensionData(F);
+  return data[p].polynomial;
+end );
+
+InstallMethod(FPDimensionApprox, [ IsFusionRing, IsObject ], function(F, label)
+  local p, data;
+  p := PositionOfLabel(F, label);
+  if p = fail then
+    Error("label not in fusion ring");
+  fi;
+  data := FPDimensionData(F);
+  return data[p].approx;
+end );
+
+InstallMethod(FPDimensionApprox, [ IsFusionRing, IsObject, IsInt ], function(F, label, digits)
+  return FRRoundFloatDigits@(FPDimensionApprox(F, label), digits);
+end );
+
+InstallGlobalFunction(FPDimensionsApprox, function(arg)
+  local F, digits, vals;
+  if Length(arg) = 1 then
+    F := arg[1];
+    digits := fail;
+  elif Length(arg) = 2 then
+    F := arg[1];
+    digits := arg[2];
+    if not IsInt(digits) or digits < 0 then
+      Error("digits must be a nonnegative integer");
+    fi;
+  else
+    Error("FPDimensionsApprox expects (F[, digits])");
+  fi;
+  vals := List(FPDimensionData(F), x -> x.approx);
+  if digits = fail then
+    return vals;
+  fi;
+  return List(vals, x -> FRRoundFloatDigits@(x, digits));
+end );
+
 InstallMethod(IsInternallyConsistent, [ IsFusionRing ], function(F)
   local one, labels, i, sample, prod, term;
   one := OneLabel(F);
