@@ -10,7 +10,13 @@ python3 -m pip install -r requirements-docs.txt
 mkdocs serve
 ```
 
-Open `http://127.0.0.1:8000`.
+Open `http://127.0.0.1:8000/FusionRings/`.
+
+If `mkdocs` is not on PATH:
+
+```bash
+python3 -m mkdocs serve
+```
 
 ## Build static site
 

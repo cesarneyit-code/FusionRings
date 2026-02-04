@@ -27,23 +27,42 @@ HTML output:
 
 PDF requires pdflatex.
 
-4) Local CI (tests + docs)
+4) Web docs (MkDocs site)
+-------------------------
+First time only (Python deps):
+
+    cd /Users/cesargalindo/Documents/FusionRings
+    python3 -m pip install --user -r requirements-docs.txt
+
+Run local web docs server:
+
+    cd /Users/cesargalindo/Documents/FusionRings
+    mkdocs serve
+
+Open in browser:
+
+    http://127.0.0.1:8000/FusionRings/
+
+If `mkdocs` is not on PATH:
+
+    python3 -m mkdocs serve
+
+5) Local CI (tests + docs)
 --------------------------
     Read("/Users/cesargalindo/Documents/FusionRings/run_ci.g");
 
-5) Where to look for context
+6) Where to look for context
 ----------------------------
 - /Users/cesargalindo/Documents/FusionRings/CONTEXT.md
 - /Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/README_CONTEXT.md
 
-6) Next roadmap (your notes)
+7) Next roadmap (your notes)
 -----------------------------
 - Modular data object + import from Rowell paper
 - Functions/invariants from fusion rings + modular data
 - Zestings (Mora–Galindo)
 
-7) Git
+8) Git
 ------
 Repo root: /Users/cesargalindo/Documents/FusionRings
 Branch: main
-
