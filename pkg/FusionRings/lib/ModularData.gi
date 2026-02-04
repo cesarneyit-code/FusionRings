@@ -71,7 +71,7 @@ BindGlobal("MDSFromNsd@", function(N, d, theta)
 end );
 
 BindGlobal("MDVerlindeSU2@", function(level)
-  local k, r, q, denom, S, T, a, b, exp, labels;
+  local k, r, q, denom, S, T, a, b, exp, labels, md, d, D2, Ncalc, i, j, x, ord;
   if not IsInt(level) or level < 1 then
     Error("level must be a positive integer");
   fi;
@@ -91,7 +91,33 @@ BindGlobal("MDVerlindeSU2@", function(level)
     T[a + 1][a + 1] := E(4 * (k + 2))^(a * (a + 2));
   od;
   labels := [0..k];
-  return ModularDataFromST(S, T, labels);
+  md := ModularDataFromST(S, T, labels);
+
+  # Populate fusion coefficients via Verlinde so the bridge to FusionRing works.
+  d := List([1..r], i -> S[1][i]);
+  D2 := Sum(d, x -> x^2);
+  Ncalc := List([1..r], i -> List([1..r], j -> List([1..r], a -> 0)));
+  for i in [1..r] do
+    for j in [1..r] do
+      for a in [1..r] do
+        exp := Sum([1..r], x -> S[i][x] * S[j][x] * S[a][x] / S[1][x]) / D2;
+        if not IsInt(exp) or exp < 0 then
+          Error("computed Verlinde coefficient is not in N for SU(2)_k");
+        fi;
+        Ncalc[i][j][a] := exp;
+      od;
+    od;
+  od;
+  md!.N := Ncalc;
+  md!.d := d;
+  md!.D2 := D2;
+  md!.theta := List([1..r], i -> T[i][i]);
+  ord := 1;
+  for i in [1..r] do
+    ord := Lcm(ord, Order(T[i][i]));
+  od;
+  md!.ordT := ord;
+  return md;
 end );
 
 InstallMethod(SMatrix, [ IsModularData ], F -> F!.S );

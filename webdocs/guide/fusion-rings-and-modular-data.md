@@ -71,11 +71,14 @@ from raw `(S, T)` only, `N` may be `fail`.
 
 ```gap
 mdv := VerlindeModularData("A", 1, 3);;
-MDFusionCoefficients(mdv) = fail;
+MDFusionCoefficients(mdv) = fail;   # currently false for SU(2)_k: N is populated
 ```
 
-So at this stage, the bridge is one-way only when fusion coefficients are
-available in the `ModularData` object.
+Current status:
+- SU(2)\_k via `VerlindeModularData("A", 1, k)` now includes `N`, so
+  `FusionRingFromModularData` works on that path.
+- Generic direct `(S, T)` wrappers can still have `N = fail` unless
+  coefficients are provided or reconstructed.
 
 ## 5) Invertibles, pointedness, and canonical subrings
 
