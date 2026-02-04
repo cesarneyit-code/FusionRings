@@ -80,6 +80,7 @@
 - `CheckOstrikADEData(k, type[, n])`
 - `FusionModuleGraphDOT(graph|M[, i])`
 - `SaveFusionModuleGraphDOT(path, graph|M[, i])`
+- `SaveFusionModuleGraphSVG(path, graph|M[, i])`
 - `OstrikReport(k)`
 
 ## Attributes

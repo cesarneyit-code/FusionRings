@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+mkdir -p "$HOME/.gap/pkg"
+ln -sfn "$ROOT/pkg/FusionRings" "$HOME/.gap/pkg/FusionRings"
+
+gap -q -A <<GAP
+Read("${ROOT}/pkg/FusionRings/tst/smoke_installed.g");
+QUIT;
+GAP

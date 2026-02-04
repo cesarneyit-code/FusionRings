@@ -43,4 +43,14 @@ gap> List(rep.modules, x -> x.type);
 gap> ForAll(rep.modules, x -> x.coxeter.ok);
 true
 
+gap> d := DirectoryTemporary();;
+
+gap> svgRes := SaveFusionModuleGraphSVG(Filename(d, "nimrep.svg"), MA, LabelOfPosition(UnderlyingFusionRing(MA), 2));;
+
+gap> IsRecord(svgRes) and IsBound(svgRes.ok);
+true
+
+gap> (svgRes.ok and IsExistingFile(svgRes.svgFile)) or (not svgRes.ok);
+true
+
 gap> STOP_TEST("FusionRings-ostrik-tools");

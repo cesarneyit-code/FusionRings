@@ -1,0 +1,32 @@
+name: GAP CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install GAP
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gap
+
+      - name: Run strict test suite (dev loader)
+        run: |
+          gap -q -A <<'GAP'
+          Read("read_direct.g");
+          FusionRings_TestAllStrict();
+          QUIT;
+          GAP
+
+      - name: Run installed-package smoke test
+        run: |
+          ./bin/fr-smoke-installed

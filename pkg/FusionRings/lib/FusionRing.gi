@@ -1065,6 +1065,29 @@ InstallGlobalFunction(SaveFusionModuleGraphDOT, function(arg)
   return path;
 end );
 
+InstallGlobalFunction(SaveFusionModuleGraphSVG, function(arg)
+  local path, dotPath, dotExe, cmd, ok;
+  if Length(arg) = 2 then
+    path := arg[1];
+    dotPath := Concatenation(path, ".dot");
+    SaveFusionModuleGraphDOT(dotPath, arg[2]);
+  elif Length(arg) = 3 then
+    path := arg[1];
+    dotPath := Concatenation(path, ".dot");
+    SaveFusionModuleGraphDOT(dotPath, arg[2], arg[3]);
+  else
+    Error("SaveFusionModuleGraphSVG expects (path, graph/module[, label])");
+  fi;
+  dotExe := Filename(DirectoriesSystemPrograms(), "dot");
+  if dotExe = fail then
+    return rec(ok := false, reason := "Graphviz 'dot' not found", dotFile := dotPath);
+  fi;
+  cmd := Concatenation("\"", dotExe, "\" -Tsvg \"", dotPath, "\" -o \"", path, "\"");
+  Exec(cmd);
+  ok := IsExistingFile(path);
+  return rec(ok := ok, svgFile := path, dotFile := dotPath);
+end );
+
 InstallGlobalFunction(OstrikReport, function(k)
   local mods, out, entry, nim, cox, check, F;
   mods := OstrikSU2Modules(k);

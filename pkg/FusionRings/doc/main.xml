@@ -146,6 +146,7 @@ FusionRing
           <Func Name="CheckOstrikADEData" Arg="k, type[, n]"/>
           <Func Name="FusionModuleGraphDOT" Arg="graph|M[, i]"/>
           <Func Name="SaveFusionModuleGraphDOT" Arg="path, graph|M[, i]"/>
+          <Func Name="SaveFusionModuleGraphSVG" Arg="path, graph|M[, i]"/>
           <Func Name="OstrikReport" Arg="k"/>
           <Description>
             Based-module constructors and analysis tools over a fusion ring.

@@ -49,4 +49,5 @@ nav:
   - API:
       - Quick API: api/quick-api.md
       - Constructors: api/constructors.md
+  - How to Cite: guide/how-to-cite.md
   - Roadmap: guide/roadmap.md

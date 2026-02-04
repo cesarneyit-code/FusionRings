@@ -132,7 +132,8 @@ API (core)
   `OstrikSU2Module`, `OstrikSU2Modules`, `IsOstrikSU2Module`,
   `NimrepFromModule`, `GraphSpectrumApprox`, `CoxeterNumberFromAdjacencyApprox`,
   `IsADELevelCompatible`, `CheckOstrikADEData`,
-  `FusionModuleGraphDOT`, `SaveFusionModuleGraphDOT`, `OstrikReport`
+  `FusionModuleGraphDOT`, `SaveFusionModuleGraphDOT`, `SaveFusionModuleGraphSVG`,
+  `OstrikReport`
 - Helpers: `NormalizeProductList`
 - Export/Import: `FusionRingRecord`, `FusionRingFromRecord`, `SaveFusionRing`, `LoadFusionRing`
 

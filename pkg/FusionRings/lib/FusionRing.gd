@@ -116,4 +116,5 @@ DeclareGlobalFunction("IsADELevelCompatible");
 DeclareGlobalFunction("CheckOstrikADEData");
 DeclareGlobalFunction("FusionModuleGraphDOT");
 DeclareGlobalFunction("SaveFusionModuleGraphDOT");
+DeclareGlobalFunction("SaveFusionModuleGraphSVG");
 DeclareGlobalFunction("OstrikReport");

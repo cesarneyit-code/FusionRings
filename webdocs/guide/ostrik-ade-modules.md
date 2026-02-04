@@ -130,6 +130,12 @@ Then save as `nimrep.dot` and run:
 dot -Tpng nimrep.dot -o nimrep.png
 ```
 
+Package helper for SVG output:
+
+```gap
+SaveFusionModuleGraphSVG("nimrep.svg", M, LabelOfPosition(UnderlyingFusionRing(M), 2));
+```
+
 ## 7) Reference shapes (static)
 
 Typical examples:

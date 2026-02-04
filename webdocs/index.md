@@ -35,3 +35,4 @@ See [Getting Started](guide/getting-started.md) for package usage and test comma
 - Contact: **cn.galindo1116@uniandes.edu.co** (or open a GitHub issue)
 - If this package is useful in your work, please cite it and acknowledge the
   FusionRings project in your paper/preprint.
+- Citation details and BibTeX: [How to Cite](guide/how-to-cite.md)

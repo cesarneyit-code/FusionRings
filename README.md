@@ -63,3 +63,16 @@ Professor of Mathematics, Universidad de los Andes
 Email: **cn.galindo1116@uniandes.edu.co**
 
 If FusionRings is useful in your work, please cite the project and acknowledge it in papers/preprints.
+
+Suggested BibTeX:
+
+```bibtex
+@software{FusionRingsGAP2026,
+  author       = {Cesar Galindo},
+  title        = {FusionRings for GAP},
+  year         = {2026},
+  version      = {0.2.0},
+  url          = {https://github.com/cesarneyit-code/FusionRings},
+  note         = {GAP package for fusion rings, modular data, and based-module computations}
+}
+```
