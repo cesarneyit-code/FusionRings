@@ -94,6 +94,8 @@ FusionRing
           <Prop Name="IsPointedFusionRing" Arg="F"/>
           <Oper Name="IsFusionSubring" Arg="F, subset"/>
           <Oper Name="FusionSubring" Arg="F, subset"/>
+          <Func Name="FusionSubringByGenerators" Arg="F, generators"/>
+          <Func Name="FusionSubringLatticeSmall" Arg="F[, maxRank]"/>
           <Attr Name="CanonicalPointedSubring" Arg="F"/>
           <Attr Name="AdjointSubring" Arg="F"/>
           <Prop Name="IsIntegralFusionRing" Arg="F"/>

@@ -23,6 +23,15 @@ ModularDataFromNsdRecord(rec);
 ModularDataFromST(S, T[, labels]);
 ```
 
+`ModularDataFromST` also accepts an options record as the last argument:
+
+```gap
+md := ModularDataFromST(S, T, labels, rec(inferN := true, completeData := true));;
+```
+
+- `inferN := true` attempts to infer fusion coefficients via Verlinde.
+- `completeData := true` fills derived fields (`d`, `D2`, `theta`, `ordT`).
+
 ## Database-backed flow
 
 ```gap

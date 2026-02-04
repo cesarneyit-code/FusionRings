@@ -118,6 +118,7 @@ API (core)
   `GlobalFPDimension`, `FPType`, `FPTypeApprox`, `FormalCodegrees`
 - Subrings/invertibles: `IsInvertibleSimple`, `InvertibleSimples`,
   `IsPointedFusionRing`, `IsFusionSubring`, `FusionSubring`,
+  `FusionSubringByGenerators`, `FusionSubringLatticeSmall`,
   `CanonicalPointedSubring`, `AdjointSubring`,
   `IsIntegralFusionRing`, `IsWeaklyIntegralFusionRing`
 - Helpers: `NormalizeProductList`

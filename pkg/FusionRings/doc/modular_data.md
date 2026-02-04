@@ -259,6 +259,9 @@ the database. Once you do, the balancing equation fixes `S` uniquely.
   - Same as above, explicit.
 - `ModularDataFromST(S, T[, labels])`
   - Wraps an existing `(S,T)`.
+  - Optional options record as last argument:
+    - `inferN := true` tries to reconstruct fusion coefficients by Verlinde.
+    - `completeData := true` fills `d`, `D2`, `theta`, `ordT` from `S`,`T`.
 
 ### Attributes
 
@@ -304,6 +307,26 @@ Levels implemented:
 
 - **7**: Cauchy primes check using `Norm(D^2)` when available
   (falls back to rational case if `D^2` is rational).
+
+### Practical walkthrough (rank 2 and rank 3)
+
+```
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+
+md2 := GetModularData(2, 1, 1);;
+for l in [1..7] do
+  v := ValidateModularData(md2, l);;
+  Print("rank2 level ", l, ": ok=", v.ok, ", failures=", Length(v.failures), "\n");
+od;
+
+md3 := GetModularData(3, 2, 1);;
+for l in [1..7] do
+  v := ValidateModularData(md3, l);;
+  Print("rank3 (2,1) level ", l, ": ok=", v.ok, ", failures=", Length(v.failures), "\n");
+od;
+```
+
+For these two entries, all levels `1..7` return `ok = true`.
 
 ### To do / Improvements
 

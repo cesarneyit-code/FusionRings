@@ -37,6 +37,8 @@ DeclareAttribute("InvertibleSimples", IsFusionRing);
 DeclareProperty("IsPointedFusionRing", IsFusionRing);
 DeclareOperation("IsFusionSubring", [ IsFusionRing, IsList ]);
 DeclareOperation("FusionSubring", [ IsFusionRing, IsList ]);
+DeclareGlobalFunction("FusionSubringByGenerators");
+DeclareGlobalFunction("FusionSubringLatticeSmall");
 DeclareAttribute("CanonicalPointedSubring", IsFusionRing);
 DeclareAttribute("AdjointSubring", IsFusionRing);
 DeclareAttribute("FPRank", IsFusionRing);

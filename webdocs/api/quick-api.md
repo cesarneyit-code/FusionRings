@@ -26,6 +26,8 @@
 - `IsPointedFusionRing(F)`
 - `IsFusionSubring(F, subset)`
 - `FusionSubring(F, subset)`
+- `FusionSubringByGenerators(F, generators)`
+- `FusionSubringLatticeSmall(F[, maxRank])`
 - `CanonicalPointedSubring(F)`
 - `AdjointSubring(F)`
 - `IsIntegralFusionRing(F)`

@@ -427,40 +427,13 @@ InstallMethod(IsFusionSubring, [ IsFusionRing, IsList ], function(F, subset)
   return true;
 end );
 
-InstallMethod(FusionSubring, [ IsFusionRing, IsList ], function(F, subset)
-  local labels, one, dual, prodTable, i, j, prod;
-  labels := FRLabelsListFromI@(subset);
-  if not IsFusionSubring(F, labels) then
-    Error("subset is not a fusion subring");
-  fi;
+BindGlobal("FRSubringClosureLabels@", function(F, seed)
+  local cur, changed, one, i, j, d, term;
   one := OneLabel(F);
-  dual := List(labels, i -> DualLabel(F, i));
-  prodTable := [];
-  for i in labels do
-    for j in labels do
-      prod := MultiplyBasis(F, i, j);
-      Add(prodTable, [ i, j, prod ]);
-    od;
-  od;
-  return FusionRingBySparseConstants(labels, one, dual, prodTable, rec(check := 2));
-end );
-
-InstallMethod(CanonicalPointedSubring, [ IsFusionRing ], function(F)
-  return FusionSubring(F, InvertibleSimples(F));
-end );
-
-InstallMethod(AdjointSubring, [ IsFusionRing ], function(F)
-  local labels, cur, changed, i, j, term, d;
-  labels := LabelsList(F);
-  cur := [ OneLabel(F) ];
-  for i in labels do
-    d := DualLabel(F, i);
-    for term in MultiplyBasis(F, i, d) do
-      if Position(cur, term[1]) = fail then
-        Add(cur, term[1]);
-      fi;
-    od;
-  od;
+  cur := ShallowCopy(seed);
+  if Position(cur, one) = fail then
+    Add(cur, one);
+  fi;
   cur := FRLabelsListFromI@(cur);
   changed := true;
   while changed do
@@ -486,6 +459,93 @@ InstallMethod(AdjointSubring, [ IsFusionRing ], function(F)
       cur := FRLabelsListFromI@(cur);
     fi;
   od;
+  return cur;
+end );
+
+InstallMethod(FusionSubring, [ IsFusionRing, IsList ], function(F, subset)
+  local labels, one, dual, prodTable, i, j, prod;
+  labels := FRLabelsListFromI@(subset);
+  if not IsFusionSubring(F, labels) then
+    Error("subset is not a fusion subring");
+  fi;
+  one := OneLabel(F);
+  dual := List(labels, i -> DualLabel(F, i));
+  prodTable := [];
+  for i in labels do
+    for j in labels do
+      prod := MultiplyBasis(F, i, j);
+      Add(prodTable, [ i, j, prod ]);
+    od;
+  od;
+  return FusionRingBySparseConstants(labels, one, dual, prodTable, rec(check := 2));
+end );
+
+InstallGlobalFunction(FusionSubringByGenerators, function(F, gens)
+  local labels;
+  if not IsFusionRing(F) then
+    Error("FusionSubringByGenerators expects a fusion ring as first argument");
+  fi;
+  if not IsList(gens) then
+    Error("generators must be a list of labels");
+  fi;
+  labels := FRSubringClosureLabels@(F, gens);
+  return FusionSubring(F, labels);
+end );
+
+InstallGlobalFunction(FusionSubringLatticeSmall, function(arg)
+  local F, maxRank, labels, one, others, out, comb, subset, i, candidates;
+  if Length(arg) = 1 then
+    F := arg[1];
+    maxRank := 10;
+  elif Length(arg) = 2 then
+    F := arg[1];
+    maxRank := arg[2];
+    if not IsInt(maxRank) or maxRank < 1 then
+      Error("maxRank must be a positive integer");
+    fi;
+  else
+    Error("FusionSubringLatticeSmall expects (F[, maxRank])");
+  fi;
+  if not IsFusionRing(F) then
+    Error("first argument must be a fusion ring");
+  fi;
+  labels := LabelsList(F);
+  if Length(labels) > maxRank then
+    Error("rank too large for exhaustive small-lattice search");
+  fi;
+  one := OneLabel(F);
+  others := Filtered(labels, x -> x <> one);
+  out := [];
+  for i in [0..Length(others)] do
+    for comb in Combinations(others, i) do
+      subset := Concatenation([one], comb);
+      if IsFusionSubring(F, subset) then
+        Add(out, FRLabelsListFromI@(subset));
+      fi;
+    od;
+  od;
+  candidates := Set(out);
+  SortBy(candidates, x -> Length(x));
+  return Immutable(candidates);
+end );
+
+InstallMethod(CanonicalPointedSubring, [ IsFusionRing ], function(F)
+  return FusionSubring(F, InvertibleSimples(F));
+end );
+
+InstallMethod(AdjointSubring, [ IsFusionRing ], function(F)
+  local labels, cur, i, term, d;
+  labels := LabelsList(F);
+  cur := [ OneLabel(F) ];
+  for i in labels do
+    d := DualLabel(F, i);
+    for term in MultiplyBasis(F, i, d) do
+      if Position(cur, term[1]) = fail then
+        Add(cur, term[1]);
+      fi;
+    od;
+  od;
+  cur := FRSubringClosureLabels@(F, cur);
   return FusionSubring(F, cur);
 end );
 

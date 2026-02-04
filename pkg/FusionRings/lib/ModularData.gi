@@ -71,7 +71,7 @@ BindGlobal("MDSFromNsd@", function(N, d, theta)
 end );
 
 BindGlobal("MDVerlindeSU2@", function(level)
-  local k, r, q, denom, S, T, a, b, exp, labels, md, d, D2, Ncalc, i, j, x, ord;
+  local k, r, q, denom, S, T, a, b, exp, labels;
   if not IsInt(level) or level < 1 then
     Error("level must be a positive integer");
   fi;
@@ -91,33 +91,7 @@ BindGlobal("MDVerlindeSU2@", function(level)
     T[a + 1][a + 1] := E(4 * (k + 2))^(a * (a + 2));
   od;
   labels := [0..k];
-  md := ModularDataFromST(S, T, labels);
-
-  # Populate fusion coefficients via Verlinde so the bridge to FusionRing works.
-  d := List([1..r], i -> S[1][i]);
-  D2 := Sum(d, x -> x^2);
-  Ncalc := List([1..r], i -> List([1..r], j -> List([1..r], a -> 0)));
-  for i in [1..r] do
-    for j in [1..r] do
-      for a in [1..r] do
-        exp := Sum([1..r], x -> S[i][x] * S[j][x] * S[a][x] / S[1][x]) / D2;
-        if not IsInt(exp) or exp < 0 then
-          Error("computed Verlinde coefficient is not in N for SU(2)_k");
-        fi;
-        Ncalc[i][j][a] := exp;
-      od;
-    od;
-  od;
-  md!.N := Ncalc;
-  md!.d := d;
-  md!.D2 := D2;
-  md!.theta := List([1..r], i -> T[i][i]);
-  ord := 1;
-  for i in [1..r] do
-    ord := Lcm(ord, Order(T[i][i]));
-  od;
-  md!.ordT := ord;
-  return md;
+  return ModularDataFromST(S, T, labels, rec(inferN := true, completeData := true));
 end );
 
 InstallMethod(SMatrix, [ IsModularData ], F -> F!.S );
@@ -130,8 +104,83 @@ InstallMethod(MDGlobalDimensionSquared, [ IsModularData ], F -> F!.D2 );
 InstallMethod(MDFusionCoefficients, [ IsModularData ], F -> F!.N );
 InstallMethod(MDOrderT, [ IsModularData ], F -> F!.ordT );
 
-InstallGlobalFunction(ModularDataFromST, function(S, T, labels)
-  local r, F;
+BindGlobal("MDInferNFromST@", function(S, T)
+  local r, d, D2, i, j, k, a, sum, Ncalc, tmp;
+  r := Length(S);
+  d := List([1..r], i -> S[1][i]);
+  D2 := Sum(d, x -> x^2);
+  Ncalc := List([1..r], i -> List([1..r], j -> List([1..r], k -> 0)));
+  for i in [1..r] do
+    for j in [1..r] do
+      for k in [1..r] do
+        sum := 0;
+        for a in [1..r] do
+          sum := sum + S[i][a] * S[j][a] * S[k][a] / S[1][a];
+        od;
+        tmp := sum / D2;
+        if not IsInt(tmp) or tmp < 0 then
+          return fail;
+        fi;
+        Ncalc[i][j][k] := tmp;
+      od;
+    od;
+  od;
+  return Ncalc;
+end );
+
+BindGlobal("MDCompleteFromST@", function(F, inferN)
+  local r, i, ord, Ncalc, th;
+  r := Length(F!.S);
+  F!.d := List([1..r], i -> F!.S[1][i]);
+  F!.D2 := Sum(F!.d, x -> x^2);
+  F!.theta := List([1..r], i -> F!.T[i][i]);
+  ord := 1;
+  for i in [1..r] do
+    ord := Lcm(ord, Order(F!.theta[i]));
+  od;
+  F!.ordT := ord;
+  if inferN then
+    Ncalc := MDInferNFromST@(F!.S, F!.T);
+    if Ncalc <> fail then
+      F!.N := Ncalc;
+    fi;
+  fi;
+  if F!.theta <> fail then
+    th := List([1..r], i -> F!.theta[i]);
+    F!.s := fail;
+    if IsBoundGlobal("LogFFE") then
+      # Leave spins unset by default; exact roots may not map cleanly to rationals.
+      F!.s := fail;
+    fi;
+  fi;
+end );
+
+InstallGlobalFunction(ModularDataFromST, function(arg)
+  local S, T, labels, opts, r, F, inferN;
+  if Length(arg) < 2 or Length(arg) > 4 then
+    Error("ModularDataFromST expects (S, T[, labels][, opts])");
+  fi;
+  S := arg[1];
+  T := arg[2];
+  labels := fail;
+  opts := rec(inferN := false, completeData := true);
+  if Length(arg) >= 3 then
+    if IsRecord(arg[3]) then
+      opts := ShallowCopy(opts);
+      if IsBound(arg[3].inferN) then opts.inferN := arg[3].inferN; fi;
+      if IsBound(arg[3].completeData) then opts.completeData := arg[3].completeData; fi;
+    else
+      labels := arg[3];
+    fi;
+  fi;
+  if Length(arg) = 4 then
+    if not IsRecord(arg[4]) then
+      Error("fourth argument must be an options record");
+    fi;
+    opts := ShallowCopy(opts);
+    if IsBound(arg[4].inferN) then opts.inferN := arg[4].inferN; fi;
+    if IsBound(arg[4].completeData) then opts.completeData := arg[4].completeData; fi;
+  fi;
   if not IsList(S) then
     Error("S must be a list (matrix)");
   fi;
@@ -150,6 +199,13 @@ InstallGlobalFunction(ModularDataFromST, function(S, T, labels)
     D2 := fail,
     ordT := fail
   ));
+  inferN := false;
+  if IsBound(opts.inferN) and opts.inferN = true then
+    inferN := true;
+  fi;
+  if not IsBound(opts.completeData) or opts.completeData = true then
+    MDCompleteFromST@(F, inferN);
+  fi;
   return F;
 end );
 

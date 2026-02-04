@@ -40,6 +40,8 @@ nav:
       - Fusion Rings and Modular Data: guide/fusion-rings-and-modular-data.md
       - Validation Levels: guide/validation-levels.md
       - Phase 2 (Verlinde): guide/phase2-verlinde.md
+      - API Exactness: guide/api-exactness.md
+      - Paper Criteria Examples: guide/paper-criteria.md
       - Worked Examples: guide/examples.md
   - API:
       - Quick API: api/quick-api.md
