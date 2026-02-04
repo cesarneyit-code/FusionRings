@@ -14,6 +14,9 @@ pkg/FusionRings/doc/chap0.html
 pkg/FusionRings/doc/main.tex
 pkg/FusionRings/doc/manual.pdf
 
+# MkDocs build artifacts
+site/
+
 # OS
 .DS_Store
 
