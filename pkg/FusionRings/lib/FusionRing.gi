@@ -583,6 +583,68 @@ InstallMethod(AreEquivalentFusionModules, [ IsFusionModule, IsFusionModule ], fu
   return Search(1);
 end );
 
+InstallGlobalFunction(FusionModuleGraph, function(arg)
+  local M, lbl, basis, n, A, acts, i, r, c, adj, edges, mode;
+  if Length(arg) = 1 then
+    M := arg[1];
+    lbl := fail;
+  elif Length(arg) = 2 then
+    M := arg[1];
+    lbl := arg[2];
+  else
+    Error("FusionModuleGraph expects 1 or 2 arguments");
+  fi;
+  if not IsFusionModule(M) then
+    Error("FusionModuleGraph expects a fusion module");
+  fi;
+  basis := ModuleBasisLabels(M);
+  n := Length(basis);
+  adj := List([1..n], x -> List([1..n], y -> 0));
+
+  if lbl = fail then
+    mode := "combined-undirected";
+    acts := ActionMatrices(M);
+    for i in [1..Length(acts)] do
+      A := acts[i];
+      for r in [1..n] do
+        for c in [1..n] do
+          if A[r][c] <> 0 then
+            adj[r][c] := adj[r][c] + A[r][c];
+            if r <> c then
+              adj[c][r] := adj[c][r] + A[r][c];
+            fi;
+          fi;
+        od;
+      od;
+    od;
+  else
+    mode := "action-directed";
+    A := ActionMatrix(M, lbl);
+    for r in [1..n] do
+      for c in [1..n] do
+        if A[r][c] <> 0 then
+          adj[r][c] := A[r][c];
+        fi;
+      od;
+    od;
+  fi;
+
+  edges := [];
+  for c in [1..n] do
+    for r in [1..n] do
+      if adj[r][c] <> 0 then
+        Add(edges, [ basis[c], basis[r], adj[r][c] ]);
+      fi;
+    od;
+  od;
+  return rec(
+    mode := mode,
+    vertices := basis,
+    edges := edges,
+    adjacency := Immutable(adj)
+  );
+end );
+
 
 InstallMethod(PositionOfLabel, [ IsFusionRing, IsObject ], function(F, i)
   local labels, pos;

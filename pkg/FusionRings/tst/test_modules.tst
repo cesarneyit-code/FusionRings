@@ -48,4 +48,20 @@ gap> SD := FusionSubmoduleByGenerators(D, [ "m1" ]);;
 gap> ModuleBasisLabels(SD);
 [ "m1" ]
 
+gap> Gact := FusionModuleGraph(M, LabelOfPosition(F2, 2));;
+
+gap> Gact.mode;
+"action-directed"
+
+gap> Gact.edges;
+[ [ "a", "b", 1 ], [ "b", "a", 1 ] ]
+
+gap> Gcomb := FusionModuleGraph(D);;
+
+gap> Gcomb.mode;
+"combined-undirected"
+
+gap> Gcomb.edges;
+[ [ "m1", "m1", 2 ], [ "m2", "m2", 2 ] ]
+
 gap> STOP_TEST("FusionRings-modules");

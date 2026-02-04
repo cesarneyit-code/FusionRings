@@ -213,3 +213,24 @@ Expected output:
 [ [ "m1" ], [ "m2" ] ]
 [ "m1" ]
 ```
+
+Module-graph view:
+
+```gap
+Gact := FusionModuleGraph(M, LabelOfPosition(F2, 2));;
+Gact.mode;
+Gact.edges;
+
+Gcomb := FusionModuleGraph(D);;
+Gcomb.mode;
+Gcomb.edges;
+```
+
+Expected output:
+
+```text
+"action-directed"
+[ [ "a", "b", 1 ], [ "b", "a", 1 ] ]
+"combined-undirected"
+[ [ "m1", "m1", 2 ], [ "m2", "m2", 2 ] ]
+```

@@ -64,6 +64,7 @@
 - `FusionModuleComponents(M)`
 - `IsIndecomposableFusionModule(M)`, `IsIrreducibleFusionModule(M)`
 - `AreEquivalentFusionModules(M1, M2)`
+- `FusionModuleGraph(M[, i])`
 
 ## Attributes
 

@@ -129,6 +129,7 @@ FusionRing
           <Prop Name="IsIndecomposableFusionModule" Arg="M"/>
           <Prop Name="IsIrreducibleFusionModule" Arg="M"/>
           <Oper Name="AreEquivalentFusionModules" Arg="M1, M2"/>
+          <Func Name="FusionModuleGraph" Arg="M[, i]"/>
           <Description>
             Based-module constructors and analysis tools over a fusion ring.
           </Description>

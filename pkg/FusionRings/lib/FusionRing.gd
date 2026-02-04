@@ -99,3 +99,4 @@ DeclareProperty("IsIndecomposableFusionModule", IsFusionModule);
 DeclareOperation("AreEquivalentFusionModules", [ IsFusionModule, IsFusionModule ]);
 DeclareAttribute("FusionModuleComponents", IsFusionModule);
 DeclareGlobalFunction("FusionModuleByActionMatrices");
+DeclareGlobalFunction("FusionModuleGraph");

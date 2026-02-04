@@ -127,7 +127,7 @@ API (core)
 - Based modules: `FusionModuleByActionMatrices`, `ActionMatrix`, `ActionOnBasis`,
   `IsFusionSubmodule`, `FusionSubmodule`, `FusionSubmoduleByGenerators`,
   `FusionModuleComponents`, `IsIndecomposableFusionModule`,
-  `IsIrreducibleFusionModule`, `AreEquivalentFusionModules`
+  `IsIrreducibleFusionModule`, `AreEquivalentFusionModules`, `FusionModuleGraph`
 - Helpers: `NormalizeProductList`
 - Export/Import: `FusionRingRecord`, `FusionRingFromRecord`, `SaveFusionRing`, `LoadFusionRing`
 
