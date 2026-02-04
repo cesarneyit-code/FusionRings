@@ -100,6 +100,10 @@ FusionRing
           <Attr Name="AdjointSubring" Arg="F"/>
           <Prop Name="IsIntegralFusionRing" Arg="F"/>
           <Prop Name="IsWeaklyIntegralFusionRing" Arg="F"/>
+          <Func Name="CheckDNumberCriterionCommutative" Arg="F"/>
+          <Func Name="CheckDrinfeldCriterionCommutative" Arg="F"/>
+          <Func Name="CheckExtendedCyclotomicCriterionCommutative" Arg="F"/>
+          <Func Name="CheckPaperCriteriaCommutative" Arg="F"/>
           <Oper Name="CheckFusionRingAxioms" Arg="F, level"/>
           <Func Name="CheckFusionRingAxiomsSample" Arg="F, level, samples"/>
           <Description>

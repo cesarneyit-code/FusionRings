@@ -116,6 +116,9 @@ API (core)
 - FP dimensions: `FPDimensions`, `FPDimensionData`, `FPDimensionPolynomials`,
   `FPDimensionPolynomial`, `FPDimensionApprox`, `FPDimensionsApprox`,
   `GlobalFPDimension`, `FPType`, `FPTypeApprox`, `FormalCodegrees`
+- Paper criteria helpers (commutative): `CheckDNumberCriterionCommutative`,
+  `CheckDrinfeldCriterionCommutative`, `CheckExtendedCyclotomicCriterionCommutative`,
+  `CheckPaperCriteriaCommutative`
 - Subrings/invertibles: `IsInvertibleSimple`, `InvertibleSimples`,
   `IsPointedFusionRing`, `IsFusionSubring`, `FusionSubring`,
   `FusionSubringByGenerators`, `FusionSubringLatticeSmall`,

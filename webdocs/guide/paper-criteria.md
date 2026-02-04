@@ -60,3 +60,27 @@ Today, the package already supports core ingredients used in the paper:
 
 Next natural additions are dedicated APIs for Schur/Drinfeld/d-number/cyclotomic
 criteria directly as one-call checks.
+
+## 6) Example from the paper appendix (criterion failure)
+
+The following rank-4 commutative example (same matrix data as in the TeX appendix)
+fails the d-number check:
+
+```gap
+M := [
+  [ [1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1] ],
+  [ [0,1,0,0],[0,0,1,0],[1,0,0,0],[0,0,0,1] ],
+  [ [0,0,1,0],[1,0,0,0],[0,1,0,0],[0,0,0,1] ],
+  [ [0,0,0,1],[0,0,0,1],[0,0,0,1],[1,1,1,1] ]
+];;
+F := FusionRingByFusionMatrices([1..4], 1, fail, M, rec(inferDual := true, check := 0));;
+
+CheckDNumberCriterionCommutative(F);
+CheckDrinfeldCriterionCommutative(F);
+CheckExtendedCyclotomicCriterionCommutative(F);
+```
+
+Current implementation notes:
+- d-number helper is exact from formal-codegree polynomials.
+- Drinfeld and extended cyclotomic helpers are currently conservative and may
+  report `applicable := false` when exact number-field checks are not yet available.

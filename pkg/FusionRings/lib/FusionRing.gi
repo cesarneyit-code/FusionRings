@@ -794,6 +794,159 @@ InstallMethod(FormalCodegrees, [ IsFusionRing ], function(F)
   return Immutable(out);
 end );
 
+BindGlobal("FRIsCommutativeFusionRing@", function(F)
+  local labels, i, j;
+  labels := LabelsList(F);
+  for i in labels do
+    for j in labels do
+      if MultiplyBasis(F, i, j) <> MultiplyBasis(F, j, i) then
+        return false;
+      fi;
+    od;
+  od;
+  return true;
+end );
+
+BindGlobal("FRIsDNumberPolynomial@", function(p)
+  local n, coeffs, b0, i, bi;
+  if not IsUnivariatePolynomial(p) then
+    return false;
+  fi;
+  coeffs := CoefficientsOfUnivariatePolynomial(p);
+  n := DegreeOfLaurentPolynomial(p);
+  if n < 0 then
+    return false;
+  fi;
+  if coeffs[n + 1] <> 1 then
+    return false;
+  fi;
+  if not ForAll(coeffs, IsInt) then
+    return false;
+  fi;
+  b0 := coeffs[1];
+  if b0 = 0 then
+    return false;
+  fi;
+  for i in [1..n] do
+    bi := coeffs[n - i + 1];
+    if (bi^n) mod (b0^i) <> 0 then
+      return false;
+    fi;
+  od;
+  return true;
+end );
+
+InstallGlobalFunction(CheckDNumberCriterionCommutative, function(F)
+  local out, fc, i;
+  out := rec(applicable := true, ok := true, failures := [], details := []);
+  if not IsFusionRing(F) then
+    Error("CheckDNumberCriterionCommutative expects a fusion ring");
+  fi;
+  if not FRIsCommutativeFusionRing@(F) then
+    out.applicable := false;
+    out.ok := false;
+    Add(out.failures, "ring is non-commutative");
+    return out;
+  fi;
+  fc := FormalCodegrees(F);
+  for i in [1..Length(fc)] do
+    Add(out.details, rec(index := i, polynomial := fc[i].polynomial,
+                         isDNumber := FRIsDNumberPolynomial@(fc[i].polynomial)));
+    if not out.details[Length(out.details)].isDNumber then
+      out.ok := false;
+      Add(out.failures, Concatenation("formal codegree polynomial #", String(i),
+          " fails d-number divisibility test"));
+    fi;
+  od;
+  return out;
+end );
+
+InstallGlobalFunction(CheckDrinfeldCriterionCommutative, function(F)
+  local out, fc, c1, i, ratio;
+  out := rec(applicable := true, ok := true, failures := [], mode := "exact-rational");
+  if not IsFusionRing(F) then
+    Error("CheckDrinfeldCriterionCommutative expects a fusion ring");
+  fi;
+  if not FRIsCommutativeFusionRing@(F) then
+    out.applicable := false;
+    out.ok := false;
+    Add(out.failures, "ring is non-commutative");
+    return out;
+  fi;
+  fc := FormalCodegrees(F);
+  if Length(fc) = 0 then
+    out.ok := false;
+    Add(out.failures, "no formal codegrees available");
+    return out;
+  fi;
+  c1 := fc[1].value;
+  if not IsRat(c1) then
+    out.mode := "unknown-nonrational";
+    out.applicable := false;
+    out.ok := false;
+    Add(out.failures, "top codegree is non-rational; exact ratio test not implemented");
+    return out;
+  fi;
+  for i in [1..Length(fc)] do
+    if not IsRat(fc[i].value) then
+      out.mode := "unknown-nonrational";
+      out.applicable := false;
+      out.ok := false;
+      Add(out.failures, Concatenation("codegree #", String(i),
+          " is non-rational; exact ratio test not implemented"));
+      return out;
+    fi;
+    ratio := c1 / fc[i].value;
+    if not IsInt(ratio) then
+      out.ok := false;
+      Add(out.failures, Concatenation("c1/c", String(i), " is not an integer"));
+    fi;
+  od;
+  return out;
+end );
+
+InstallGlobalFunction(CheckExtendedCyclotomicCriterionCommutative, function(F)
+  local out, mats, i, p;
+  out := rec(applicable := true, ok := true, failures := [], mode := "conservative");
+  if not IsFusionRing(F) then
+    Error("CheckExtendedCyclotomicCriterionCommutative expects a fusion ring");
+  fi;
+  if not FRIsCommutativeFusionRing@(F) then
+    out.applicable := false;
+    out.ok := false;
+    Add(out.failures, "ring is non-commutative");
+    return out;
+  fi;
+  mats := FusionMatrices(F);
+  for i in [1..Length(mats)] do
+    p := MinimalPolynomial(Rationals, mats[i], 1);
+    if not IsUnivariatePolynomial(p) then
+      out.ok := false;
+      Add(out.failures, Concatenation("minimal polynomial unavailable for matrix #", String(i)));
+      return out;
+    fi;
+    # Conservative implementation: degree-1 and degree-2 factors are treated as cyclotomic-compatible.
+    # Higher degrees are marked unknown unless dedicated number-field checks are added.
+    if DegreeOfLaurentPolynomial(p) > 2 then
+      out.mode := "unknown-high-degree";
+      out.applicable := false;
+      out.ok := false;
+      Add(out.failures, Concatenation("matrix #", String(i),
+          " has degree > 2 minimal polynomial; exact abelian splitting-field check not yet implemented"));
+      return out;
+    fi;
+  od;
+  return out;
+end );
+
+InstallGlobalFunction(CheckPaperCriteriaCommutative, function(F)
+  return rec(
+    dNumber := CheckDNumberCriterionCommutative(F),
+    drinfeld := CheckDrinfeldCriterionCommutative(F),
+    cyclotomic := CheckExtendedCyclotomicCriterionCommutative(F)
+  );
+end );
+
 InstallMethod(IsInternallyConsistent, [ IsFusionRing ], function(F)
   local one, labels, i, sample, prod, term;
   one := OneLabel(F);

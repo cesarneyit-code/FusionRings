@@ -47,6 +47,13 @@
 - `FPDimensionsApprox(F[, digits])`
 - `FPTypeApprox(F[, digits])`
 
+## Paper criteria helpers (commutative case)
+
+- `CheckDNumberCriterionCommutative(F)`
+- `CheckDrinfeldCriterionCommutative(F)`
+- `CheckExtendedCyclotomicCriterionCommutative(F)`
+- `CheckPaperCriteriaCommutative(F)`
+
 ## Attributes
 
 - `SMatrix(md)`, `TMatrix(md)`, `MDLabels(md)`
