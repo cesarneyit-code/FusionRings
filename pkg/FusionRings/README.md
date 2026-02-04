@@ -113,6 +113,13 @@ API (core)
 - Operations: `MultiplyBasis`, `FusionCoefficient`, `DualLabel`, `FusionMatrix`, `CheckFusionRingAxioms`
 - Attributes/Indexing: `BasisLabels`, `OneLabel`, `LabelsList`, `DualTable`, `FusionMatrices`,
   `PositionOfLabel`, `LabelOfPosition`
+- FP dimensions: `FPDimensions`, `FPDimensionData`, `FPDimensionPolynomials`,
+  `FPDimensionPolynomial`, `FPDimensionApprox`, `FPDimensionsApprox`,
+  `GlobalFPDimension`, `FPType`, `FPTypeApprox`, `FormalCodegrees`
+- Subrings/invertibles: `IsInvertibleSimple`, `InvertibleSimples`,
+  `IsPointedFusionRing`, `IsFusionSubring`, `FusionSubring`,
+  `CanonicalPointedSubring`, `AdjointSubring`,
+  `IsIntegralFusionRing`, `IsWeaklyIntegralFusionRing`
 - Helpers: `NormalizeProductList`
 - Export/Import: `FusionRingRecord`, `FusionRingFromRecord`, `SaveFusionRing`, `LoadFusionRing`
 

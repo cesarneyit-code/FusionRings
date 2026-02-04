@@ -341,6 +341,154 @@ InstallMethod(FusionMatrices, [ IsFusionRing ], function(F)
   return Immutable(mats);
 end );
 
+BindGlobal("FRIsPermutationMatrix@", function(mat)
+  local r, i, j, rowsum, colsum;
+  if not IsList(mat) then
+    return false;
+  fi;
+  r := Length(mat);
+  if r = 0 then
+    return false;
+  fi;
+  for i in [1..r] do
+    if not IsList(mat[i]) or Length(mat[i]) <> r then
+      return false;
+    fi;
+  od;
+  for i in [1..r] do
+    rowsum := 0;
+    for j in [1..r] do
+      if not IsInt(mat[i][j]) or not (mat[i][j] = 0 or mat[i][j] = 1) then
+        return false;
+      fi;
+      rowsum := rowsum + mat[i][j];
+    od;
+    if rowsum <> 1 then
+      return false;
+    fi;
+  od;
+  for j in [1..r] do
+    colsum := 0;
+    for i in [1..r] do
+      colsum := colsum + mat[i][j];
+    od;
+    if colsum <> 1 then
+      return false;
+    fi;
+  od;
+  return true;
+end );
+
+InstallMethod(IsInvertibleSimple, [ IsFusionRing, IsObject ], function(F, label)
+  if PositionOfLabel(F, label) = fail then
+    Error("label not in fusion ring");
+  fi;
+  return FRIsPermutationMatrix@(FusionMatrix(F, label));
+end );
+
+InstallMethod(InvertibleSimples, [ IsFusionRing ], function(F)
+  local labels;
+  labels := LabelsList(F);
+  return Immutable(Filtered(labels, x -> IsInvertibleSimple(F, x)));
+end );
+
+InstallMethod(IsPointedFusionRing, [ IsFusionRing ], function(F)
+  return Length(InvertibleSimples(F)) = Length(LabelsList(F));
+end );
+
+InstallMethod(IsFusionSubring, [ IsFusionRing, IsList ], function(F, subset)
+  local labels, one, i, j, prod, term;
+  if subset = [] then
+    return false;
+  fi;
+  labels := FRLabelsListFromI@(subset);
+  one := OneLabel(F);
+  if Position(labels, one) = fail then
+    return false;
+  fi;
+  for i in labels do
+    if PositionOfLabel(F, i) = fail then
+      return false;
+    fi;
+    if Position(labels, DualLabel(F, i)) = fail then
+      return false;
+    fi;
+  od;
+  for i in labels do
+    for j in labels do
+      prod := MultiplyBasis(F, i, j);
+      for term in prod do
+        if Position(labels, term[1]) = fail then
+          return false;
+        fi;
+      od;
+    od;
+  od;
+  return true;
+end );
+
+InstallMethod(FusionSubring, [ IsFusionRing, IsList ], function(F, subset)
+  local labels, one, dual, prodTable, i, j, prod;
+  labels := FRLabelsListFromI@(subset);
+  if not IsFusionSubring(F, labels) then
+    Error("subset is not a fusion subring");
+  fi;
+  one := OneLabel(F);
+  dual := List(labels, i -> DualLabel(F, i));
+  prodTable := [];
+  for i in labels do
+    for j in labels do
+      prod := MultiplyBasis(F, i, j);
+      Add(prodTable, [ i, j, prod ]);
+    od;
+  od;
+  return FusionRingBySparseConstants(labels, one, dual, prodTable, rec(check := 2));
+end );
+
+InstallMethod(CanonicalPointedSubring, [ IsFusionRing ], function(F)
+  return FusionSubring(F, InvertibleSimples(F));
+end );
+
+InstallMethod(AdjointSubring, [ IsFusionRing ], function(F)
+  local labels, cur, changed, i, j, term, d;
+  labels := LabelsList(F);
+  cur := [ OneLabel(F) ];
+  for i in labels do
+    d := DualLabel(F, i);
+    for term in MultiplyBasis(F, i, d) do
+      if Position(cur, term[1]) = fail then
+        Add(cur, term[1]);
+      fi;
+    od;
+  od;
+  cur := FRLabelsListFromI@(cur);
+  changed := true;
+  while changed do
+    changed := false;
+    for i in ShallowCopy(cur) do
+      d := DualLabel(F, i);
+      if Position(cur, d) = fail then
+        Add(cur, d);
+        changed := true;
+      fi;
+    od;
+    for i in ShallowCopy(cur) do
+      for j in ShallowCopy(cur) do
+        for term in MultiplyBasis(F, i, j) do
+          if Position(cur, term[1]) = fail then
+            Add(cur, term[1]);
+            changed := true;
+          fi;
+        od;
+      od;
+    od;
+    if changed then
+      cur := FRLabelsListFromI@(cur);
+    fi;
+  od;
+  return FusionSubring(F, cur);
+end );
+
 BindGlobal("FRPolyEvalFloat@", function(poly, x)
   local coeffs, i, y;
   coeffs := CoefficientsOfUnivariatePolynomial(poly);
@@ -493,6 +641,97 @@ InstallGlobalFunction(FPDimensionsApprox, function(arg)
     return vals;
   fi;
   return List(vals, x -> FRRoundFloatDigits@(x, digits));
+end );
+
+InstallMethod(FPRank, [ IsFusionRing ], F -> Length(LabelsList(F)));
+InstallOtherMethod(Rank, [ IsFusionRing ], F -> FPRank(F));
+
+InstallMethod(GlobalFPDimension, [ IsFusionRing ], function(F)
+  return Sum(FPDimensions(F), d -> d^2);
+end );
+
+InstallMethod(FPType, [ IsFusionRing ], function(F)
+  local data, pairs;
+  data := FPDimensionData(F);
+  pairs := List([1..Length(data)], i -> [ data[i].approx, data[i].root ]);
+  SortBy(pairs, p -> p[1]);
+  return Immutable(List(pairs, p -> p[2]));
+end );
+
+InstallGlobalFunction(FPTypeApprox, function(arg)
+  local F, digits, data, pairs, vals;
+  if Length(arg) = 1 then
+    F := arg[1];
+    digits := fail;
+  elif Length(arg) = 2 then
+    F := arg[1];
+    digits := arg[2];
+    if not IsInt(digits) or digits < 0 then
+      Error("digits must be a nonnegative integer");
+    fi;
+  else
+    Error("FPTypeApprox expects (F[, digits])");
+  fi;
+  data := FPDimensionData(F);
+  pairs := List([1..Length(data)], i -> [ data[i].approx, data[i].approx ]);
+  SortBy(pairs, p -> p[1]);
+  vals := List(pairs, p -> p[2]);
+  if digits = fail then
+    return vals;
+  fi;
+  return List(vals, x -> FRRoundFloatDigits@(x, digits));
+end );
+
+InstallMethod(IsIntegralFusionRing, [ IsFusionRing ], function(F)
+  local p, coeffs;
+  for p in FPDimensionPolynomials(F) do
+    if DegreeOfLaurentPolynomial(p) <> 1 then
+      return false;
+    fi;
+    coeffs := CoefficientsOfUnivariatePolynomial(p);
+    if Length(coeffs) <> 2 or coeffs[2] <> 1 or not IsInt(-coeffs[1]) then
+      return false;
+    fi;
+  od;
+  return true;
+end );
+
+InstallMethod(IsWeaklyIntegralFusionRing, [ IsFusionRing ], function(F)
+  local s, n;
+  s := Sum(FPDimensionData(F), x -> x.approx^2);
+  n := Int(s + 0.5);
+  return AbsoluteValue(s - n) < 1.0e-8;
+end );
+
+InstallMethod(FormalCodegrees, [ IsFusionRing ], function(F)
+  local mats, A, i, p, fac, out, f, exp, deg, coeffs, root, K;
+  mats := FusionMatrices(F);
+  A := NullMat(Length(mats), Length(mats));
+  for i in [1..Length(mats)] do
+    A := A + mats[i] * TransposedMat(mats[i]);
+  od;
+  p := CharacteristicPolynomial(A);
+  fac := Collected(Factors(p));
+  out := [];
+  for i in [1..Length(fac)] do
+    f := fac[i][1];
+    exp := fac[i][2];
+    deg := DegreeOfLaurentPolynomial(f);
+    if deg = 1 then
+      coeffs := CoefficientsOfUnivariatePolynomial(f);
+      root := -coeffs[1];
+    else
+      K := AlgebraicExtension(Rationals, f, Concatenation("fc", String(i)));
+      root := RootOfDefiningPolynomial(K);
+    fi;
+    if IsRat(root) then
+      Add(out, rec(value := root, polynomial := f, multiplicity := exp, approx := Float(root)));
+    else
+      Add(out, rec(value := root, polynomial := f, multiplicity := exp, approx := 0.0));
+    fi;
+  od;
+  SortBy(out, x -> -x.approx);
+  return Immutable(out);
 end );
 
 InstallMethod(IsInternallyConsistent, [ IsFusionRing ], function(F)

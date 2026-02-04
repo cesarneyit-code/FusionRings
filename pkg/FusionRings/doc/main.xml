@@ -89,6 +89,15 @@ FusionRing
           <Oper Name="FusionCoefficient" Arg="F, i, j, k"/>
           <Oper Name="DualLabel" Arg="F, i"/>
           <Oper Name="FusionMatrix" Arg="F, i"/>
+          <Oper Name="IsInvertibleSimple" Arg="F, i"/>
+          <Attr Name="InvertibleSimples" Arg="F"/>
+          <Prop Name="IsPointedFusionRing" Arg="F"/>
+          <Oper Name="IsFusionSubring" Arg="F, subset"/>
+          <Oper Name="FusionSubring" Arg="F, subset"/>
+          <Attr Name="CanonicalPointedSubring" Arg="F"/>
+          <Attr Name="AdjointSubring" Arg="F"/>
+          <Prop Name="IsIntegralFusionRing" Arg="F"/>
+          <Prop Name="IsWeaklyIntegralFusionRing" Arg="F"/>
           <Oper Name="CheckFusionRingAxioms" Arg="F, level"/>
           <Func Name="CheckFusionRingAxiomsSample" Arg="F, level, samples"/>
           <Description>
@@ -107,6 +116,17 @@ FusionRing
           <Attr Name="LabelsList" Arg="F"/>
           <Attr Name="DualTable" Arg="F"/>
           <Attr Name="FusionMatrices" Arg="F"/>
+          <Attr Name="FPDimensionData" Arg="F"/>
+          <Attr Name="FPRank" Arg="F"/>
+          <Attr Name="GlobalFPDimension" Arg="F"/>
+          <Attr Name="FPType" Arg="F"/>
+          <Attr Name="FPDimensions" Arg="F"/>
+          <Attr Name="FPDimensionPolynomials" Arg="F"/>
+          <Attr Name="FormalCodegrees" Arg="F"/>
+          <Oper Name="FPDimensionPolynomial" Arg="F, i"/>
+          <Oper Name="FPDimensionApprox" Arg="F, i[, digits]"/>
+          <Func Name="FPDimensionsApprox" Arg="F[, digits]"/>
+          <Func Name="FPTypeApprox" Arg="F[, digits]"/>
           <Oper Name="PositionOfLabel" Arg="F, i"/>
           <Oper Name="LabelOfPosition" Arg="F, p"/>
           <Func Name="NormalizeProductList" Arg="list[, F]"/>

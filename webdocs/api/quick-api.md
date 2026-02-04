@@ -19,6 +19,32 @@
 - `VerlindeModularDataByLieAlgebra(L, level)`
 - `VerlindeModularDataByRootSystem(R, level)`
 
+## Invertibles and subrings
+
+- `IsInvertibleSimple(F, i)`
+- `InvertibleSimples(F)`
+- `IsPointedFusionRing(F)`
+- `IsFusionSubring(F, subset)`
+- `FusionSubring(F, subset)`
+- `CanonicalPointedSubring(F)`
+- `AdjointSubring(F)`
+- `IsIntegralFusionRing(F)`
+- `IsWeaklyIntegralFusionRing(F)`
+
+## FP dimensions
+
+- `FPDimensionData(F)`
+- `FPRank(F)` (and `Rank(F)` helper)
+- `GlobalFPDimension(F)`
+- `FPType(F)`
+- `FPDimensions(F)` (exact algebraic values)
+- `FPDimensionPolynomials(F)`
+- `FormalCodegrees(F)`
+- `FPDimensionPolynomial(F, i)`
+- `FPDimensionApprox(F, i[, digits])`
+- `FPDimensionsApprox(F[, digits])`
+- `FPTypeApprox(F[, digits])`
+
 ## Attributes
 
 - `SMatrix(md)`, `TMatrix(md)`, `MDLabels(md)`

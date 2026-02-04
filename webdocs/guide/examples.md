@@ -117,7 +117,43 @@ MDFusionCoefficients(mdV) = fail;       # expected: true (current Phase 2 state)
 
 Use this check before calling `FusionRingFromModularData(md)`.
 
-## Example 8: Run the SU(2)_k test file
+## Example 8: Canonical pointed subring from invertibles
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+
+Fi := IsingFusionRing();;
+InvertibleSimples(Fi);                    # [ "1", "psi" ]
+P := CanonicalPointedSubring(Fi);;
+IsPointedFusionRing(P);
+```
+
+## Example 9: Exact FP dimensions and polynomials
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+
+F := FibonacciFusionRing();;
+FPDimensionPolynomial(F, "x");
+FPDimensions(F);                          # exact algebraic values
+FPDimensionApprox(F, "x", 6);             # decimal helper
+```
+
+## Example 10: FP type, integrality, and formal codegrees
+
+```gap
+Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+
+Fi := IsingFusionRing();;
+FPTypeApprox(Fi, 3);                      # [ 1., 1., 1.414 ]
+IsIntegralFusionRing(Fi);                 # false
+IsWeaklyIntegralFusionRing(Fi);           # true
+
+F4 := CyclicPointedFusionRing(4);;
+FormalCodegrees(F4);
+```
+
+## Example 11: Run the SU(2)_k test file
 
 ```gap
 Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");

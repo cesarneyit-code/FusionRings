@@ -76,3 +76,68 @@ MDFusionCoefficients(mdv) = fail;
 
 So at this stage, the bridge is one-way only when fusion coefficients are
 available in the `ModularData` object.
+
+## 5) Invertibles, pointedness, and canonical subrings
+
+An object is invertible exactly when its fusion matrix is a permutation matrix.
+This gives a canonical way to extract invertibles and build a pointed subring.
+
+```gap
+Fi := IsingFusionRing();;
+IsInvertibleSimple(Fi, "1");      # true
+IsInvertibleSimple(Fi, "psi");    # true
+IsInvertibleSimple(Fi, "sigma");  # false
+
+inv := InvertibleSimples(Fi);;
+inv;                               # [ "1", "psi" ]
+IsPointedFusionRing(Fi);           # false
+
+P := CanonicalPointedSubring(Fi);;
+BasisLabels(P);                    # [ "1", "psi" ]
+IsPointedFusionRing(P);            # true
+```
+
+You can also test arbitrary subsets:
+
+```gap
+IsFusionSubring(Fi, [ "1", "psi" ]);    # true
+IsFusionSubring(Fi, [ "1", "sigma" ]);  # false
+```
+
+## 6) Exact FP dimensions and associated polynomials
+
+FP dimensions are stored exactly (algebraic numbers), with optional decimal
+views for inspection.
+
+```gap
+F := FibonacciFusionRing();;
+FPDimensions(F);                         # exact
+FPDimensionPolynomial(F, "x");           # x^2 - x - 1
+FPDimensionApprox(F, "x", 6);            # 1.618034
+FPDimensionsApprox(F, 3);                # [ 1., 1.618 ]
+```
+
+Other useful FP helpers:
+
+```gap
+FPRank(F);
+GlobalFPDimension(F);
+FPType(F);                               # exact values (sorted by size)
+FPTypeApprox(F, 3);                      # decimal view
+FormalCodegrees(F);                      # list of records: value/polynomial/multiplicity
+```
+
+Integrality checks:
+
+```gap
+IsIntegralFusionRing(F);                 # all FPdims are integers
+IsWeaklyIntegralFusionRing(F);           # global FP dimension is an integer
+```
+
+Canonical adjoint subring:
+
+```gap
+Fi := IsingFusionRing();;
+A := AdjointSubring(Fi);;
+BasisLabels(A);                          # [ "1", "psi" ]
+```
