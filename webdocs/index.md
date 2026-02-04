@@ -26,3 +26,11 @@ CheckFusionRingAxioms(F, 1);
 ```
 
 See [Getting Started](guide/getting-started.md) for package usage and test commands.
+
+## Maintainer and citation
+
+- Maintainer: **Cesar Galindo**
+- Repository: [github.com/cesarneyit-code/FusionRings](https://github.com/cesarneyit-code/FusionRings)
+- Contact: please open an issue in the GitHub repository for questions/collaboration.
+- If this package is useful in your work, please cite it and acknowledge the
+  FusionRings project in your paper/preprint.
