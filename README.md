@@ -9,6 +9,7 @@ and module-graph workflows inspired by the ADE/Ostrik perspective.
 - Documentation website: https://cesarneyit-code.github.io/FusionRings/
 - Source repository: https://github.com/cesarneyit-code/FusionRings
 - Package directory in this repository: `pkg/FusionRings`
+- Citation page: https://cesarneyit-code.github.io/FusionRings/guide/how-to-cite/
 
 ## Main capabilities
 
@@ -35,6 +36,12 @@ If FusionRings is installed as a GAP package, load with:
 
 ```gap
 LoadPackage("FusionRings");;
+```
+
+For local development from this repository:
+
+```gap
+Read("read_direct.g");
 ```
 
 ## Quick start
