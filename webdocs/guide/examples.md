@@ -92,6 +92,23 @@ Expected output:
 true
 ```
 
+Another valid parameter set is `(k, l, m, n) = (1, 1, 1, 0)` (since `1^2+1^2 = 1*0 + 1*1 + 1`):
+
+```gap
+F3b := Rank3FusionRing(1, 1, 1, 0);;
+MultiplyBasis(F3b, "X", "X");
+MultiplyBasis(F3b, "Y", "Y");
+MultiplyBasis(F3b, "X", "Y");
+```
+
+Expected output:
+
+```text
+[ [ "1", 1 ], [ "X", 1 ], [ "Y", 1 ] ]
+[ [ "1", 1 ], [ "X", 1 ] ]
+[ [ "X", 1 ], [ "Y", 1 ] ]
+```
+
 ## 4) Fibonacci, Ising, and Tambara-Yamagami
 
 This is a quick family smoke test that mixes pointed/non-pointed behavior.

@@ -18,6 +18,15 @@ gap> MultiplyBasis(F, "X", "Y") = [ [ "Y", 1 ] ];
 true
 gap> CheckFusionRingAxioms(F, 1);
 true
+gap> F := Rank3FusionRing(1, 1, 1, 0);;
+gap> MultiplyBasis(F, "X", "X") = [ [ "1", 1 ], [ "X", 1 ], [ "Y", 1 ] ];
+true
+gap> MultiplyBasis(F, "Y", "Y") = [ [ "1", 1 ], [ "X", 1 ] ];
+true
+gap> MultiplyBasis(F, "X", "Y") = [ [ "X", 1 ], [ "Y", 1 ] ];
+true
+gap> CheckFusionRingAxioms(F, 1);
+true
 gap> F := IsingFusionRing();;
 gap> MultiplyBasis(F, "sigma", "sigma") = [ [ "1", 1 ], [ "psi", 1 ] ];
 true

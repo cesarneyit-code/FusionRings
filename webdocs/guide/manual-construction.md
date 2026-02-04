@@ -21,6 +21,11 @@ F3 := Rank3FusionRing(0, 1, 0, 0);;
 MultiplyBasis(F3, "X", "X");
 MultiplyBasis(F3, "Y", "Y");
 MultiplyBasis(F3, "X", "Y");
+
+F3b := Rank3FusionRing(1, 1, 1, 0);;
+MultiplyBasis(F3b, "X", "X");
+MultiplyBasis(F3b, "Y", "Y");
+MultiplyBasis(F3b, "X", "Y");
 ```
 
 ## 1) Fusion ring from sparse product table
