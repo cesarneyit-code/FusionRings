@@ -1,5 +1,16 @@
 # Quick API
 
+If you only remember one workflow, use:
+
+```gap
+md := GetModularData(rank, iGO, iMD);;
+ValidateModularData(md, 4).ok;
+F := FusionRingFromModularData(md);;
+CheckFusionRingAxioms(F, 1);
+```
+
+Then use the sections below as a function index.
+
 ## Constructors
 
 - `ModularData(rec | S, T[, labels])`

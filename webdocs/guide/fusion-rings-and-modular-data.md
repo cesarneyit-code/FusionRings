@@ -6,6 +6,9 @@ This page explains three things together:
 - how to load modular data from the database,
 - and how the bridge between both layers works in practice.
 
+If you are new: run each code block in order. This page is written as a guided
+script, not only as a reference.
+
 ## 1) Load the package code
 
 ```gap
@@ -66,19 +69,30 @@ This works because database-built `ModularData` includes fusion coefficients
 
 ### Important caveat for direct `(S, T)` constructors
 
-`FusionRingFromModularData(md)` needs `N`. If a modular-data object is built
-from raw `(S, T)` only, `N` may be `fail`.
+`FusionRingFromModularData(md)` needs fusion coefficients `N`.
+When you build `md` from raw `(S, T)`, you must check whether `N` was included
+or inferred.
 
 ```gap
-mdv := VerlindeModularData("A", 1, 3);;
-MDFusionCoefficients(mdv) = fail;   # currently false for SU(2)_k: N is populated
+mdDB := GetModularData(2, 1, 1);;
+MDFusionCoefficients(mdDB) = fail;   # expected: false
+
+mdV := VerlindeModularData("A", 1, 3);;
+MDFusionCoefficients(mdV) = fail;    # check current implementation state
+
+md0 := GetModularData(2, 1, 1);;
+S := SMatrix(md0);; T := TMatrix(md0);;
+mdST := ModularDataFromST(S, T, [1,2]);;
+MDFusionCoefficients(mdST) = fail;   # expected: true (no inferN option)
+
+mdSTi := ModularDataFromST(S, T, [1,2], rec(inferN := true, completeData := true));;
+MDFusionCoefficients(mdSTi) = fail;  # expected: false
 ```
 
-Current status:
-- SU(2)\_k via `VerlindeModularData("A", 1, k)` now includes `N`, so
-  `FusionRingFromModularData` works on that path.
-- Generic direct `(S, T)` wrappers can still have `N = fail` unless
-  coefficients are provided or reconstructed.
+Practical rule:
+- if `MDFusionCoefficients(md) = fail`, do not call `FusionRingFromModularData(md)`;
+- either use database-backed data, a constructor that already provides `N`, or
+  `ModularDataFromST(..., rec(inferN := true, ...))` when appropriate.
 
 ## 5) Invertibles, pointedness, and canonical subrings
 
@@ -190,3 +204,6 @@ Interpretation:
   nontrivial one.
 - In a pointed ring like `C4`, each simple gives a grading component and the
   grading is a genuine finite group.
+
+If you want a compact summary of exact vs approximate APIs, continue with
+[API Exactness](api-exactness.md).

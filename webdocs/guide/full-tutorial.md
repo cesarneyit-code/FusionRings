@@ -3,6 +3,12 @@
 This is a single narrative flow you can run top-to-bottom in GAP. It is meant
 for new users who want to understand both the API and the expected behavior.
 
+At the end of this tutorial you will have:
+- created standard fusion-ring families;
+- loaded and validated modular data from the database;
+- bridged modular data to a fusion ring;
+- run exact FP-dimension and criterion checks.
+
 ## Step 1: Load the package
 
 ```gap
@@ -135,3 +141,8 @@ FusionRings_TestAllStrict();
 ```
 
 Success signal: final summary with `0 failures in ... files`.
+
+Where to go next:
+- [Worked Examples](examples.md) for more patterns;
+- [Theorem to Computation](theorem-to-computation.md) for paper-oriented workflows;
+- [Quick API](../api/quick-api.md) as a compact reference.

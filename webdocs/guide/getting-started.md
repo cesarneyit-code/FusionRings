@@ -5,6 +5,9 @@ This is the practical "first 10 minutes" path. You will:
 2) run one full modular-data -> fusion-ring pipeline,
 3) check a few standard families.
 
+Before starting, make sure `LoadPackage("FusionRings")` returns `true`.
+If GAP cannot find the package, install/symlink it in your GAP `pkg/` directory.
+
 ## Load the package
 
 ```gap
@@ -32,6 +35,10 @@ true
 ```
 
 If both are `true`, the core pipeline is healthy.
+
+What this means mathematically:
+- the selected modular datum is internally consistent (up to validation level 4);
+- its fusion coefficients define a valid fusion ring object.
 
 ## Fusion ring family smoke test
 
@@ -88,3 +95,7 @@ CI helper (tests + docs):
 LoadPackage("FusionRings");;
 FusionRings_CI();
 ```
+
+Recommended before pushing changes:
+- run `FusionRings_TestAllStrict();`
+- then run your local examples once more to confirm expected output.

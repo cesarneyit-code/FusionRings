@@ -4,6 +4,11 @@
 
 Validation is cumulative: level `n` includes checks from levels `1..n`.
 
+Think of levels as "how strict should I be right now?":
+- Levels `1-3`: fast structural screening.
+- Level `4`: strong consistency checkpoint (good default in practice).
+- Levels `5-7`: deeper arithmetic/Galois-style filters.
+
 ## Level-by-level details
 
 1. **Shape and basic matrix constraints**
@@ -36,6 +41,10 @@ if not v.ok then
 fi;
 ```
 
+Suggested defaults:
+- during exploration: level `4`;
+- before claims/paper tables: level `7`.
+
 ## Full walkthrough on rank-2 and rank-3 database entries
 
 ```gap
@@ -57,6 +66,10 @@ od;
 ```
 
 Expected behavior for these examples: all levels return `ok=true`.
+
+Reading the output:
+- `ok=true, failures=0` means the entry passed all checks up to that level;
+- if a level fails, inspect `v.failures` and stop before bridge/construction steps.
 
 ## Reproducible test command (entire package)
 

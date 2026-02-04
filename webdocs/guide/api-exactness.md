@@ -3,6 +3,11 @@
 This table summarizes which outputs are exact algebraic data and which are
 numeric helpers meant for inspection.
 
+Legend used below:
+- **exact**: suitable for symbolic/theorem-level computations;
+- **heuristic view**: decimal helper for readability, not for proofs;
+- **partial/conservative**: implemented, but may decline applicability on hard inputs.
+
 | API | Status | Notes |
 |---|---|---|
 | `FPDimensions(F)` | exact | Algebraic values (or rational) per simple object. |

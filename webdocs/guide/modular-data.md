@@ -15,6 +15,11 @@ Conceptually, a `ModularData` object is the package's canonical container for
 the modular pair `(S, T)` and its derived invariants. Once this object exists,
 all validation, database workflows, and fusion-ring conversion become uniform.
 
+If you are new to this layer, use this sequence:
+1. load one database object (`GetModularData`);
+2. validate (`ValidateModularData`);
+3. bridge to a fusion ring (`FusionRingFromModularData`).
+
 ## Constructors
 
 ```gap
@@ -90,7 +95,7 @@ fusion ring. That keeps debugging localized to the modular-data layer.
 `FusionRingFromModularData(md)` requires fusion coefficients `N`.
 
 - Database entries loaded with `GetModularData` include `N`.
-- Some direct `(S, T)` constructors may not include `N` yet.
+- Direct `(S, T)` construction may omit `N` unless you request inference.
 
 Quick check:
 
@@ -98,9 +103,16 @@ Quick check:
 mdDB := GetModularData(2, 1, 1);;
 MDFusionCoefficients(mdDB) = fail;   # false
 
-mdV := VerlindeModularData("A", 1, 3);;
-MDFusionCoefficients(mdV) = fail;    # true (current implementation state)
+md0 := GetModularData(2, 1, 1);;
+S := SMatrix(md0);; T := TMatrix(md0);;
+mdST := ModularDataFromST(S, T, [1,2]);;
+MDFusionCoefficients(mdST) = fail;   # typically true
+
+mdSTi := ModularDataFromST(S, T, [1,2], rec(inferN := true, completeData := true));;
+MDFusionCoefficients(mdSTi) = fail;  # typically false
 ```
+
+Always check `MDFusionCoefficients(md) = fail` before bridging.
 
 ## Universal grading check from modular data
 

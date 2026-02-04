@@ -5,6 +5,14 @@ FusionRings builds fusion rings and modular data with exact arithmetic in GAP.
 Current Phase 2 progress includes an implemented SU(2)_k Verlinde constructor.
 </div>
 
+## Who this is for
+
+This documentation is written for:
+
+- mathematicians who want exact computations with fusion rings and modular data;
+- GAP users who want practical constructors and validation workflows;
+- researchers who want reproducible examples for papers (including module graphs).
+
 ## What is included
 
 - Fusion ring constructors from rules, sparse tables, and matrices.
@@ -14,7 +22,7 @@ Current Phase 2 progress includes an implemented SU(2)_k Verlinde constructor.
 - Bridge from modular data to fusion rings.
 - Phase 2 start: `VerlindeModularData("A", 1, k)` for SU(2)_k.
 
-## Fast start
+## Fast start (2 minutes)
 
 ```gap
 LoadPackage("FusionRings");;
@@ -25,7 +33,15 @@ F := FusionRingFromModularData(md);;
 CheckFusionRingAxioms(F, 1);
 ```
 
-See [Getting Started](guide/getting-started.md) for package usage and test commands.
+If both checks return `true`, your setup is working.
+
+## Recommended reading order
+
+1. [Getting Started](guide/getting-started.md)
+2. [Full Tutorial](guide/full-tutorial.md)
+3. [Fusion Rings and Modular Data](guide/fusion-rings-and-modular-data.md)
+4. [Worked Examples](guide/examples.md)
+5. [Quick API](api/quick-api.md)
 
 ## Maintainer and citation
 
