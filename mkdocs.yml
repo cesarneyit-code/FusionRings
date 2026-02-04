@@ -3,6 +3,7 @@ site_description: Fusion rings and modular data in GAP, including Phase 2 Verlin
 site_url: https://cesargalindo.github.io/FusionRings/
 repo_url: https://github.com/cesargalindo/FusionRings
 repo_name: cesargalindo/FusionRings
+docs_dir: webdocs
 
 theme:
   name: material
