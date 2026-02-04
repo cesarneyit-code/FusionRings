@@ -136,6 +136,14 @@ FusionRing
           <Func Name="OstrikSU2Module" Arg="k, type[, n][, opts]"/>
           <Func Name="OstrikSU2Modules" Arg="k"/>
           <Func Name="IsOstrikSU2Module" Arg="M, k[, type[, n]]"/>
+          <Func Name="NimrepFromModule" Arg="M[, i]"/>
+          <Func Name="GraphSpectrumApprox" Arg="A|M|nimrep"/>
+          <Func Name="CoxeterNumberFromAdjacencyApprox" Arg="A|M|nimrep"/>
+          <Func Name="IsADELevelCompatible" Arg="k, type[, n]"/>
+          <Func Name="CheckOstrikADEData" Arg="k, type[, n]"/>
+          <Func Name="FusionModuleGraphDOT" Arg="graph|M[, i]"/>
+          <Func Name="SaveFusionModuleGraphDOT" Arg="path, graph|M[, i]"/>
+          <Func Name="OstrikReport" Arg="k"/>
           <Description>
             Based-module constructors and analysis tools over a fusion ring.
           </Description>

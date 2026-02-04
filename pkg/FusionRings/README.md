@@ -129,7 +129,10 @@ API (core)
   `FusionModuleComponents`, `IsIndecomposableFusionModule`,
   `IsIrreducibleFusionModule`, `AreEquivalentFusionModules`, `FusionModuleGraph`,
   `CanonicalFusionModule`, `FusionSubmoduleByObject`, `DynkinGraphAdjacency`,
-  `OstrikSU2Module`, `OstrikSU2Modules`, `IsOstrikSU2Module`
+  `OstrikSU2Module`, `OstrikSU2Modules`, `IsOstrikSU2Module`,
+  `NimrepFromModule`, `GraphSpectrumApprox`, `CoxeterNumberFromAdjacencyApprox`,
+  `IsADELevelCompatible`, `CheckOstrikADEData`,
+  `FusionModuleGraphDOT`, `SaveFusionModuleGraphDOT`, `OstrikReport`
 - Helpers: `NormalizeProductList`
 - Export/Import: `FusionRingRecord`, `FusionRingFromRecord`, `SaveFusionRing`, `LoadFusionRing`
 

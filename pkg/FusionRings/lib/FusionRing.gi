@@ -886,6 +886,206 @@ InstallGlobalFunction(OstrikSU2Modules, function(k)
   return Immutable(out);
 end );
 
+InstallGlobalFunction(NimrepFromModule, function(arg)
+  local M, i, F;
+  if Length(arg) = 1 then
+    M := arg[1];
+    F := UnderlyingFusionRing(M);
+    if Length(LabelsList(F)) < 2 then
+      Error("NimrepFromModule: fusion ring rank must be at least 2 for default generator");
+    fi;
+    i := LabelOfPosition(F, 2);
+  elif Length(arg) = 2 then
+    M := arg[1];
+    i := arg[2];
+  else
+    Error("NimrepFromModule expects (M[, i])");
+  fi;
+  if not IsFusionModule(M) then
+    Error("NimrepFromModule expects a fusion module");
+  fi;
+  return rec(
+    generator := i,
+    adjacency := ActionMatrix(M, i),
+    graph := FusionModuleGraph(M, i)
+  );
+end );
+
+BindGlobal("FRPowerMethodSpectralRadius@", function(A)
+  local n, v, it, w, normv, i, j, ray;
+  n := Length(A);
+  if n = 0 then
+    return 0.;
+  fi;
+  v := List([1..n], x -> 1.);
+  for it in [1..40] do
+    w := List([1..n], r -> Sum([1..n], c -> Float(A[r][c]) * v[c]));
+    normv := Maximum(List(w, x -> Sqrt(x * x)));
+    if normv = 0. then
+      return 0.;
+    fi;
+    v := List(w, x -> x / normv);
+  od;
+  ray := 0.;
+  for i in [1..n] do
+    ray := ray + v[i] * Sum([1..n], j -> Float(A[i][j]) * v[j]);
+  od;
+  return ray / Sum(v, x -> x * x);
+end );
+
+InstallGlobalFunction(GraphSpectrumApprox, function(arg)
+  local A, vals;
+  if Length(arg) = 1 then
+    if IsFusionModule(arg[1]) then
+      A := NimrepFromModule(arg[1]).adjacency;
+    elif IsRecord(arg[1]) and IsBound(arg[1].adjacency) then
+      A := arg[1].adjacency;
+    else
+      A := arg[1];
+    fi;
+  else
+    Error("GraphSpectrumApprox expects one argument (matrix/module/nimrep)");
+  fi;
+  vals := Eigenvalues(Rationals, A);
+  return List(vals, Float);
+end );
+
+InstallGlobalFunction(CoxeterNumberFromAdjacencyApprox, function(arg)
+  local A, lmax, theta, h;
+  if Length(arg) = 1 then
+    if IsFusionModule(arg[1]) then
+      A := NimrepFromModule(arg[1]).adjacency;
+    elif IsRecord(arg[1]) and IsBound(arg[1].adjacency) then
+      A := arg[1].adjacency;
+    else
+      A := arg[1];
+    fi;
+  else
+    Error("CoxeterNumberFromAdjacencyApprox expects one argument");
+  fi;
+  lmax := FRPowerMethodSpectralRadius@(A);
+  if lmax <= -2.0 or lmax >= 2.0 then
+    return rec(ok := false, reason := "spectral radius outside (-2,2)", lambda := lmax);
+  fi;
+  theta := Acos(lmax / 2.0);
+  h := Int((4.0 * Atan(1.0)) / theta + 0.5);
+  return rec(ok := true, lambda := lmax, theta := theta, hApprox := h);
+end );
+
+InstallGlobalFunction(IsADELevelCompatible, function(arg)
+  local k, typ, n, kExpected;
+  if Length(arg) = 2 then
+    k := arg[1]; typ := UppercaseString(arg[2]); n := fail;
+  elif Length(arg) = 3 then
+    k := arg[1]; typ := UppercaseString(arg[2]); n := arg[3];
+  else
+    Error("IsADELevelCompatible expects (k, type[, n])");
+  fi;
+  if typ = "A" then
+    if n = fail then return true; fi;
+    return k = n - 1;
+  fi;
+  if typ = "D" then
+    if n = fail then
+      return k mod 2 = 0 and k >= 4;
+    fi;
+    return k = 2 * n - 4;
+  fi;
+  if typ = "E6" then return k = 10; fi;
+  if typ = "E7" then return k = 16; fi;
+  if typ = "E8" then return k = 28; fi;
+  return false;
+end );
+
+InstallGlobalFunction(CheckOstrikADEData, function(arg)
+  local k, typ, n, kExpected, ok;
+  if Length(arg) = 2 then
+    k := arg[1]; typ := UppercaseString(arg[2]); n := fail;
+  elif Length(arg) = 3 then
+    k := arg[1]; typ := UppercaseString(arg[2]); n := arg[3];
+  else
+    Error("CheckOstrikADEData expects (k, type[, n])");
+  fi;
+  if typ = "A" and n = fail then n := k + 1; fi;
+  if typ = "D" and n = fail and k mod 2 = 0 then n := k / 2 + 2; fi;
+  if typ = "E6" then n := 6; fi;
+  if typ = "E7" then n := 7; fi;
+  if typ = "E8" then n := 8; fi;
+  if n = fail then
+    return rec(ok := false, reason := "missing n for A/D");
+  fi;
+  kExpected := FROstrikADEAllowedK@(typ, n);
+  ok := k = kExpected;
+  return rec(ok := ok, k := k, type := typ, n := n, expectedK := kExpected);
+end );
+
+InstallGlobalFunction(FusionModuleGraphDOT, function(arg)
+  local g, lines, v, e;
+  if Length(arg) = 1 then
+    if IsFusionModule(arg[1]) then
+      g := FusionModuleGraph(arg[1]);
+    else
+      g := arg[1];
+    fi;
+  elif Length(arg) = 2 then
+    if IsFusionModule(arg[1]) then
+      g := FusionModuleGraph(arg[1], arg[2]);
+    else
+      Error("FusionModuleGraphDOT two-arg form expects (module, label)");
+    fi;
+  else
+    Error("FusionModuleGraphDOT expects (graph) or (module[, label])");
+  fi;
+  lines := [ "digraph Nimrep {", "  rankdir=LR;" ];
+  for v in g.vertices do
+    Add(lines, Concatenation("  \"", String(v), "\";"));
+  od;
+  for e in g.edges do
+    Add(lines, Concatenation("  \"", String(e[1]), "\" -> \"", String(e[2]),
+        "\" [label=\"", String(e[3]), "\"];"));
+  od;
+  Add(lines, "}");
+  return JoinStringsWithSeparator(lines, "\n");
+end );
+
+InstallGlobalFunction(SaveFusionModuleGraphDOT, function(arg)
+  local path, txt, out;
+  if Length(arg) = 2 then
+    path := arg[1];
+    txt := FusionModuleGraphDOT(arg[2]);
+  elif Length(arg) = 3 then
+    path := arg[1];
+    txt := FusionModuleGraphDOT(arg[2], arg[3]);
+  else
+    Error("SaveFusionModuleGraphDOT expects (path, graph/module[, label])");
+  fi;
+  out := OutputTextFile(path, false);
+  WriteAll(out, txt);
+  CloseStream(out);
+  return path;
+end );
+
+InstallGlobalFunction(OstrikReport, function(k)
+  local mods, out, entry, nim, cox, check, F;
+  mods := OstrikSU2Modules(k);
+  out := [];
+  for entry in mods do
+    F := UnderlyingFusionRing(entry.module);
+    nim := NimrepFromModule(entry.module, LabelOfPosition(F, 2));
+    cox := CoxeterNumberFromAdjacencyApprox(nim.adjacency);
+    check := CheckOstrikADEData(k, entry.type, Length(nim.adjacency));
+    Add(out, rec(
+      type := entry.type,
+      n := Length(nim.adjacency),
+      moduleRank := ModuleRank(entry.module),
+      coxeter := cox,
+      adeCheck := check,
+      graph := nim.graph
+    ));
+  od;
+  return rec(k := k, modules := Immutable(out));
+end );
+
 
 InstallMethod(PositionOfLabel, [ IsFusionRing, IsObject ], function(F, i)
   local labels, pos;

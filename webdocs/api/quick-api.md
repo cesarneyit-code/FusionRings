@@ -70,6 +70,14 @@
 - `OstrikSU2Module(k, type[, n][, opts])`
 - `OstrikSU2Modules(k)`
 - `IsOstrikSU2Module(M, k[, type[, n]])`
+- `NimrepFromModule(M[, i])`
+- `GraphSpectrumApprox(A|M|nimrep)`
+- `CoxeterNumberFromAdjacencyApprox(A|M|nimrep)`
+- `IsADELevelCompatible(k, type[, n])`
+- `CheckOstrikADEData(k, type[, n])`
+- `FusionModuleGraphDOT(graph|M[, i])`
+- `SaveFusionModuleGraphDOT(path, graph|M[, i])`
+- `OstrikReport(k)`
 
 ## Attributes
 
