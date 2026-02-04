@@ -124,6 +124,10 @@ API (core)
   `FusionSubringByGenerators`, `FusionSubringLatticeSmall`,
   `CanonicalPointedSubring`, `AdjointSubring`,
   `IsIntegralFusionRing`, `IsWeaklyIntegralFusionRing`
+- Based modules: `FusionModuleByActionMatrices`, `ActionMatrix`, `ActionOnBasis`,
+  `IsFusionSubmodule`, `FusionSubmodule`, `FusionSubmoduleByGenerators`,
+  `FusionModuleComponents`, `IsIndecomposableFusionModule`,
+  `IsIrreducibleFusionModule`, `AreEquivalentFusionModules`
 - Helpers: `NormalizeProductList`
 - Export/Import: `FusionRingRecord`, `FusionRingFromRecord`, `SaveFusionRing`, `LoadFusionRing`
 

@@ -171,3 +171,45 @@ FusionRings_TestAllStrict();
 ```
 
 This runs the package test suite and is the right command before a commit.
+
+## 8) Based modules over a fusion ring
+
+The package now supports based modules (Ostrik's based modules over a based
+ring, i.e. modules over a fusion ring with nonnegative integral action
+matrices).
+
+```gap
+F2 := CyclicPointedFusionRing(2);;
+A1 := [ [1,0],[0,1] ];;
+Aswap := [ [0,1],[1,0] ];;
+
+M := FusionModuleByActionMatrices(F2, [ "a", "b" ], [ A1, Aswap ]);;
+ActionOnBasis(M, LabelOfPosition(F2, 2), "a");
+IsIrreducibleFusionModule(M);
+IsIndecomposableFusionModule(M);
+```
+
+Expected output:
+
+```text
+[ [ "b", 1 ] ]
+true
+true
+```
+
+And a reducible/decomposable example:
+
+```gap
+Afix := [ [1,0],[0,1] ];;
+D := FusionModuleByActionMatrices(F2, [ "m1", "m2" ], [ A1, Afix ]);;
+FusionModuleComponents(D);
+SD := FusionSubmoduleByGenerators(D, [ "m1" ]);;
+ModuleBasisLabels(SD);
+```
+
+Expected output:
+
+```text
+[ [ "m1" ], [ "m2" ] ]
+[ "m1" ]
+```

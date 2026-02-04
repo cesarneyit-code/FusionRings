@@ -54,6 +54,17 @@
 - `CheckExtendedCyclotomicCriterionCommutative(F)`
 - `CheckPaperCriteriaCommutative(F)`
 
+## Based modules over fusion rings
+
+- `FusionModuleByActionMatrices(F, basisLabels, actionMatrices[, opts])`
+- `UnderlyingFusionRing(M)`, `ModuleBasisLabels(M)`, `ModuleRank(M)`
+- `ActionMatrices(M)`, `ActionMatrix(M, i)`, `ActionOnBasis(M, i, m)`
+- `IsFusionSubmodule(M, subset)`, `FusionSubmodule(M, subset)`
+- `FusionSubmoduleByGenerators(M, generators)`
+- `FusionModuleComponents(M)`
+- `IsIndecomposableFusionModule(M)`, `IsIrreducibleFusionModule(M)`
+- `AreEquivalentFusionModules(M1, M2)`
+
 ## Attributes
 
 - `SMatrix(md)`, `TMatrix(md)`, `MDLabels(md)`

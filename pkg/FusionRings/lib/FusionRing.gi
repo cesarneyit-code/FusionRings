@@ -28,6 +28,11 @@ if not IsBound(FRFusionRingFamily@) then
   BindGlobal("FRFusionRingMatricesType@", NewType(FRFusionRingFamily@, IsFusionRingByMatricesRep));
 fi;
 
+if not IsBound(FRFusionModuleFamily@) then
+  BindGlobal("FRFusionModuleFamily@", NewFamily("FusionModulesFamily", IsFusionModule));
+  BindGlobal("FRFusionModuleMatricesType@", NewType(FRFusionModuleFamily@, IsFusionModuleByMatricesRep));
+fi;
+
 BindGlobal("FRLabelsListFromI@", function(I)
   local labels;
   if IsList(I) then
@@ -172,6 +177,410 @@ InstallMethod(Display, [ IsFusionRing ], function(F)
   else
     Print(labels{[1..10]}, " ...\n");
   fi;
+end );
+
+BindGlobal("FRParseModuleOpts@", function(opts)
+  local o;
+  o := rec(
+    check := 1,
+    makeImmutable := true
+  );
+  if opts <> fail then
+    if not IsRecord(opts) then
+      Error("opts must be a record or fail");
+    fi;
+    if IsBound(opts.check) then o.check := opts.check; fi;
+    if IsBound(opts.makeImmutable) then o.makeImmutable := opts.makeImmutable; fi;
+  fi;
+  return o;
+end );
+
+BindGlobal("FRZeroSquareMatrix@", function(n)
+  return List([1..n], i -> List([1..n], j -> 0));
+end );
+
+BindGlobal("FRIdentityMatrix@", function(n)
+  local M, i;
+  M := FRZeroSquareMatrix@(n);
+  for i in [1..n] do
+    M[i][i] := 1;
+  od;
+  return M;
+end );
+
+BindGlobal("FRRestrictSquareMatrix@", function(A, pos)
+  return List(pos, r -> List(pos, c -> A[r][c]));
+end );
+
+InstallMethod(ViewObj, [ IsFusionModule ], function(M)
+  Print("<FusionModule rank=", ModuleRank(M), " over rank-", Length(LabelsList(UnderlyingFusionRing(M))), " FusionRing>");
+end );
+
+InstallMethod(PrintObj, [ IsFusionModule ], function(M)
+  Print("FusionModule( rank := ", ModuleRank(M), ", basis := ", ModuleBasisLabels(M), " )");
+end );
+
+InstallMethod(Display, [ IsFusionModule ], function(M)
+  Print("FusionModule\n");
+  Print("  module rank: ", ModuleRank(M), "\n");
+  Print("  fusion ring rank: ", Length(LabelsList(UnderlyingFusionRing(M))), "\n");
+  Print("  basis: ", ModuleBasisLabels(M), "\n");
+end );
+
+InstallMethod(UnderlyingFusionRing, [ IsFusionModule ], M -> M!.F );
+InstallMethod(ModuleBasisLabels, [ IsFusionModule ], M -> M!.M );
+InstallMethod(ModuleRank, [ IsFusionModule ], M -> Length(M!.M) );
+InstallMethod(ActionMatrices, [ IsFusionModule ], M -> Immutable(M!.actions) );
+
+InstallMethod(ActionMatrix, [ IsFusionModule, IsObject ], function(M, i)
+  local F, pos;
+  F := UnderlyingFusionRing(M);
+  pos := PositionOfLabel(F, i);
+  if pos = fail then
+    Error("ActionMatrix: unknown fusion-ring label");
+  fi;
+  return M!.actions[pos];
+end );
+
+InstallMethod(ActionOnBasis, [ IsFusionModule, IsObject, IsObject ], function(M, i, m)
+  local A, basis, c, p, out, r;
+  basis := ModuleBasisLabels(M);
+  p := Position(basis, m);
+  if p = fail then
+    Error("ActionOnBasis: module basis label not found");
+  fi;
+  A := ActionMatrix(M, i);
+  out := [];
+  for r in [1..Length(basis)] do
+    c := A[r][p];
+    if c <> 0 then
+      Add(out, [ basis[r], c ]);
+    fi;
+  od;
+  return out;
+end );
+
+InstallGlobalFunction(FusionModuleByActionMatrices, function(arg)
+  local F, basis, actions, opts, o, ringLabels, r, m, i, j, t, onePos, lhs, rhs, prod, term, A, M;
+  if Length(arg) = 3 then
+    F := arg[1]; basis := arg[2]; actions := arg[3]; opts := fail;
+  elif Length(arg) = 4 then
+    F := arg[1]; basis := arg[2]; actions := arg[3]; opts := arg[4];
+  else
+    Error("FusionModuleByActionMatrices expects 3 or 4 arguments");
+  fi;
+  if not IsFusionRing(F) then
+    Error("first argument must be a fusion ring");
+  fi;
+  if not IsList(basis) then
+    Error("module basis must be a list");
+  fi;
+  if Length(Set(basis)) <> Length(basis) then
+    Error("module basis labels must be unique");
+  fi;
+  if not IsList(actions) then
+    Error("action matrices must be a list");
+  fi;
+
+  o := FRParseModuleOpts@(opts);
+  ringLabels := LabelsList(F);
+  r := Length(ringLabels);
+  m := Length(basis);
+  if Length(actions) <> r then
+    Error("action matrices length must match fusion ring rank");
+  fi;
+
+  A := ShallowCopy(actions);
+  for i in [1..r] do
+    if not IsList(A[i]) or Length(A[i]) <> m then
+      Error("each action matrix must be square with size module rank");
+    fi;
+    for j in [1..m] do
+      if not IsList(A[i][j]) or Length(A[i][j]) <> m then
+        Error("each action matrix must be square with size module rank");
+      fi;
+      for t in [1..m] do
+        if not IsInt(A[i][j][t]) or A[i][j][t] < 0 then
+          Error("action matrices must have nonnegative integer entries");
+        fi;
+      od;
+    od;
+  od;
+
+  if o.check >= 1 then
+    onePos := PositionOfLabel(F, OneLabel(F));
+    if onePos = fail then
+      Error("fusion ring has no valid one label");
+    fi;
+    if A[onePos] <> FRIdentityMatrix@(m) then
+      Error("identity simple must act by identity matrix");
+    fi;
+    for i in [1..r] do
+      for j in [1..r] do
+        lhs := A[i] * A[j];
+        rhs := FRZeroSquareMatrix@(m);
+        prod := MultiplyBasis(F, ringLabels[i], ringLabels[j]);
+        for term in prod do
+          rhs := rhs + term[2] * A[PositionOfLabel(F, term[1])];
+        od;
+        if lhs <> rhs then
+          Error("module associativity failed for labels ", ringLabels[i], " and ", ringLabels[j]);
+        fi;
+      od;
+    od;
+  fi;
+
+  if o.makeImmutable then
+    basis := Immutable(ShallowCopy(basis));
+    A := Immutable(List(A, x -> Immutable(x)));
+  fi;
+  M := Objectify(FRFusionModuleMatricesType@, rec(F := F, M := basis, actions := A));
+  return M;
+end );
+
+InstallMethod(IsFusionSubmodule, [ IsFusionModule, IsList ], function(M, subset)
+  local basis, pos, idx, inSub, acts, i, c, r;
+  basis := ModuleBasisLabels(M);
+  if Length(Set(subset)) <> Length(subset) then
+    return false;
+  fi;
+  pos := List(subset, x -> Position(basis, x));
+  if fail in pos then
+    return false;
+  fi;
+  inSub := List([1..Length(basis)], k -> false);
+  for idx in pos do
+    inSub[idx] := true;
+  od;
+  acts := ActionMatrices(M);
+  for i in [1..Length(acts)] do
+    for c in pos do
+      for r in [1..Length(basis)] do
+        if acts[i][r][c] <> 0 and not inSub[r] then
+          return false;
+        fi;
+      od;
+    od;
+  od;
+  return true;
+end );
+
+InstallMethod(FusionSubmodule, [ IsFusionModule, IsList ], function(M, subset)
+  local basis, pos, F, acts, subActs, subBasis;
+  if not IsFusionSubmodule(M, subset) then
+    Error("subset is not closed under fusion-ring action");
+  fi;
+  basis := ModuleBasisLabels(M);
+  pos := Filtered([1..Length(basis)], i -> basis[i] in subset);
+  subBasis := basis{pos};
+  F := UnderlyingFusionRing(M);
+  acts := ActionMatrices(M);
+  subActs := List(acts, A -> FRRestrictSquareMatrix@(A, pos));
+  return FusionModuleByActionMatrices(F, subBasis, subActs, rec(check := 0));
+end );
+
+InstallGlobalFunction(FusionSubmoduleByGenerators, function(M, gens)
+  local basis, pos, inSub, acts, changed, c, r, i, subset;
+  if not IsFusionModule(M) then
+    Error("FusionSubmoduleByGenerators expects a fusion module");
+  fi;
+  basis := ModuleBasisLabels(M);
+  pos := List(gens, g -> Position(basis, g));
+  if fail in pos then
+    Error("generator not found in module basis");
+  fi;
+  inSub := List([1..Length(basis)], i -> false);
+  for i in pos do
+    inSub[i] := true;
+  od;
+  acts := ActionMatrices(M);
+  changed := true;
+  while changed do
+    changed := false;
+    for i in [1..Length(acts)] do
+      for c in [1..Length(basis)] do
+        if inSub[c] then
+          for r in [1..Length(basis)] do
+            if acts[i][r][c] <> 0 and not inSub[r] then
+              inSub[r] := true;
+              changed := true;
+            fi;
+          od;
+        fi;
+      od;
+    od;
+  od;
+  subset := Filtered([1..Length(basis)], i -> inSub[i]);
+  return FusionSubmodule(M, basis{subset});
+end );
+
+InstallMethod(FusionModuleComponents, [ IsFusionModule ], function(M)
+  local m, acts, adj, i, c, r, seen, q, head, comp, comps, v, basis;
+  m := ModuleRank(M);
+  if m = 0 then
+    return [];
+  fi;
+  acts := ActionMatrices(M);
+  adj := List([1..m], x -> []);
+  for i in [1..Length(acts)] do
+    for c in [1..m] do
+      for r in [1..m] do
+        if acts[i][r][c] <> 0 then
+          if not r in adj[c] then Add(adj[c], r); fi;
+          if not c in adj[r] then Add(adj[r], c); fi;
+        fi;
+      od;
+    od;
+  od;
+  seen := List([1..m], x -> false);
+  comps := [];
+  for v in [1..m] do
+    if not seen[v] then
+      q := [ v ];
+      seen[v] := true;
+      comp := [];
+      head := 1;
+      while head <= Length(q) do
+        c := q[head];
+        head := head + 1;
+        Add(comp, c);
+        for r in adj[c] do
+          if not seen[r] then
+            seen[r] := true;
+            Add(q, r);
+          fi;
+        od;
+      od;
+      Sort(comp);
+      Add(comps, comp);
+    fi;
+  od;
+  basis := ModuleBasisLabels(M);
+  return Immutable(List(comps, C -> basis{C}));
+end );
+
+InstallMethod(IsIndecomposableFusionModule, [ IsFusionModule ], function(M)
+  return Length(FusionModuleComponents(M)) <= 1;
+end );
+
+InstallMethod(IsIrreducibleFusionModule, [ IsFusionModule ], function(M)
+  local m, acts, adj, start, seen, q, head, c, r;
+  m := ModuleRank(M);
+  if m <= 1 then
+    return true;
+  fi;
+  acts := ActionMatrices(M);
+  adj := List([1..m], x -> []);
+  for c in [1..m] do
+    for r in [1..m] do
+      for start in [1..Length(acts)] do
+        if acts[start][r][c] <> 0 then
+          if not r in adj[c] then
+            Add(adj[c], r);
+          fi;
+          break;
+        fi;
+      od;
+    od;
+  od;
+  for start in [1..m] do
+    seen := List([1..m], x -> false);
+    q := [ start ];
+    seen[start] := true;
+    head := 1;
+    while head <= Length(q) do
+      c := q[head];
+      head := head + 1;
+      for r in adj[c] do
+        if not seen[r] then
+          seen[r] := true;
+          Add(q, r);
+        fi;
+      od;
+    od;
+    if false in seen then
+      return false;
+    fi;
+  od;
+  return true;
+end );
+
+BindGlobal("FRModuleInvariantVector@", function(acts, v)
+  local inv, A;
+  inv := [];
+  for A in acts do
+    Add(inv, Sum([1..Length(A)], r -> A[r][v]));
+    Add(inv, Sum([1..Length(A)], c -> A[v][c]));
+    Add(inv, A[v][v]);
+  od;
+  return inv;
+end );
+
+InstallMethod(AreEquivalentFusionModules, [ IsFusionModule, IsFusionModule ], function(M1, M2)
+  local F1, F2, b1, b2, acts1, acts2, n, i, j, inv1, inv2, cand, used, p, Search, Consistent;
+  F1 := UnderlyingFusionRing(M1);
+  F2 := UnderlyingFusionRing(M2);
+  if LabelsList(F1) <> LabelsList(F2) or FusionMatrices(F1) <> FusionMatrices(F2) then
+    return false;
+  fi;
+  b1 := ModuleBasisLabels(M1);
+  b2 := ModuleBasisLabels(M2);
+  if Length(b1) <> Length(b2) then
+    return false;
+  fi;
+  n := Length(b1);
+  acts1 := ActionMatrices(M1);
+  acts2 := ActionMatrices(M2);
+  if n = 0 then
+    return true;
+  fi;
+  inv1 := List([1..n], v -> FRModuleInvariantVector@(acts1, v));
+  inv2 := List([1..n], v -> FRModuleInvariantVector@(acts2, v));
+  cand := List([1..n], a -> Filtered([1..n], b -> inv1[a] = inv2[b]));
+  if ForAny(cand, C -> Length(C) = 0) then
+    return false;
+  fi;
+
+  p := List([1..n], x -> 0);
+  used := List([1..n], x -> false);
+  Consistent := function(k)
+    local a, t;
+    for a in [1..k] do
+      if p[a] = 0 then
+        continue;
+      fi;
+      for t in [1..Length(acts1)] do
+        if acts1[t][k][a] <> acts2[t][p[k]][p[a]] then
+          return false;
+        fi;
+        if acts1[t][a][k] <> acts2[t][p[a]][p[k]] then
+          return false;
+        fi;
+      od;
+    od;
+    return true;
+  end;
+
+  Search := function(k)
+    local b;
+    if k > n then
+      return true;
+    fi;
+    for b in cand[k] do
+      if not used[b] then
+        p[k] := b;
+        used[b] := true;
+        if Consistent(k) and Search(k + 1) then
+          return true;
+        fi;
+        used[b] := false;
+        p[k] := 0;
+      fi;
+    od;
+    return false;
+  end;
+
+  return Search(1);
 end );
 
 

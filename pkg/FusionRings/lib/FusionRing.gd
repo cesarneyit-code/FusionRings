@@ -1,4 +1,5 @@
 DeclareCategory("IsFusionRing", IsObject);
+DeclareCategory("IsFusionModule", IsObject);
 
 DeclareRepresentation("IsFusionRingByRuleRep",
   IsFusionRing and IsComponentObjectRep,
@@ -11,6 +12,10 @@ DeclareRepresentation("IsFusionRingBySparseRep",
 DeclareRepresentation("IsFusionRingByMatricesRep",
   IsFusionRing and IsComponentObjectRep,
   [ "I", "one", "dual", "fusionMatrices" ]);
+
+DeclareRepresentation("IsFusionModuleByMatricesRep",
+  IsFusionModule and IsComponentObjectRep,
+  [ "F", "M", "actions" ]);
 
 DeclareInfoClass("InfoFusionRings");
 
@@ -79,3 +84,18 @@ DeclareGlobalFunction("FusionRingRecord");
 DeclareGlobalFunction("FusionRingFromRecord");
 DeclareGlobalFunction("SaveFusionRing");
 DeclareGlobalFunction("LoadFusionRing");
+
+DeclareAttribute("UnderlyingFusionRing", IsFusionModule);
+DeclareAttribute("ModuleBasisLabels", IsFusionModule);
+DeclareAttribute("ModuleRank", IsFusionModule);
+DeclareAttribute("ActionMatrices", IsFusionModule);
+DeclareOperation("ActionMatrix", [ IsFusionModule, IsObject ]);
+DeclareOperation("ActionOnBasis", [ IsFusionModule, IsObject, IsObject ]);
+DeclareOperation("IsFusionSubmodule", [ IsFusionModule, IsList ]);
+DeclareOperation("FusionSubmodule", [ IsFusionModule, IsList ]);
+DeclareGlobalFunction("FusionSubmoduleByGenerators");
+DeclareProperty("IsIrreducibleFusionModule", IsFusionModule);
+DeclareProperty("IsIndecomposableFusionModule", IsFusionModule);
+DeclareOperation("AreEquivalentFusionModules", [ IsFusionModule, IsFusionModule ]);
+DeclareAttribute("FusionModuleComponents", IsFusionModule);
+DeclareGlobalFunction("FusionModuleByActionMatrices");

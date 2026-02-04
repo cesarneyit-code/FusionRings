@@ -113,6 +113,28 @@ FusionRing
         </ManSection>
       </Section>
       <Section>
+        <Heading>Based Modules (Fusion Modules)</Heading>
+        <ManSection>
+          <Func Name="FusionModuleByActionMatrices" Arg="F, basisLabels, actionMatrices[, opts]"/>
+          <Attr Name="UnderlyingFusionRing" Arg="M"/>
+          <Attr Name="ModuleBasisLabels" Arg="M"/>
+          <Attr Name="ModuleRank" Arg="M"/>
+          <Attr Name="ActionMatrices" Arg="M"/>
+          <Oper Name="ActionMatrix" Arg="M, i"/>
+          <Oper Name="ActionOnBasis" Arg="M, i, m"/>
+          <Oper Name="IsFusionSubmodule" Arg="M, subset"/>
+          <Oper Name="FusionSubmodule" Arg="M, subset"/>
+          <Func Name="FusionSubmoduleByGenerators" Arg="M, generators"/>
+          <Attr Name="FusionModuleComponents" Arg="M"/>
+          <Prop Name="IsIndecomposableFusionModule" Arg="M"/>
+          <Prop Name="IsIrreducibleFusionModule" Arg="M"/>
+          <Oper Name="AreEquivalentFusionModules" Arg="M1, M2"/>
+          <Description>
+            Based-module constructors and analysis tools over a fusion ring.
+          </Description>
+        </ManSection>
+      </Section>
+      <Section>
         <Heading>Attributes and Indexing</Heading>
         <ManSection>
           <Attr Name="BasisLabels" Arg="F"/>
