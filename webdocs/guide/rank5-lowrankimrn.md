@@ -137,6 +137,12 @@ Write the same output to a file:
 ./bin/fr-scan-rank5 --csv rank5_scan.csv
 ```
 
+Generate a ready-to-paste Markdown table:
+
+```bash
+./bin/fr-scan-rank5 --md rank5_table.md
+```
+
 And a quick end-to-end demo:
 
 ```bash

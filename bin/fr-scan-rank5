@@ -4,15 +4,17 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 OUTFILE=""
-if [[ "${1:-}" == "--csv" ]]; then
+FORMAT=""
+if [[ "${1:-}" == "--csv" || "${1:-}" == "--md" ]]; then
   if [[ -z "${2:-}" ]]; then
-    echo "usage: $0 [--csv path]" >&2
+    echo "usage: $0 [--csv path | --md path]" >&2
     exit 1
   fi
+  FORMAT="$1"
   OUTFILE="$2"
 fi
 
-if [[ -n "$OUTFILE" ]]; then
+if [[ -n "$OUTFILE" && "$FORMAT" == "--csv" ]]; then
   gap -q -l "${ROOT}/pkg;" <<'GAP' >"$OUTFILE"
 LoadPackage("FusionRings");;
 LoadNsdGOL(5);;
@@ -31,6 +33,40 @@ for iGO in [1..Length(nsd)] do
     cc := MDCentralCharge(md);;
     Print(iGO, ",", iMD, ",", inv, ",", dims, ",", ordT, ",", cc, "\n");
   od;
+od;
+QUIT;
+GAP
+  echo "wrote $OUTFILE"
+elif [[ -n "$OUTFILE" && "$FORMAT" == "--md" ]]; then
+  gap -q -l "${ROOT}/pkg;" <<'GAP' >"$OUTFILE"
+LoadPackage("FusionRings");;
+LoadNsdGOL(5);;
+nsd := ValueGlobal("NsdGOL");;
+
+Print("| Galois orbit | Entries | Invertibles | ordT | Family (by invariants) |\n");
+Print("|---|---:|---:|---:|---|\n");
+
+for iGO in [1..Length(nsd)] do
+  inv := fail;
+  ordT := fail;
+  for iMD in [1..Length(nsd[iGO])] do
+    md := GetModularData(5, iGO, iMD);;
+    F := FusionRingFromModularData(md);;
+    inv := Length(InvertibleSimples(F));;
+    ordT := MDOrderT(md);;
+    break;
+  od;
+  family := "unknown";
+  if inv = 5 and ordT = 5 then
+    family := "SU(5)_1 (pointed, Z5)";
+  elif inv = 2 and ordT = 24 then
+    family := "SU(2)_4";
+  elif inv = 1 and ordT = 11 then
+    family := "SU(2)_9/Z2";
+  elif inv = 1 and ordT = 7 then
+    family := "SU(3)_4/Z3";
+  fi;
+  Print("| ", iGO, " | ", Length(nsd[iGO]), " | ", inv, " | ", ordT, " | ", family, " |\n");
 od;
 QUIT;
 GAP
