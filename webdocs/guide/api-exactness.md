@@ -24,7 +24,9 @@ Legend used below:
 | `IsInvertibleSimple(F,i)` | exact combinatorial | Checks fusion matrix is a permutation matrix. |
 | `IsFusionSubring(F,S)` | exact combinatorial | Closure under unit, dual, multiplication support. |
 | `MDGaussSums(md)` | exact | Returns Gauss sums `pplus`, `pminus` as cyclotomics. |
+| `MDGaussSumProduct(md)` | exact | Returns `pplus*pminus` (should equal `D^2`). |
 | `MDCentralCharge(md)` | exact | Returns `pplus/pminus` (root of unity). |
+| `MDFrobeniusSchurExponent(md)` | exact | Wrapper for `MDOrderT(md)`. |
 
 ## Quick recommendations
 

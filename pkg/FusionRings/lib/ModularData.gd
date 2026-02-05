@@ -14,7 +14,9 @@ DeclareAttribute("MDGlobalDimensionSquared", IsModularData);
 DeclareAttribute("MDFusionCoefficients", IsModularData);
 DeclareAttribute("MDOrderT", IsModularData);
 DeclareAttribute("MDGaussSums", IsModularData);
+DeclareAttribute("MDGaussSumProduct", IsModularData);
 DeclareAttribute("MDCentralCharge", IsModularData);
+DeclareAttribute("MDFrobeniusSchurExponent", IsModularData);
 
 DeclareGlobalFunction("ModularData");
 DeclareGlobalFunction("ModularDataFromST");

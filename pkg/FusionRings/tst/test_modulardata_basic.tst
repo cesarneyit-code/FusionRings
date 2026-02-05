@@ -40,7 +40,11 @@ gap> MDOrderT(md);
 gap> gs := MDGaussSums(md);;
 gap> gs.pplus * gs.pminus = MDGlobalDimensionSquared(md);
 true
+gap> MDGaussSumProduct(md) = MDGlobalDimensionSquared(md);
+true
 gap> MDCentralCharge(md);
 E(4)
+gap> MDFrobeniusSchurExponent(md);
+4
 
 gap> STOP_TEST("FusionRings-modulardata-basic");

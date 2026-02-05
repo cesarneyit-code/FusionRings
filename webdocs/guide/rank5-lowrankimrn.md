@@ -101,6 +101,28 @@ Typical patterns:
 - **SU(2)\_9/Z2** and **SU(3)\_4/Z3**: non-pointed, non-isomorphic fusion rules;
   both are present as distinct Galois orbits in `NsdGOL5`.
 
+## Invariants from modular data (as used in LowrankIMRN)
+
+The paper repeatedly uses the following quantities, all computable from
+`ModularData`:
+
+- Quantum dimensions `MDQuantumDimensions(md)`
+- Global dimension squared `MDGlobalDimensionSquared(md)`
+- Gauss sums `MDGaussSums(md)` and `MDGaussSumProduct(md)`
+- Central charge `MDCentralCharge(md)`
+- Frobenius–Schur exponent `MDFrobeniusSchurExponent(md)` (equals `MDOrderT(md)`)
+
+Minimal example:
+
+```gap
+md := GetModularData(2, 1, 1);;
+MDQuantumDimensions(md);
+MDGlobalDimensionSquared(md);
+MDGaussSums(md);
+MDCentralCharge(md);
+MDFrobeniusSchurExponent(md);
+```
+
 ## Practical takeaway
 
 Use:

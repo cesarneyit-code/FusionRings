@@ -162,6 +162,8 @@ gs.pplus;
 gs.pminus;
 
 MDCentralCharge(md);
+MDGaussSumProduct(md);
+MDFrobeniusSchurExponent(md);
 ```
 
 Expected output for the rank-2 database example:
@@ -170,6 +172,8 @@ Expected output for the rank-2 database example:
 1
 1
 E(4)
+1
+4
 ```
 
 Note: `MDGaussSums` returns a record with fields `pplus` and `pminus`.

@@ -562,6 +562,12 @@ InstallMethod(MDGaussSums, [ IsModularData ], function(md)
   return rec(pplus := pplus, pminus := pminus);
 end );
 
+InstallMethod(MDGaussSumProduct, [ IsModularData ], function(md)
+  local gs;
+  gs := MDGaussSums(md);
+  return gs.pplus * gs.pminus;
+end );
+
 InstallMethod(MDCentralCharge, [ IsModularData ], function(md)
   local gs;
   gs := MDGaussSums(md);
@@ -569,6 +575,10 @@ InstallMethod(MDCentralCharge, [ IsModularData ], function(md)
     Error("pminus is 0; cannot form central charge");
   fi;
   return gs.pplus / gs.pminus;
+end );
+
+InstallMethod(MDFrobeniusSchurExponent, [ IsModularData ], function(md)
+  return MDOrderT(md);
 end );
 
 InstallGlobalFunction(LoadNsdGOL, function(rank)
