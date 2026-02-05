@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+gap -q -l "${ROOT}/pkg;" <<'GAP'
+LoadPackage("FusionRings");;
+
+Print("=== SU(2)_4 via Verlinde ===\n");
+md := VerlindeModularData("A", 1, 4);;
+v4 := ValidateModularData(md, 4);;
+Print("validate_level4: ", v4.ok, "\n");
+F := FusionRingFromModularData(md);;
+Print("axioms_level1: ", CheckFusionRingAxioms(F, 1), "\n");
+Print("FP dims: ", FPDimensionsApprox(F, 6), "\n");
+Print("ord(T): ", MDOrderT(md), "\n");
+Print("central charge: ", MDCentralCharge(md), "\n\n");
+
+Print("=== Pointed rank-5 (Z5) ===\n");
+Fp := CyclicPointedFusionRing(5);;
+Print("invertibles: ", Length(InvertibleSimples(Fp)), "\n");
+Print("FP dims: ", FPDimensionsApprox(Fp, 6), "\n\n");
+
+Print("=== Rank-5 database summary (first entry) ===\n");
+md0 := GetModularData(5, 1, 1);;
+F0 := FusionRingFromModularData(md0);;
+Print("invertibles: ", Length(InvertibleSimples(F0)), "\n");
+Print("ord(T): ", MDOrderT(md0), "\n");
+Print("central charge: ", MDCentralCharge(md0), "\n");
+QUIT;
+GAP

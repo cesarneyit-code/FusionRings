@@ -101,6 +101,28 @@ Typical patterns:
 - **SU(2)\_9/Z2** and **SU(3)\_4/Z3**: non-pointed, non-isomorphic fusion rules;
   both are present as distinct Galois orbits in `NsdGOL5`.
 
+## Reproducible CLI scripts (recommended)
+
+From the repository root:
+
+```bash
+./bin/fr-scan-rank5
+```
+
+This prints a CSV-like table:
+
+```
+iGO,iMD,invertibles,fp_dims_sorted_approx,ordT,central_charge
+1,1,5,[ 1., 1., 1., 1., 1. ],5,E(5)
+...
+```
+
+And a quick end-to-end demo:
+
+```bash
+./bin/fr-example-lowrank
+```
+
 ## Invariants from modular data (as used in LowrankIMRN)
 
 The paper repeatedly uses the following quantities, all computable from

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+gap -q -l "${ROOT}/pkg;" <<'GAP'
+LoadPackage("FusionRings");;
+LoadNsdGOL(5);;
+nsd := ValueGlobal("NsdGOL");;
+
+Print("iGO,iMD,invertibles,fp_dims_sorted_approx,ordT,central_charge\n");
+
+for iGO in [1..Length(nsd)] do
+  for iMD in [1..Length(nsd[iGO])] do
+    md := GetModularData(5, iGO, iMD);;
+    F := FusionRingFromModularData(md);;
+    inv := Length(InvertibleSimples(F));;
+    dims := FPDimensionsApprox(F, 6);;
+    dims := SortedList(dims);;
+    ordT := MDOrderT(md);;
+    cc := MDCentralCharge(md);;
+    Print(iGO, ",", iMD, ",", inv, ",", dims, ",", ordT, ",", cc, "\n");
+  od;
+od;
+QUIT;
+GAP
