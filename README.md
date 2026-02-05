@@ -63,6 +63,14 @@ CheckFusionRingAxioms(F, 1);
 - Package source: `pkg/FusionRings/lib/`
 - Tests: `pkg/FusionRings/tst/`
 
+### Testing
+
+Recommended clean CLI workflow (avoids `Reread` warnings):
+
+```bash
+./bin/fr-test-strict
+```
+
 ## Citation and contact
 
 Maintainer: **Cesar Galindo**  
