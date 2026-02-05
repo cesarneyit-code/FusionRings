@@ -20,11 +20,13 @@ end;
 FusionRings_Load := function()
     FusionRings_Read("pkg/FusionRings/lib/FusionRing.gd");
     FusionRings_Read("pkg/FusionRings/lib/ModularData.gd");
+    FusionRings_Read("pkg/FusionRings/lib/TestHelpers.gd");
     FusionRings_Read("pkg/FusionRings/lib/FusionRing.gi");
     FusionRings_Read("pkg/FusionRings/lib/FusionRingRule.gi");
     FusionRings_Read("pkg/FusionRings/lib/FusionRingSparse.gi");
     FusionRings_Read("pkg/FusionRings/lib/FusionRingMatrices.gi");
     FusionRings_Read("pkg/FusionRings/lib/ModularData.gi");
+    FusionRings_Read("pkg/FusionRings/lib/TestHelpers.gi");
 end;
 
 FusionRings_Setup := function()
@@ -35,33 +37,3 @@ FusionRings_Setup := function()
 end;
 
 FusionRings_Setup();
-
-# 2) Helper de tests
-FusionRings_TestAll := function()
-    return TestDirectory(
-        [ "/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/tst" ],
-        rec(exitGAP := false, testOptions := rec(compareFunction := "uptowhitespace"))
-    );
-end;
-
-# Strict tests (exact output)
-FusionRings_TestAllStrict := function()
-    return TestDirectory(
-        [ "/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/tst" ],
-        rec(exitGAP := false, testOptions := rec(compareFunction := "uptonl"))
-    );
-end;
-
-# Normalize .tst outputs for this GAP installation
-FusionRings_RewriteTests := function()
-    return TestDirectory(
-        [ "/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/tst" ],
-        rec(exitGAP := false, rewriteToFile := true)
-    );
-end;
-
-# Local CI helper (tests + docs)
-FusionRings_CI := function()
-    FusionRings_TestAllStrict();
-    Read("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/doc/build_manual.g");
-end;

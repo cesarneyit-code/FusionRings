@@ -1,3 +1,5 @@
-Read("/Users/cesargalindo/Documents/FusionRings/read_direct.g");
+if LoadPackage("FusionRings") <> true then
+  Error("FusionRings package not found on GAP package path");
+fi;
 FusionRings_TestAllStrict();
-Read("/Users/cesargalindo/Documents/FusionRings/pkg/FusionRings/doc/build_manual.g");
+ReadPackage("FusionRings", "doc/build_manual.g");
