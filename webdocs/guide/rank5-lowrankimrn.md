@@ -101,6 +101,20 @@ Typical patterns:
 - **SU(2)\_9/Z2** and **SU(3)\_4/Z3**: non-pointed, non-isomorphic fusion rules;
   both are present as distinct Galois orbits in `NsdGOL5`.
 
+## Identification table (rank-5 database)
+
+The following table summarizes the mapping observed in `NsdGOL5`. Each row is a
+Galois orbit of modular data entries. The identification uses the dimension
+pattern and the order of `T` (`ordT`), consistent with the LowrankIMRN list.
+
+| Galois orbit | Entries | Invertibles | ordT | Family |
+|---|---:|---:|---:|---|
+| 1 | 2 | 5 | 5 | `SU(5)_1` (pointed, Z5) |
+| 2 | 4 | 2 | 24 | `SU(2)_4` |
+| 3 | 4 | 2 | 24 | `SU(2)_4` (Galois orbit) |
+| 4 | 10 | 1 | 11 | `SU(2)_9/Z2` |
+| 5 | 6 | 1 | 7 | `SU(3)_4/Z3` |
+
 ## Reproducible CLI scripts (recommended)
 
 From the repository root:
@@ -115,6 +129,12 @@ This prints a CSV-like table:
 iGO,iMD,invertibles,fp_dims_sorted_approx,ordT,central_charge
 1,1,5,[ 1., 1., 1., 1., 1. ],5,E(5)
 ...
+```
+
+Write the same output to a file:
+
+```bash
+./bin/fr-scan-rank5 --csv rank5_scan.csv
 ```
 
 And a quick end-to-end demo:
