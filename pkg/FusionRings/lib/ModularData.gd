@@ -13,6 +13,8 @@ DeclareAttribute("MDQuantumDimensions", IsModularData);
 DeclareAttribute("MDGlobalDimensionSquared", IsModularData);
 DeclareAttribute("MDFusionCoefficients", IsModularData);
 DeclareAttribute("MDOrderT", IsModularData);
+DeclareAttribute("MDGaussSums", IsModularData);
+DeclareAttribute("MDCentralCharge", IsModularData);
 
 DeclareGlobalFunction("ModularData");
 DeclareGlobalFunction("ModularDataFromST");

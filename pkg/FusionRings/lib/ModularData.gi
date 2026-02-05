@@ -551,6 +551,26 @@ InstallGlobalFunction(ValidateModularData, function(arg)
   return out;
 end );
 
+InstallMethod(MDGaussSums, [ IsModularData ], function(md)
+  local S, T, r, d, pplus, pminus;
+  S := SMatrix(md);
+  T := TMatrix(md);
+  r := Length(S);
+  d := List([1..r], i -> S[1][i]);
+  pplus := Sum([1..r], i -> d[i]^2 * T[i][i]);
+  pminus := Sum([1..r], i -> d[i]^2 / T[i][i]);
+  return rec(pplus := pplus, pminus := pminus);
+end );
+
+InstallMethod(MDCentralCharge, [ IsModularData ], function(md)
+  local gs;
+  gs := MDGaussSums(md);
+  if gs.pminus = 0 then
+    Error("pminus is 0; cannot form central charge");
+  fi;
+  return gs.pplus / gs.pminus;
+end );
+
 InstallGlobalFunction(LoadNsdGOL, function(rank)
   local path, fname;
   if not IsInt(rank) or rank < 1 then

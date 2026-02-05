@@ -37,4 +37,10 @@ true
 gap> MDOrderT(md);
 4
 
+gap> gs := MDGaussSums(md);;
+gap> gs.pplus * gs.pminus = MDGlobalDimensionSquared(md);
+true
+gap> MDCentralCharge(md);
+E(4)
+
 gap> STOP_TEST("FusionRings-modulardata-basic");

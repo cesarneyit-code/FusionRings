@@ -103,3 +103,4 @@ Then use the sections below as a function index.
 - `SMatrix(md)`, `TMatrix(md)`, `MDLabels(md)`
 - `MDSpins(md)`, `MDTwists(md)`, `MDQuantumDimensions(md)`
 - `MDGlobalDimensionSquared(md)`, `MDFusionCoefficients(md)`, `MDOrderT(md)`
+- `MDGaussSums(md)`, `MDCentralCharge(md)`

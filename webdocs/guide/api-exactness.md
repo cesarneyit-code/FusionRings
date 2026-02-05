@@ -23,6 +23,8 @@ Legend used below:
 | `IsWeaklyIntegralFusionRing(F)` | numeric check | Uses decimal tolerance on global FP dimension. |
 | `IsInvertibleSimple(F,i)` | exact combinatorial | Checks fusion matrix is a permutation matrix. |
 | `IsFusionSubring(F,S)` | exact combinatorial | Closure under unit, dual, multiplication support. |
+| `MDGaussSums(md)` | exact | Returns Gauss sums `pplus`, `pminus` as cyclotomics. |
+| `MDCentralCharge(md)` | exact | Returns `pplus/pminus` (root of unity). |
 
 ## Quick recommendations
 

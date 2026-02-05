@@ -39,6 +39,15 @@ F := FusionRingFromModularData(md);;
 CheckFusionRingAxioms(F, 1);
 ```
 
+Gauss sums and central charge:
+
+```gap
+gs := MDGaussSums(md);;
+gs.pplus;
+gs.pminus;
+MDCentralCharge(md);
+```
+
 ### 2) `SU(5)_1` (pointed)
 
 The fusion rules are pointed with group `Z5`:

@@ -149,3 +149,27 @@ true
 
 This is the modular-data version of the statement that for modular categories
 the universal grading group size matches the number of invertible simples.
+
+## Gauss sums and central charge
+
+The paper uses Gauss sums and the ratio \(p_+/p_-\) (central charge). These are
+computable directly from the modular data:
+
+```gap
+md := GetModularData(2, 1, 1);;
+gs := MDGaussSums(md);;
+gs.pplus;
+gs.pminus;
+
+MDCentralCharge(md);
+```
+
+Expected output for the rank-2 database example:
+
+```text
+1
+1
+E(4)
+```
+
+Note: `MDGaussSums` returns a record with fields `pplus` and `pminus`.
