@@ -1,0 +1,1519 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Fusion rings and modular data in GAP, including Phase 2 Verlinde constructors.">
+      
+      
+      
+        <link rel="canonical" href="https://cesarneyit-code.github.io/FusionRings/guide/examples/">
+      
+      
+        <link rel="prev" href="../rank5-lowrankimrn/">
+      
+      
+        <link rel="next" href="../../api/quick-api/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Worked Examples - FusionRings for GAP</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#worked-examples" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="FusionRings for GAP" class="md-header__button md-logo" aria-label="FusionRings for GAP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            FusionRings for GAP
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Worked Examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="amber"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cesarneyit-code/FusionRings" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cesarneyit-code/FusionRings
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="FusionRings for GAP" class="md-nav__button md-logo" aria-label="FusionRings for GAP" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    FusionRings for GAP
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cesarneyit-code/FusionRings" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cesarneyit-code/FusionRings
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../full-tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Full Tutorial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theorem-to-computation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theorem to Computation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ostrik-ade-modules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ostrik ADE Modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manual-construction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual Construction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modular-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modular Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fusion-rings-and-modular-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fusion Rings and Modular Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation-levels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation Levels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase2-verlinde/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Phase 2 (Verlinde)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-exactness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Exactness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../paper-criteria/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paper Criteria Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rank5-lowrankimrn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rank-5 Classification (LowrankIMRN)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Worked Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-rank-2-family-tautau-1-ntau" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Rank-2 family (tautau = 1 + ntau)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pointed-ring-in-20-seconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Pointed ring in 20 seconds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-rank-3-family-kk-l-m-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Rank-3 family K(k, l, m, n)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-fibonacci-ising-and-tambara-yamagami" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Fibonacci, Ising, and Tambara-Yamagami
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-from-modular-data-database-to-fusion-ring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) From modular-data database to fusion ring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-invertibles-and-canonical-pointed-subring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Invertibles and canonical pointed subring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-fp-dimensions-exact-and-approximate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7) FP dimensions: exact and approximate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-paper-style-criterion-example-that-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8) Paper-style criterion example that fails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-full-test-run-when-you-want-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9) Full test run (when you want confidence)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-based-modules-over-a-fusion-ring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10) Based modules over a fusion ring
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/quick-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/constructors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Constructors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-cite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to Cite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Roadmap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-rank-2-family-tautau-1-ntau" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Rank-2 family (tautau = 1 + ntau)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pointed-ring-in-20-seconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Pointed ring in 20 seconds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-rank-3-family-kk-l-m-n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Rank-3 family K(k, l, m, n)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-fibonacci-ising-and-tambara-yamagami" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Fibonacci, Ising, and Tambara-Yamagami
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-from-modular-data-database-to-fusion-ring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) From modular-data database to fusion ring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-invertibles-and-canonical-pointed-subring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Invertibles and canonical pointed subring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-fp-dimensions-exact-and-approximate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7) FP dimensions: exact and approximate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-paper-style-criterion-example-that-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8) Paper-style criterion example that fails
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-full-test-run-when-you-want-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9) Full test run (when you want confidence)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-based-modules-over-a-fusion-ring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10) Based modules over a fusion ring
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="worked-examples">Worked Examples<a class="headerlink" href="#worked-examples" title="Permanent link">&para;</a></h1>
+<p>This page is a guided tour: run a command, see what GAP prints, and understand
+why that output matters. Start each session with:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">LoadPackage</span><span class="p">(</span><span class="s">&quot;FusionRings&quot;</span><span class="p">)</span><span class="o">;;</span>
+</code></pre></div>
+<h2 id="1-rank-2-family-tautau-1-ntau">1) Rank-2 family (tau<em>tau = 1 + n</em>tau)<a class="headerlink" href="#1-rank-2-family-tautau-1-ntau" title="Permanent link">&para;</a></h2>
+<p>The rank-2 family is parameterized by a nonnegative integer <code>n</code>.
+It is a useful stress-test: <code>n=0</code> is pointed (<code>C2</code>), <code>n=1</code> is Fibonacci,
+and larger <code>n</code> often fails deeper criteria even though the ring is defined.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">F0</span> <span class="o">:=</span> <span class="nv">Rank2FusionRing</span><span class="p">(</span><span class="nv">0</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">F1</span> <span class="o">:=</span> <span class="nv">Rank2FusionRing</span><span class="p">(</span><span class="nv">1</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">F5</span> <span class="o">:=</span> <span class="nv">Rank2FusionRing</span><span class="p">(</span><span class="nv">5</span><span class="p">)</span><span class="o">;;</span>
+
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F0</span><span class="o">,</span> <span class="s">&quot;tau&quot;</span><span class="o">,</span> <span class="s">&quot;tau&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F1</span><span class="o">,</span> <span class="s">&quot;tau&quot;</span><span class="o">,</span> <span class="s">&quot;tau&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F5</span><span class="o">,</span> <span class="s">&quot;tau&quot;</span><span class="o">,</span> <span class="s">&quot;tau&quot;</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ [ &quot;1&quot;, 1 ] ]
+[ [ &quot;1&quot;, 1 ], [ &quot;tau&quot;, 1 ] ]
+[ [ &quot;1&quot;, 1 ], [ &quot;tau&quot;, 5 ] ]
+</code></pre></div>
+<p>Use this family when you want a fast parameterized example with known behavior.</p>
+<h2 id="2-pointed-ring-in-20-seconds">2) Pointed ring in 20 seconds<a class="headerlink" href="#2-pointed-ring-in-20-seconds" title="Permanent link">&para;</a></h2>
+<p>Start with a very small pointed ring (<code>CyclicPointedFusionRing(4)</code>), then check
+the basic product logic.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Fc4</span> <span class="o">:=</span> <span class="nv">CyclicPointedFusionRing</span><span class="p">(</span><span class="nv">4</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">LabelsList</span><span class="p">(</span><span class="nv">Fc4</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">Fc4</span><span class="o">,</span> <span class="nv">2</span><span class="o">,</span> <span class="nv">2</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">CheckFusionRingAxioms</span><span class="p">(</span><span class="nv">Fc4</span><span class="o">,</span> <span class="nv">1</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ &lt;identity&gt; of ..., f1, f2, f1*f2 ]
+[ [ 4, 1 ] ]
+true
+</code></pre></div>
+<p>Interpretation:
+- the second simple times itself lands in simple #4 with coefficient 1;
+- level-1 axioms pass.</p>
+<h2 id="3-rank-3-family-kk-l-m-n">3) Rank-3 family K(k, l, m, n)<a class="headerlink" href="#3-rank-3-family-kk-l-m-n" title="Permanent link">&para;</a></h2>
+<p>The rank-3 family has basis <code>1, X, Y</code> with rules:</p>
+<div class="highlight"><pre><span></span><code>X^2 = 1 + m X + k Y
+Y^2 = 1 + l X + n Y
+X Y = Y X = k X + l Y
+</code></pre></div>
+<p>Parameters must satisfy:</p>
+<div class="highlight"><pre><span></span><code>k^2 + l^2 = k n + l m + 1
+</code></pre></div>
+<p>Example with <code>(k, l, m, n) = (0, 1, 0, 0)</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">F3</span> <span class="o">:=</span> <span class="nv">Rank3FusionRing</span><span class="p">(</span><span class="nv">0</span><span class="o">,</span> <span class="nv">1</span><span class="o">,</span> <span class="nv">0</span><span class="o">,</span> <span class="nv">0</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F3</span><span class="o">,</span> <span class="s">&quot;X&quot;</span><span class="o">,</span> <span class="s">&quot;X&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F3</span><span class="o">,</span> <span class="s">&quot;Y&quot;</span><span class="o">,</span> <span class="s">&quot;Y&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F3</span><span class="o">,</span> <span class="s">&quot;X&quot;</span><span class="o">,</span> <span class="s">&quot;Y&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">CheckFusionRingAxioms</span><span class="p">(</span><span class="nv">F3</span><span class="o">,</span> <span class="nv">1</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ [ &quot;1&quot;, 1 ] ]
+[ [ &quot;1&quot;, 1 ], [ &quot;X&quot;, 1 ] ]
+[ [ &quot;Y&quot;, 1 ] ]
+true
+</code></pre></div>
+<p>Another valid parameter set is <code>(k, l, m, n) = (1, 1, 1, 0)</code> (since <code>1^2+1^2 = 1*0 + 1*1 + 1</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="nv">F3b</span> <span class="o">:=</span> <span class="nv">Rank3FusionRing</span><span class="p">(</span><span class="nv">1</span><span class="o">,</span> <span class="nv">1</span><span class="o">,</span> <span class="nv">1</span><span class="o">,</span> <span class="nv">0</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F3b</span><span class="o">,</span> <span class="s">&quot;X&quot;</span><span class="o">,</span> <span class="s">&quot;X&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F3b</span><span class="o">,</span> <span class="s">&quot;Y&quot;</span><span class="o">,</span> <span class="s">&quot;Y&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">MultiplyBasis</span><span class="p">(</span><span class="nv">F3b</span><span class="o">,</span> <span class="s">&quot;X&quot;</span><span class="o">,</span> <span class="s">&quot;Y&quot;</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ [ &quot;1&quot;, 1 ], [ &quot;X&quot;, 1 ], [ &quot;Y&quot;, 1 ] ]
+[ [ &quot;1&quot;, 1 ], [ &quot;X&quot;, 1 ] ]
+[ [ &quot;X&quot;, 1 ], [ &quot;Y&quot;, 1 ] ]
+</code></pre></div>
+<h2 id="4-fibonacci-ising-and-tambara-yamagami">4) Fibonacci, Ising, and Tambara-Yamagami<a class="headerlink" href="#4-fibonacci-ising-and-tambara-yamagami" title="Permanent link">&para;</a></h2>
+<p>This is a quick family smoke test that mixes pointed/non-pointed behavior.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Ffib</span> <span class="o">:=</span> <span class="nv">FibonacciFusionRing</span><span class="p">()</span><span class="o">;;</span>
+<span class="nv">Fis</span> <span class="o">:=</span> <span class="nv">IsingFusionRing</span><span class="p">()</span><span class="o">;;</span>
+<span class="nv">G3</span> <span class="o">:=</span> <span class="nv">CyclicGroup</span><span class="p">(</span><span class="nv">3</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">Fty</span> <span class="o">:=</span> <span class="nv">TambaraYamagamiFusionRing</span><span class="p">(</span><span class="nv">G3</span><span class="p">)</span><span class="o">;;</span>
+
+<span class="nv">CheckFusionRingAxioms</span><span class="p">(</span><span class="nv">Ffib</span><span class="o">,</span> <span class="nv">1</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">CheckFusionRingAxioms</span><span class="p">(</span><span class="nv">Fis</span><span class="o">,</span> <span class="nv">1</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">CheckFusionRingAxioms</span><span class="p">(</span><span class="nv">Fty</span><span class="o">,</span> <span class="nv">1</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>true
+true
+true
+</code></pre></div>
+<p>Interpretation: all three constructors produce internally consistent fusion
+rules at level 1.</p>
+<h2 id="5-from-modular-data-database-to-fusion-ring">5) From modular-data database to fusion ring<a class="headerlink" href="#5-from-modular-data-database-to-fusion-ring" title="Permanent link">&para;</a></h2>
+<p>This is the core pipeline many users want:
+database -&gt; validated <code>ModularData</code> -&gt; <code>FusionRing</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">LoadNsdGOL</span><span class="p">(</span><span class="nv">2</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">md</span> <span class="o">:=</span> <span class="nv">GetModularData</span><span class="p">(</span><span class="nv">2</span><span class="o">,</span> <span class="nv">1</span><span class="o">,</span> <span class="nv">1</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">v</span> <span class="o">:=</span> <span class="nv">ValidateModularData</span><span class="p">(</span><span class="nv">md</span><span class="o">,</span> <span class="nv">7</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">v</span><span class="o">.</span><span class="nv">ok</span><span class="o">;</span>
+
+<span class="nv">Fmd</span> <span class="o">:=</span> <span class="nv">FusionRingFromModularData</span><span class="p">(</span><span class="nv">md</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">CheckFusionRingAxioms</span><span class="p">(</span><span class="nv">Fmd</span><span class="o">,</span> <span class="nv">1</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>true
+true
+</code></pre></div>
+<p>Interpretation:
+- the modular datum passes validation level 7;
+- the reconstructed fusion ring also passes ring-axiom checks.</p>
+<h2 id="6-invertibles-and-canonical-pointed-subring">6) Invertibles and canonical pointed subring<a class="headerlink" href="#6-invertibles-and-canonical-pointed-subring" title="Permanent link">&para;</a></h2>
+<p>Now inspect structure inside a non-pointed ring (<code>IsingFusionRing</code>).</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Fi</span> <span class="o">:=</span> <span class="nv">IsingFusionRing</span><span class="p">()</span><span class="o">;;</span>
+<span class="nv">InvertibleSimples</span><span class="p">(</span><span class="nv">Fi</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">P</span> <span class="o">:=</span> <span class="nv">CanonicalPointedSubring</span><span class="p">(</span><span class="nv">Fi</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">LabelsList</span><span class="p">(</span><span class="nv">P</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">IsPointedFusionRing</span><span class="p">(</span><span class="nv">P</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ &quot;1&quot;, &quot;psi&quot; ]
+[ &quot;1&quot;, &quot;psi&quot; ]
+true
+</code></pre></div>
+<p>Interpretation: Ising has exactly two invertibles, and they generate the
+canonical pointed subring.</p>
+<h2 id="7-fp-dimensions-exact-and-approximate">7) FP dimensions: exact and approximate<a class="headerlink" href="#7-fp-dimensions-exact-and-approximate" title="Permanent link">&para;</a></h2>
+<p>Use exact values for algebraic work and decimal approximations for quick
+intuition.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Ffib</span> <span class="o">:=</span> <span class="nv">FibonacciFusionRing</span><span class="p">()</span><span class="o">;;</span>
+<span class="nv">FPDimensionPolynomial</span><span class="p">(</span><span class="nv">Ffib</span><span class="o">,</span> <span class="s">&quot;x&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">FPDimensions</span><span class="p">(</span><span class="nv">Ffib</span><span class="p">)[</span><span class="nv">2</span><span class="p">]</span><span class="o">;</span>
+<span class="nv">FPDimensionApprox</span><span class="p">(</span><span class="nv">Ffib</span><span class="o">,</span> <span class="s">&quot;x&quot;</span><span class="o">,</span> <span class="nv">8</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">GlobalFPDimension</span><span class="p">(</span><span class="nv">Ffib</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>x_1^2-x_1-1
+fp2
+1.61803399
+fp2+2
+</code></pre></div>
+<p>Interpretation:
+- the FP dimension of <code>x</code> is the positive root of <code>x^2 - x - 1</code>;
+- exact values stay algebraic (<code>fp2</code>), while approximations are optional.</p>
+<h2 id="8-paper-style-criterion-example-that-fails">8) Paper-style criterion example that fails<a class="headerlink" href="#8-paper-style-criterion-example-that-fails" title="Permanent link">&para;</a></h2>
+<p>This rank-4 commutative example is useful because it fails a criterion in a
+controlled way.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">M</span> <span class="o">:=</span> <span class="p">[</span>
+  <span class="p">[</span> <span class="p">[</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span> <span class="p">]</span><span class="o">,</span>
+  <span class="p">[</span> <span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span> <span class="p">]</span><span class="o">,</span>
+  <span class="p">[</span> <span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span> <span class="p">]</span><span class="o">,</span>
+  <span class="p">[</span> <span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">1</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">1</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span> <span class="p">]</span>
+<span class="p">]</span><span class="o">;;</span>
+<span class="nv">Fbad</span> <span class="o">:=</span> <span class="nv">FusionRingByFusionMatrices</span><span class="p">([</span><span class="nv">1</span><span class="o">..</span><span class="nv">4</span><span class="p">]</span><span class="o">,</span> <span class="nv">1</span><span class="o">,</span> <span class="no">fail</span><span class="o">,</span> <span class="nv">M</span><span class="o">,</span> <span class="k">rec</span><span class="p">(</span><span class="nv">inferDual</span> <span class="o">:=</span> <span class="no">true</span><span class="o">,</span> <span class="nv">check</span> <span class="o">:=</span> <span class="nv">0</span><span class="p">))</span><span class="o">;;</span>
+
+<span class="nv">dres</span> <span class="o">:=</span> <span class="nv">CheckDNumberCriterionCommutative</span><span class="p">(</span><span class="nv">Fbad</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">dres</span><span class="o">.</span><span class="nv">ok</span><span class="o">;</span>
+<span class="nv">dres</span><span class="o">.</span><span class="nv">failures</span><span class="p">[</span><span class="nv">1</span><span class="p">]</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>false
+formal codegree polynomial #2 fails d-number divisibility test
+</code></pre></div>
+<p>Interpretation: this is a concrete "criterion fails" case you can use while
+developing filters/classifiers.</p>
+<h2 id="9-full-test-run-when-you-want-confidence">9) Full test run (when you want confidence)<a class="headerlink" href="#9-full-test-run-when-you-want-confidence" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nv">FusionRings_TestAllStrict</span><span class="p">()</span><span class="o">;</span>
+</code></pre></div>
+<p>This runs the package test suite and is the right command before a commit.</p>
+<h2 id="10-based-modules-over-a-fusion-ring">10) Based modules over a fusion ring<a class="headerlink" href="#10-based-modules-over-a-fusion-ring" title="Permanent link">&para;</a></h2>
+<p>The package now supports based modules (Ostrik's based modules over a based
+ring, i.e. modules over a fusion ring with nonnegative integral action
+matrices).</p>
+<div class="highlight"><pre><span></span><code><span class="nv">F2</span> <span class="o">:=</span> <span class="nv">CyclicPointedFusionRing</span><span class="p">(</span><span class="nv">2</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">A1</span> <span class="o">:=</span> <span class="p">[</span> <span class="p">[</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span> <span class="p">]</span><span class="o">;;</span>
+<span class="nv">Aswap</span> <span class="o">:=</span> <span class="p">[</span> <span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span> <span class="p">]</span><span class="o">;;</span>
+
+<span class="nv">M</span> <span class="o">:=</span> <span class="nv">FusionModuleByActionMatrices</span><span class="p">(</span><span class="nv">F2</span><span class="o">,</span> <span class="p">[</span> <span class="s">&quot;a&quot;</span><span class="o">,</span> <span class="s">&quot;b&quot;</span> <span class="p">]</span><span class="o">,</span> <span class="p">[</span> <span class="nv">A1</span><span class="o">,</span> <span class="nv">Aswap</span> <span class="p">])</span><span class="o">;;</span>
+<span class="nv">ActionOnBasis</span><span class="p">(</span><span class="nv">M</span><span class="o">,</span> <span class="nv">LabelOfPosition</span><span class="p">(</span><span class="nv">F2</span><span class="o">,</span> <span class="nv">2</span><span class="p">)</span><span class="o">,</span> <span class="s">&quot;a&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">IsIrreducibleFusionModule</span><span class="p">(</span><span class="nv">M</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">IsIndecomposableFusionModule</span><span class="p">(</span><span class="nv">M</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ [ &quot;b&quot;, 1 ] ]
+true
+true
+</code></pre></div>
+<p>And a reducible/decomposable example:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Afix</span> <span class="o">:=</span> <span class="p">[</span> <span class="p">[</span><span class="nv">1</span><span class="o">,</span><span class="nv">0</span><span class="p">]</span><span class="o">,</span><span class="p">[</span><span class="nv">0</span><span class="o">,</span><span class="nv">1</span><span class="p">]</span> <span class="p">]</span><span class="o">;;</span>
+<span class="nv">D</span> <span class="o">:=</span> <span class="nv">FusionModuleByActionMatrices</span><span class="p">(</span><span class="nv">F2</span><span class="o">,</span> <span class="p">[</span> <span class="s">&quot;m1&quot;</span><span class="o">,</span> <span class="s">&quot;m2&quot;</span> <span class="p">]</span><span class="o">,</span> <span class="p">[</span> <span class="nv">A1</span><span class="o">,</span> <span class="nv">Afix</span> <span class="p">])</span><span class="o">;;</span>
+<span class="nv">FusionModuleComponents</span><span class="p">(</span><span class="nv">D</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">SD</span> <span class="o">:=</span> <span class="nv">FusionSubmoduleByGenerators</span><span class="p">(</span><span class="nv">D</span><span class="o">,</span> <span class="p">[</span> <span class="s">&quot;m1&quot;</span> <span class="p">])</span><span class="o">;;</span>
+<span class="nv">ModuleBasisLabels</span><span class="p">(</span><span class="nv">SD</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ [ &quot;m1&quot; ], [ &quot;m2&quot; ] ]
+[ &quot;m1&quot; ]
+</code></pre></div>
+<p>Module-graph view:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Gact</span> <span class="o">:=</span> <span class="nv">FusionModuleGraph</span><span class="p">(</span><span class="nv">M</span><span class="o">,</span> <span class="nv">LabelOfPosition</span><span class="p">(</span><span class="nv">F2</span><span class="o">,</span> <span class="nv">2</span><span class="p">))</span><span class="o">;;</span>
+<span class="nv">Gact</span><span class="o">.</span><span class="nv">mode</span><span class="o">;</span>
+<span class="nv">Gact</span><span class="o">.</span><span class="nv">edges</span><span class="o">;</span>
+
+<span class="nv">Gcomb</span> <span class="o">:=</span> <span class="nv">FusionModuleGraph</span><span class="p">(</span><span class="nv">D</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">Gcomb</span><span class="o">.</span><span class="nv">mode</span><span class="o">;</span>
+<span class="nv">Gcomb</span><span class="o">.</span><span class="nv">edges</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>&quot;action-directed&quot;
+[ [ &quot;a&quot;, &quot;b&quot;, 1 ], [ &quot;b&quot;, &quot;a&quot;, 1 ] ]
+&quot;combined-undirected&quot;
+[ [ &quot;m1&quot;, &quot;m1&quot;, 2 ], [ &quot;m2&quot;, &quot;m2&quot;, 2 ] ]
+</code></pre></div>
+<p>Canonical module of a fusion ring and cyclic submodule from one object:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Fi</span> <span class="o">:=</span> <span class="nv">IsingFusionRing</span><span class="p">()</span><span class="o">;;</span>
+<span class="nv">CM</span> <span class="o">:=</span> <span class="nv">CanonicalFusionModule</span><span class="p">(</span><span class="nv">Fi</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">ModuleBasisLabels</span><span class="p">(</span><span class="nv">CM</span><span class="p">)</span> <span class="o">=</span> <span class="nv">LabelsList</span><span class="p">(</span><span class="nv">Fi</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">ActionOnBasis</span><span class="p">(</span><span class="nv">CM</span><span class="o">,</span> <span class="s">&quot;sigma&quot;</span><span class="o">,</span> <span class="s">&quot;sigma&quot;</span><span class="p">)</span><span class="o">;</span>
+
+<span class="nv">Sobj</span> <span class="o">:=</span> <span class="nv">FusionSubmoduleByObject</span><span class="p">(</span><span class="nv">Fi</span><span class="o">,</span> <span class="s">&quot;sigma&quot;</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">ModuleBasisLabels</span><span class="p">(</span><span class="nv">Sobj</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>true
+[ [ &quot;1&quot;, 1 ], [ &quot;psi&quot;, 1 ] ]
+[ &quot;1&quot;, &quot;psi&quot;, &quot;sigma&quot; ]
+</code></pre></div>
+<p>Ostrik classification modules for <code>SU(2)_k</code> (ADE):</p>
+<div class="highlight"><pre><span></span><code><span class="nv">mods4</span> <span class="o">:=</span> <span class="nv">OstrikSU2Modules</span><span class="p">(</span><span class="nv">4</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">List</span><span class="p">(</span><span class="nv">mods4</span><span class="o">,</span> <span class="nv">x</span> <span class="o">-&gt;</span> <span class="nv">x</span><span class="o">.</span><span class="nv">type</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">IsOstrikSU2Module</span><span class="p">(</span><span class="nv">mods4</span><span class="p">[</span><span class="nv">1</span><span class="p">]</span><span class="o">.</span><span class="nv">module</span><span class="o">,</span> <span class="nv">4</span><span class="o">,</span> <span class="s">&quot;A&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">IsOstrikSU2Module</span><span class="p">(</span><span class="nv">mods4</span><span class="p">[</span><span class="nv">2</span><span class="p">]</span><span class="o">.</span><span class="nv">module</span><span class="o">,</span> <span class="nv">4</span><span class="o">,</span> <span class="s">&quot;D&quot;</span><span class="p">)</span><span class="o">;</span>
+
+<span class="nv">mods10</span> <span class="o">:=</span> <span class="nv">OstrikSU2Modules</span><span class="p">(</span><span class="nv">10</span><span class="p">)</span><span class="o">;;</span>
+<span class="nv">List</span><span class="p">(</span><span class="nv">mods10</span><span class="o">,</span> <span class="nv">x</span> <span class="o">-&gt;</span> <span class="nv">x</span><span class="o">.</span><span class="nv">type</span><span class="p">)</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>[ &quot;A&quot;, &quot;D&quot; ]
+true
+true
+[ &quot;A&quot;, &quot;D&quot;, &quot;E6&quot; ]
+</code></pre></div>
+<p>Universal grading (first step toward nilpotency series):</p>
+<div class="highlight"><pre><span></span><code><span class="nv">Fi</span> <span class="o">:=</span> <span class="nv">IsingFusionRing</span><span class="p">()</span><span class="o">;;</span>
+<span class="nv">UniversalGradingOrder</span><span class="p">(</span><span class="nv">Fi</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">UniversalGradingComponent</span><span class="p">(</span><span class="nv">Fi</span><span class="o">,</span> <span class="s">&quot;1&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">UniversalGradingComponent</span><span class="p">(</span><span class="nv">Fi</span><span class="o">,</span> <span class="s">&quot;sigma&quot;</span><span class="p">)</span><span class="o">;</span>
+<span class="nv">UniversalGradingData</span><span class="p">(</span><span class="nv">Fi</span><span class="p">)</span><span class="o">.</span><span class="nv">multiplication</span><span class="o">;</span>
+</code></pre></div>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>2
+1
+2
+[ [ 1, 2 ], [ 2, 1 ] ]
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
