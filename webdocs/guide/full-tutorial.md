@@ -187,6 +187,12 @@ FusionRings_TestAllStrict();
 
 Success signal: final summary with `0 failures in ... files`.
 
+If you want a clean CLI run (recommended for reproducibility):
+
+```bash
+./bin/fr-test-strict
+```
+
 Where to go next:
 - [Worked Examples](examples.md) for more patterns;
 - [Theorem to Computation](theorem-to-computation.md) for paper-oriented workflows;

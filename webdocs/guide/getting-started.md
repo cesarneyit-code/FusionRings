@@ -146,6 +146,15 @@ LoadPackage("FusionRings");;
 FusionRings_CI();
 ```
 
+Professional CLI workflow (clean session):
+
+```bash
+./bin/fr-test-strict
+```
+
+This runs GAP in a clean session with a local package path and avoids any
+`Reread`-related warnings.
+
 Recommended before pushing changes:
 - run `FusionRings_TestAllStrict();`
 - then run your local examples once more to confirm expected output.
