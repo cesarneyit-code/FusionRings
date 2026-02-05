@@ -3,7 +3,16 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
+./bin/fr-scan-rank5 --md "${ROOT}/webdocs/guide/rank5_table.generated.md"
+
+# Run tests in a clean session
 gap -q -l "${ROOT}/pkg;" <<GAP
-Read("${ROOT}/run_ci.g");
+Read("${ROOT}/run_tests_strict.g");
+QUIT;
+GAP
+
+# Build manual in a fresh session to avoid Reread warnings
+gap -q -l "${ROOT}/pkg;" <<GAP
+ReadPackage("FusionRings", "doc/build_manual.g");
 QUIT;
 GAP

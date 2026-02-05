@@ -13,6 +13,7 @@ pkg/FusionRings/doc/chap*.txt
 pkg/FusionRings/doc/chap0.html
 pkg/FusionRings/doc/main.tex
 pkg/FusionRings/doc/manual.pdf
+pkg/FusionRings/doc/main.log
 
 # MkDocs build artifacts
 site/
@@ -28,6 +29,7 @@ ostrik.tex
 nilpotent.tex
 rank3.tex
 LowrankIMRN.tex
+webdocs/guide/*_table.generated.md
 
 # Generated GAPDoc byproducts
 pkg/FusionRings/doc/main.aux
